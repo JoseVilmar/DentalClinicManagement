@@ -1,0 +1,276 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+.search-section{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E0DBD7;
+    position: sticky;
+}
+.location-search{
+    height: 60px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+.input-location{
+    width: 300px;
+    height: 30px;
+    font-size: 1.2rem;
+    border: none;
+    
+}
+.input-dentist{
+    width: 400px;
+    height: 30px;
+    font-size: 1.2rem;
+    border: none;
+    
+}
+.location-icon{
+    width: 40px;
+    height: 32px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    
+}
+
+.btna{
+    font-size: 1.2rem;
+    width: 100px;
+    height: 30px;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(3, 215, 252); 
+    
+    margin-left: 0.5rem;
+}
+/* Doctor style */
+.doctor-list{
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    background-color: #f0ddce;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 4rem;
+    padding-bottom:2rem;
+
+}
+.doctor-details{
+    height: 130px;
+    width: 84%;
+    display: flex;
+    justify-content: space-evenly;
+    
+    background-color: rgb(3, 215, 252);
+    color: white;
+    margin-top: 0.9rem;
+    margin-bottom: 1rem;
+    border-radius: 4rem;
+    font-size: 1.2rem;
+}
+.beao{
+    height: 100px;
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    color: red;
+   
+}
+.extra{
+    font-size: 1.5rem;
+    color: black;
+}
+.extra i{
+    font-size: 1rem;
+    color: black;
+}
+.name{
+    padding-top: 0.4rem;
+}
+.daddre{
+    width: 300px;
+
+}
+.doctor-details p{
+    margin-top: 0.6rem;
+   
+}
+.book a{
+    width: 90px;
+    height: 30px;
+    font-size: 1.2rem;
+    border-radius: 0.8rem;
+    
+    background-color: rgb(244, 239, 239); 
+}
+.book-a{
+    width: 40%;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    color: black;
+} 
+
+address{
+    color: black;
+    text-transform: capitalize;
+}
+.btn{
+    font-size: 1.2rem;
+    width: 100px;
+    height: 30px;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white; 
+    
+    margin-left: 0.5rem;
+}
+
+
+/* user */
+.user{
+    width: 46px;
+    height:46px;
+    font-size: 1.5rem;
+    background-color: white;
+    color: rgb(3, 215, 252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+}
+.user:hover{
+    border: 1.5px solid darkblue;
+    border-radius: 100px;
+}
+/* toggle bar */
+#sidebarmenu{
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 70px;
+    transform: translateX(250px);
+    transition: transform 250ms ease-in-out;
+    background: darkblue;
+}
+.menu{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.menu li{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+}
+.menu li a{
+    color: #fff;
+    display: block;
+    padding: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+.menu li a:hover{
+  background-color: rgb(3, 215, 252,0.5);
+}
+#opensidebar:checked ~ #sidebarmenu {
+    transform: translateX(0px);
+}
+input#opensidebar{
+    display: none;
+}
+.sidebarIconToggle{
+      
+    width: 46px;
+    height:46px;
+    
+    position: absolute;
+    z-index: 99; 
+    top: 12px;
+    right: 118px;
+    transition: all 0.3s;
+    cursor: pointer; 
+    border-radius: 100px;
+    
+}
+
+
+/* pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 85%;
+   
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    font-size: 1.2rem;
+    background-color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 2px solid rgb(3, 215, 252);
+  }
+  
+  .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+  
+  .pagination a:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .pagination a:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  /* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }

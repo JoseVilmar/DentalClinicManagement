@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Home Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="/static/cssfiles/userhomepstyle.css">
+        
+    </head>
+    
+    <body>
+        <!-- header -->
+        <header>
+
+            <div class="navbar" id="home-page">
+
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+
+                <div class="nav-search ">
+                    {% comment %} <input placeholder="Search Dentist" class="search-input" id="search-dentist">
+                    <div class="search-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <!-- <button>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button> -->
+                    </div> {% endcomment %}
+
+                </div>
+                <div class="contact-us border">
+                    <a href="{% url 'contact' %}">Contact Us</a>
+
+                </div>
+                <div class="about-us border">
+                    <a href="{% url 'about' %}">About Us</a>
+
+                </div>
+
+                <div class="user">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+                
+
+        </header>
+        
+        <!-- toggle menu -->
+        <input type="checkbox" id="openSidebarMenu">
+        <label for="openSidebarMenu" class="sidebarIconToggle">
+            
+        </label>
+        <div id="sidebarMenu">
+            <ul class="menu">
+                <li><a href="{% url 'userdetail' email %}">Details</a></li>
+                <li><a href="{% url 'applist' email %}">Appointments</a></li>
+                <li><a href="{% url 'history' email%}">History</a></li>
+                <li><a href="{%url 'userlogout'%}">Log Out</a></li>
+            
+            </ul>
+            
+        </div>
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+        <!-- hero section -->
+        <div class="hero-section">
+            <div class="hero-msgone">
+                <p class="mone">SMILE</p>
+                <p>WITHOUT</p>
+                <p>HESITATION</p>
+            </div>
+            <div class="hero-msgtwo">
+                <p>
+                    We protect your smile and makes your perfect smile even better.
+                </p>
+            </div>
+        </div>
+        <!-- Appointment Section -->
+        <div class="appointment-section" id="book-appointment">
+            <div class="normal-appointment box">
+                <div class="box-content">
+                    <h3>Regular</h3>
+                    <div class="msgthree">
+                        <p>Regular dental check-ups provide a range of benefits that safeguard oral health. They facilitate the prevention and early detection of dental problems, allowing timely intervention to prevent them from escalating into more severe conditions.Regular preventive dental checkups are key to maintaining both your oral health and your overall health. Checkups not only help prevent tooth decay, gum disease and oral cancer, but they help you avoid the pain and costs that dental problems can bring with them.</p>
+                    </div>
+
+                    <div class="make-appointment">
+                       <p> <a  class="a1 " href="{% url 'appointment' email%}" target="_blank">Make an Appointment</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="emergency-appointment box">
+                <div class="box-content">
+                    <h3 class="emer">Emergency!</h3>
+                    <div class="msgthree">
+                        <p>If you have a toothache that lasts more than 1-2 days and is causing you a lot of pain or discomfort, you're having a dental emergency. This usually indicates an advanced cavity or an infected tooth. Without proper care, your condition will only get worse.</p>
+                        <br>
+                        <p class="emer1">
+                            Note:- For emergency make an appointment which help you to get fast appointment with best dentist within 1 hour for checkup.
+                        </p>
+                    </div>
+
+                    <div class="make-appointment">
+                       <p> <a  class="a1 " href="{% url 'emergencyappointment' email%}">Make an Appointment</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <footer>
+            <div class="panel1 ">
+                <ul class="ul1">
+                    <p>Get to know Us</p>
+                    <a href="{% url 'userhp' email %}">Home</a>
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                    
+                    
+                </ul>
+                <ul class="ul1">
+                    <p>For Patients</p>
+                    <a href="#search-dentist">Find Doctors</a>
+                    <a href="#book-appointment">Book appointment</a>
+                </ul>
+
+                <ul>
+                    <p>Social</p>
+                    <div class="social">
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <a href="#">Twitter</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-facebook"></i>
+                        <a href="#">Facebook</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-instagram"></i>
+                        <a href="#">Instagram</a>
+                    </div>
+                </ul>
+
+
+            </div>
+            <div class="panel2">
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+            </div>
+
+            <div class="panel3">
+                <p>DENTIST © 2024, All Rights Reserved </p>
+            </div>
+        </footer>
+    </body>
+</html>

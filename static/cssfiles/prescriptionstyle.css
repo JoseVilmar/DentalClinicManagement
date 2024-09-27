@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+
+.detail-user{
+    height: 800px;
+    
+    background-color: #f0ddce;
+    padding-top: 4rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+    
+    
+}
+
+.details{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+.row1{
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    margin-top: 1.1rem;
+    margin-bottom: 1.1rem;
+    font-size: 1.4rem;
+}
+.name1{
+    font-size: 1.4rem;
+    margin-top: 4rem;
+    margin-bottom: 1.1rem;
+}
+.input-two{
+    width: 50%;
+    height: 300px;
+    font-size: 1rem;
+    
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+    
+    text-align: start;
+
+}
+
+.button{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.btn{
+    width: 90px;
+    height: 40px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    
+    background-color: rgb(3,215,252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+/* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }
+
+
+
+  /* prescription */
+
+.detail-set{
+    display: flex;
+    
+}
+.user-history{
+    width: 40%;
+    
+    padding-left: 14rem;
+    padding-right: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.history-table{
+    background-color: white;
+}
+table,th,td{
+    border: 2px solid black;
+}
+table{
+    width: 100%;
+}
+.display-date{
+    text-align: center;
+}
+
+.table-date{
+    width: 100px;
+    
+}
+.table-drname{
+    width: 250px;
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Details</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+        <link rel="stylesheet" href="/static/cssfiles/userdetailsstyle.css">
+        
+    </head>
+    
+    <body>
+        <!-- header -->
+        <header>
+
+            <div class="navbar" >
+
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+
+                
+                <div class="user-part">
+                    <div class="contact-us border">
+                        <a href="{% url 'contact' %}">Contact Us</a>
+    
+                    </div>
+                    <div class="about-us border">
+                        <a href="{% url 'about' %}">About Us</a>
+    
+                    </div>
+    
+                    <div class="user">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            </div>
+                
+
+        </header>
+        <!-- toggle menu -->
+        <input type="checkbox" id="opensidebar">
+        <label for="opensidebar" class="sidebarIconToggle"></label>
+        <div id="sidebarmenu">
+            <ul class="menu">
+                <li><a href="{% url 'userdetail' email %}">Details</a></li>
+                <li><a href="{% url 'applist' email %}">Appointments</a></li>
+                <li><a href="{% url 'history' email%}">History</a></li>
+                <li><a href="{%url 'userlogout'%}">Log Out</a></li>
+            </ul>
+        </div> 
+         
+        <!-- user details -->
+       
+        <form class="detail-form" id="detail-user">
+            <div class="detail-title">
+                <h1>User Details</h1>
+            </div>
+            <div class="details">
+                <div class="name">
+                    <p>Name:</p>
+                    <p class="input-one">
+                        {{userdetail.name}}
+                    </p>
+                </div>
+                <div class="row1">
+                    <div class="name">
+                        <p>Date of Birth:</p>
+                        <p class="input-one">
+                            {{userdetail.dateofbirth}}
+                        </p>
+                    </div>
+                    <div class="name">
+                        <p>Gender:</p>
+                        
+                        <p class="input-one">
+                            {{userdetail.gender}}
+                        </p>
+                        
+                    </div>
+                </div>
+                <div class="row1">
+                    <div class="name">
+                        <p>Contact:</p>
+                        <p class="input-one">
+                            {{userdetail.contact}}
+                        </p>
+                    </div>
+                    <div class="name">
+                        <p>Email:</p>
+                        <p class="input-one">
+                            {{userdetail.email}}
+                        </p>
+        
+                    </div>
+                </div>
+                <div class="name">
+                    <p>Address:</p>
+                    <p class="input-two">
+                        {{userdetail.address}}
+                        {{userdetail.pincode}}
+                    </p>
+                </div>
+            </div>
+            {% comment %} <div class="button">
+                <button>Edit</button>
+                <button>Save</button>
+            </div> {% endcomment %}
+        </form>
+        
+        <!-- footer -->
+        <footer>
+            <div class="panel1 ">
+                <ul class="ul1">
+                    <p>Get to know Us</p>
+                    <a href="{% url 'userhp' email %}">Home</a>
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                    
+                </ul>
+                <ul class="ul1">
+                    <p>For Patients</p>
+                    <a href="{% url 'userhp' email %}">Find Doctors</a>
+                    <a href="{% url 'userhp' email %}">Book appointment</a>
+                </ul>
+
+                <ul>
+                    <p>Social</p>
+                    <div class="social">
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <a href="#">Twitter</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-facebook"></i>
+                        <a href="#">Facebook</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-instagram"></i>
+                        <a href="#">Instagram</a>
+                    </div>
+                </ul>
+
+
+            </div>
+            <div class="panel2">
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+            </div>
+
+            <div class="panel3">
+                <p>DENTIST © 2024, All Rights Reserved </p>
+            </div>
+        </footer>
+    </body>
+</html>

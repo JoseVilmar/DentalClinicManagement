@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>forget password</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="/static/cssfiles/otpstyle.css">
+    </head>
+
+    <body>
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+       <div class="otp">
+            <div class="otp1">
+                <form action="{%url 'otp'%}" class="e-otp" method="post">
+                {% csrf_token %}
+                    <input type="hidden" name="form_type" value="useremail">
+                    <label for="emailid">Email id:</label>
+                    <input type="email" id="emailid" name="emailid" placeholder="Enter your registered email id" class="e-input">
+                    <input type="submit" value="Get OTP" class="so"  >
+                    
+                    
+                </form>
+            </div>
+            <div  class="otp-change-user">
+                        
+                <form action="{% url 'otp' %}" method="post">
+                {% csrf_token %}
+                    <input type="hidden" name="form_type" value="changepassword">
+                    <div class="change-p">
+                        <div class="enter-otp">
+                            <p>OTP: <input type="text" id="enterotp" name="enterotp" placeholder="Enter OTP"></p>
+                            
+                        </div>
+                        
+                        <div class="enter-otp">
+                            <p>Enter password:</p>
+                            <input type="password" id="newpassword" name="newpassword" placeholder="Enter new password" class="input-one">
+                        </div>
+                        <div class="enter-otp">
+                            <label>
+                                <p>Confirm password:</p>
+                                
+                            </label>
+                            <input type="password" id="cnewpassword" name="cnewpassword" placeholder="Confirm password" class="input-one">
+                        </div>
+                        
+                        <div class="c-book">
+                            
+                            <input type="submit" value="Submit" class="button"  >
+
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+            
+       </div>
+
+    </body>
+</html>

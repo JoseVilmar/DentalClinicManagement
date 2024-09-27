@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Details</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+        <link rel="stylesheet" href="/static/cssfiles/userhistorystyle.css">
+        <link rel="stylesheet" href="/static/cssfiles/doctorapphistory.css">
+        
+    </head>
+    
+    <body>
+        <!-- header -->
+        <header>
+
+            <div class="navbar" >
+
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+
+                
+                <div class="user-part">
+                    <div class="contact-us border">
+                        <a href="{% url 'contact' %}">Contact Us</a>
+    
+                    </div>
+                    <div class="about-us border">
+                        <a href="{% url 'about' %}">About Us</a>
+    
+                    </div>
+                </div>
+            </div>
+                
+
+        </header>
+        <!-- toggle menu -->
+       
+
+        <!-- users appointments history-->
+        <div class="user-history" id="appointment-history">
+            <div class="detail-title">
+                <h1>Patient History</h1>
+            </div>
+           
+            <form method="post" action="{% url 'doctorappoitmenthistory' email %}">
+            {%csrf_token%}
+              
+                <div class="select-date">       
+                    <div class="date">
+                        <label for="ad"></label>
+                        <p>Select Date: <input type="date"  id="ad" name="ad" class="adate"> </p>
+                        
+                    </div>
+                    
+                    <input type="submit" value="Search" class="btna" >
+                 
+                </div>  
+            </form> 
+
+            {%if noappointment == True%}
+            <table class="history-table">
+
+                <tr>
+                    
+                    <th class="table-date">Date</th>
+                    <th class="table-drname">Patient Name</th>
+                    <th class="table-prescribe">Prescription</th>
+                </tr>
+                {%for n in userdetail%}
+                <tr>
+                    
+                    <td class="display-date">
+                        <p>{{n.appdate}}</p>
+                    </td>
+                    <td>
+                        <p>{{n.username}}</p>
+                    </td>
+                    <td>
+                        <p>{{n.prescription}}</p>
+                    </td>
+                </tr>
+                {%endfor%}
+               
+            </table>
+            {% elif noappointment == False  %}
+            <div class="detail-title1">
+                <h1>No Patient history</h1>
+            </div>
+            {%endif%}
+        </div>
+       
+        
+        
+        <!-- footer -->
+        <footer>
+            <div class="panel1 ">
+                <ul class="ul1">
+                    <p>Get to know Us</p>
+                    {%if check == False and dcheck == False %}
+                    <a href="{% url 'home' %}">Home</a>
+                    {%endif%}
+                
+                    {%if dcheck == True%}
+                    <a href="{% url 'doctors' email %}">Home</a>
+                    {%endif%}
+                    
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                    
+                    
+                </ul>
+               
+
+                <ul>
+                    <p>Social</p>
+                    <div class="social">
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <a href="#">Twitter</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-facebook"></i>
+                        <a href="#">Facebook</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-instagram"></i>
+                        <a href="#">Instagram</a>
+                    </div>
+                </ul>
+
+
+            </div>
+            <div class="panel2">
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+            </div>
+
+            <div class="panel3">
+                <p>DENTIST © 2024, All Rights Reserved </p>
+            </div>
+        </footer>
+    </body>
+</html>

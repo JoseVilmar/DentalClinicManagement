@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contact Us Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="/static/cssfiles/contactusstyle.css">
+        <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+        
+    </head>
+    
+    <body>
+        <!-- header -->
+        <header>
+
+            <div class="navbar" >
+
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+
+                
+                <div class="user-part">
+                    <div class="contact-us border">
+                        <a href="{% url 'contact'%}">Contact Us</a>
+    
+                    </div>
+                    <div class="about-us border">
+                        <a href="{% url 'about'%}">About Us</a>
+    
+                    </div>
+                    
+                    {%if check == False and dcheck == False%}
+                    <div class="about-us border">
+                        <a href="{% url 'fordoctor' %}">For Doctor</a>
+    
+                    </div>
+                    <div class="user-login">
+                        <p>
+                            <a class="border" href="{% url 'login' %}">Login</a> or <a class="border" href="{% url 'register' %}">Register</a>
+                        </p>
+                    </div>
+                    {%endif%}
+                    
+                    
+                </div>
+            </div>
+                
+
+        </header>
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+        <!-- section -->
+        <section id="contactus-one">
+            <div class="msg-five">
+                <p class="title-one">Contact Us</p>
+                <p>Have questions ,suggestions or anything else? Let us know and we'll get back to you.</p>
+            </div>
+            <div class="contact-detail">
+                <div class="details">
+                    <div class="email">
+                        <div class="e-icon">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>E-MAIL </p>
+                        </div>
+                        <p class="e-detail">dentist@gmail.com</p>
+                    </div>
+                    <div class="email">
+                        <div class="e-icon">
+                            <i class="fa-solid fa-phone"></i>
+                            <p>CALL </p>
+                        </div>
+                        <p class="e-detail">91-0000000000</p>
+                    </div>
+                </div>
+                <form class="form-one" action="{% url 'contact'%}" method="post">
+                {% csrf_token %}
+                    <div class="name">
+                        <label for="username">
+                            <p>
+                                Name
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <input type="text" id="username" name="username" placeholder="Enter your full name" class="input-one">
+                    </div>
+                    <div class="name">
+                        <label for="useremail">
+                            <p>
+                                Email
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <input type="email" id="useremail" name="useremail" placeholder="Enter your email" class="input-one">
+                    </div>
+                    <div class="name">
+                        <label for="usercontact">
+                            <p>
+                                Contact
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <input type="number" id="usercontact" name="usercontact" placeholder="Enter your phone no." class="input-one">
+                    </div>
+                    <div class="name">
+                        <label for="usermessage">
+                            <p>
+                                Message
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <textarea id="usermessage" name="usermessage" placeholder="Write Message" class="input-two"></textarea>
+                    </div>
+                    
+                    <input type="submit" value="Submit" class="btn" >
+                        
+                    
+                </form>
+            </div>
+
+        </section>
+
+        
+        
+        <!-- footer -->
+        <footer>
+            <div class="panel1 ">
+                <ul class="ul1">
+                    <p>Get to know Us</p>
+                    {%if check == False and dcheck == False %}
+                    <a href="{% url 'home' %}">Home</a>
+                    {%endif%}
+                    {%if check == True%}
+                    <a href="{% url 'userhp' uemail %}">Home</a>
+                    {%endif%}
+                    {%if dcheck == True%}
+                    <a href="{% url 'doctors' email %}">Home</a>
+                    {%endif%}
+
+                    
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                    
+                    
+                </ul>
+                {% if check == False and dcheck == False %}
+                <ul class="ul1">
+                    <p>For Patients</p>
+                    <a href="{% url 'login' %}">Find Doctors</a>
+                    <a href="{% url 'login' %}">Book appointment</a>
+                </ul>
+                {%endif%}
+                {%if check == True %}
+                <ul class="ul1">
+                    <p>For Patients</p>
+                    <a href="{% url 'appointment' uemail %}">Find Doctors</a>
+                    <a href="{% url 'appointment' uemail %}">Book appointment</a>
+                </ul>
+                {%endif%}
+
+                <ul>
+                    <p>Social</p>
+                    <div class="social">
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <a href="#">Twitter</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-facebook"></i>
+                        <a href="#">Facebook</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-instagram"></i>
+                        <a href="#">Instagram</a>
+                    </div>
+                </ul>
+
+
+            </div>
+            <div class="panel2">
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+            </div>
+
+            <div class="panel3">
+                <p>DENTIST © 2024, All Rights Reserved </p>
+            </div>
+        </footer>
+    </body>
+</html>

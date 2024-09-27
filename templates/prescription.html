@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Book appointment Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="/static/cssfiles/prescriptionstyle.css">
+    </head>
+    
+ <body>
+    {% if messages %}
+    {%for message in messages%}
+    <div class="alert" >
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>{{ message}}</strong> 
+    </div>
+    
+    {% endfor%}
+    {%endif%}
+    <div class="detail-user">
+
+       <div class="detail-set">
+        <div class="details">
+            <div class="name">
+                <p>Name:  {{userdetail.name}}</p>
+                
+            </div>
+            <div class="row1">
+                <div class="name">
+                    <p>Age:  {{age}}</p>
+                    
+                </div>
+                <div class="name">
+                    <p>Gender:  {{userdetail.gender}}</p>
+                    
+                    
+                    
+                </div>
+            </div>
+            <div class="row1">
+                <div class="name">
+                    <p>Contact:  {{userdetail.contact}}</p>
+                    
+                </div>
+                <div class="name">
+                    <p>Email:  {{userdetail.email}}</p>
+                    
+        
+                </div>
+            </div>
+            
+        </div>
+        <div class="user-history" id="appointment-history">
+            {%if noappointment == True%}
+                <table class="history-table">
+    
+                    <tr>
+                        
+                        <th class="table-date">Date</th>
+                        
+                        <th class="table-prescribe">Prescription</th>
+                    </tr>
+                    {%for n in userdetail1%}
+                    <tr>
+                        
+                        <td class="display-date">
+                            <p>{{n.appdate}}</p>
+                        </td>
+                        
+                        <td >
+                            <p>{{n.prescription}}</p>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                   
+                </table>
+                {% elif noappointment == False  %}
+                    <div class="detail-title1">
+                        
+                    </div>
+            {%endif%}
+           
+           
+            
+        </div>
+       </div>
+        <form method="post" action="{% url 'prescription' email %}">
+            {% csrf_token %}
+                
+                <div class="name1">
+                    
+                    <label for="pres"><p>Prescription:</p></label>
+                    <textarea id="pres" name="pres" placeholder="Write Prescription" class="input-two"></textarea>
+                </div>
+                <div class="button">
+                    <p>
+                        <input type="submit" class="btn" value="Submit">
+                    </p>
+                    
+                </div>
+                
+                
+        </form>
+       
+
+        
+    </div>
+    
+
+
+        
+        
+  </body>
+</html>

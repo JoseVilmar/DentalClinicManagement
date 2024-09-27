@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+.msg-five{
+    height: 200px;
+    background-color: #f0ddce;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1.5rem;
+}
+.title-one{
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgb(3, 215, 252);
+}
+
+.contact-detail{
+    height: 900px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(3, 215, 252,0.85);
+    
+}
+/* contact detail */
+.details{
+    height: 800px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    
+
+}
+
+
+.e-icon{
+    display: flex;
+    font-size: 2rem;
+    width:60%;
+    
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 0.7rem;
+    margin-top: 0.7rem;
+    
+}
+.email{
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
+.contact-detail i{
+    font-size: 3rem;
+}
+.e-detail{
+    font-size: 2rem;
+}
+/* form */
+.form-one{
+    height: 800px;
+    width: 50%;
+    background-color: rgb(3, 215, 252,2);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    
+}
+.form-one p{
+    font-size: 1.5rem;
+}
+.input-one{
+    width: 60%;
+    height: 30px;
+    font-size: 1rem;
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+}
+.name{
+    margin-top: 1.8rem;
+    margin-bottom: 1.8rem;
+}
+.input-two{
+    width: 60%;
+    height: 250px;
+    font-size: 1rem;
+    margin-top: 0.7rem;
+   
+    
+    text-align: start;
+
+}
+.btn{
+    font-size: 1.2rem;
+    width: 100px;
+    height: 40px;
+    border-radius: 3rem;
+    
+    margin-left: 10rem;
+    background-color: white;
+}
+
+/* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+}
+  
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.closebtn:hover {
+    color: black;
+  }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Book emergency appointment Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="/static/cssfiles/bookappointmentstyle.css">
+    </head>
+    
+ <body>
+    {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+    <div  class="set-schedule">
+        
+        <div class="appointment-detail">
+
+           <form method="post" action="{% url 'bookemergencyappointment' demail %}">
+            {% csrf_token %}
+                
+                <div class="date">
+                    <label for="ad"></label>
+                    <p>Select Date:  {{date}}</p>
+                    
+                </div>
+                <div class="date">
+                    <p>
+                        <label for="select_time">Select Time:</label>
+                    </p>
+                    <div class="select-time">
+                        
+                        <p class="time"><input type="radio" id="select_time" name="select_time" value="10:00 Am" >10:00 AM</p>
+                       
+                        <p class="time"> <input type="radio" id="select_time" name="select_time" value="11:00 Am" >11:00 AM</p>
+                   
+                        <p class="time"> <input type="radio" id="select_time" name="select_time" value="12:00 Pm" >12:00 PM</p>
+                   
+                        <p class="time"> <input type="radio" id="select_time" name="select_time" value="01:00 Pm" >1:00 PM</p>
+                   
+                        <p class="time"><input type="radio" id="select_time" name="select_time" value="02:00 Pm" >2:00 PM</p>
+                   
+                        <p class="time" > <input type="radio" id="select_time" name="select_time" value="03:00 Pm" > 3:00 PM</p>
+                   
+                        <p class="time"> <input type="radio" id="select_time" name="select_time" value="04:00 Pm" > 4:00 PM</p>
+
+                        <p class="time"> <input type="radio" id="select_time" name="select_time" value="04:00 Pm" > 5:00 PM</p>
+
+                        <p class="time"> <input type="radio" id="select_time" name="select_time" value="04:00 Pm" > 6:00 PM</p>
+
+                    </div>
+                </div>
+                <div class="payment-method ">
+                    <p><label for="select_payment"></label>Payment:</p>
+                    <div>
+                        <p><input type="radio" id="select_payment" name="select_payment" value="Online Payment"> Online Payment</p>
+                        <p><input type="radio" id="select_payment" name="select_payment" value="Ofline Payment"> Offline Payment</p>
+                    </div>
+                </div>
+                <div class="c-book">
+                    <input type="submit" value="Book" class="btn" >
+                    
+
+                </div>
+               
+           </form>
+        </div>
+    </div>
+        
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="/static/cssfiles/indexstyle.css">
+        
+        
+    </head>
+    
+    <body>
+        <!-- header -->
+        <header>
+
+            <div class="navbar" id="home-page">
+
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+
+                
+                <div class="contact-us border">
+                    <a href="{% url 'contact' %}">Contact Us</a>
+
+                </div>
+                <div class="about-us border">
+                    <a href="{% url 'about' %}">About Us</a>
+
+                </div>
+                <div class="for-doctor border">
+                    <a href="{% url 'fordoctor' %}">For Doctor</a>
+
+                </div>
+                {%if check == False%}
+                <div class="user">
+                    <p>
+                        <a class="border" href="{% url 'login' %}">Login</a> or <a class="border" href="{% url 'register' %}">Register</a>
+                    </p>
+                </div>
+                {%endif%}
+            </div>
+                
+
+        </header>
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+        
+        <section class="section-one">
+            <div class="herosection">
+                <div class="title-hero">
+                    <h2 class="title-one">TRUSTED DENTISTS</h2>
+                    <h1 class="title-two">
+                        Exceptional Dental Care for all age groups
+                    </h1>
+                    
+                </div>
+                <div class="img-1">
+                    
+                </div>
+            </div>
+        </section>
+        <section class="information">
+            <div class="information-one">
+                <p>
+                    Dental care or dentalcare is the maintenance of healthy teeth and may refer to:
+                    
+                </p>
+                <ul>
+                    <li>Oral hygiene, the practice of keeping the mouth and teeth clean in order to prevent dental disorders</li>
+                    <li>Dentistry, the professional care of teeth, including professional oral hygiene and dental surgery</li>
+                    <li>Oral Surgery, any of a number of medical procedures that involve artificially modifying dentition; in other words, surgery of the teeth and jaw bones</li>
+                </ul>
+                
+            </div>
+            <div class="information-two">
+                <p class="info-two-one">
+                    
+                    Oral health includes your teeth and gums, both of which require regular care to avoid cavities, infections, and other issues. Taking care of your oral health can also benefit other parts of your body, including your heart.
+                    
+                </p>
+                <p class="info-two-two">
+                    Dental and oral health is an essential part of your overall health and well-being. Poor oral hygiene can lead to dental cavities and gum disease, and has also been linked to heart disease, cancer, and diabetes.
+                </p>
+                <p class="info-two-two">
+                    
+                    Maintaining healthy teeth and gums is a lifelong commitment. The earlier you learn proper oral hygiene habits — such as brushing, flossing, and limiting your sugar intake — the easier it'll be to avoid costly dental procedures and long-term health issues.
+                </p>
+                <h1>Symptoms of dental and oral problems</h1>
+                <p class="info-two-two">You shouldn't wait until you have symptoms to visit your dentist. Going to the dentist twice a year will usually allow them to catch a problem before you even notice any symptoms.</p>
+                <p class="info-two-two">If you experience any of the following warning signs of dental health issues, you should make an appointment to see your dentist as soon as possible:</p>
+                <ul>
+                    <li>ulcers, sores, or tender areas in the mouth that won't heal after a week or two</li>
+                    <li>bleeding or swollen gums after brushing or flossing</li>
+                    <li>chronic bad breath</li>
+                    <li>sudden sensitivity to hot and cold temperatures or beverages</li>
+                    <li>pain or toothache</li>
+                    <li>loose teeth</li>
+                    <li>receding gums</li>
+                    <li>pain with chewing or biting</li>
+                    <li>swelling of the face and cheek</li>
+                    <li>clicking of the jaw</li>
+                    <li>cracked or broken teeth</li>
+                    <li>frequent dry mouth</li>
+                </ul>   
+                <p class="info-two-three">If any of these symptoms are accompanied by a high fever and facial or neck swelling, you should seek emergency medical treatment. Learn more about the warning signs of oral health issues.</p>
+            </div>
+            <div class="information-three">
+                <p>
+                    We provide you appoinment with best dentist in few minutes according to your convinent time and near place. Which help you to care your teeth.
+                </p>
+            </div>
+        </section>
+
+
+            <div class="stwo">
+                
+                    
+                <div class="m-one">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <p class="lead">"Every tooth in a man's head is more valuable than a diamond."</p>
+                    
+                    <h2 class="n-one">Miguel de Cervantes</h2>
+                    <p class="p-one">Novelist, Playwright &amp; Poet</p>
+                </div>
+            
+            
+                <div class="m-one">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <p class="lead">"A smile is a curve that sets everything straight."</p>
+                    
+                    <h2 class="n-one">Phyllis Diller</h2>
+                    <p class="p-one">American stand-up comedian, actress, author, musician, and visual artist</p>
+                </div>
+                    
+                    
+                <div class="m-one">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <p class="lead">"You're never fully dressed without a smile."</p>
+                    
+                    <h2 class="n-one">Martin Charnin</h2>
+                    <p class="p-one">American lyricist, writer, and theatre director</p>
+                </div>
+                
+            </div>
+            
+            <div class="sthree">
+                <div class="m-one">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <p class="lead">"Your smile is your logo, your personality is your business card, and how you
+                    leave others feeling after having an experience with you becomes your trademark."</p>
+                    
+                    <h2 class="n-one">Dr. Jay Shetty</h2>
+                    <p class="p-one">Dentist</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="map-h">
+            <div class="map">
+            <iframe  class="map-one" title="map" scrolling="no"
+                src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s%C4%B0mumbai!6i14!3m1!1sen!5m1!1sen" ></iframe>
+            </div>
+            
+        </section>
+        
+            
+        <!-- footer -->
+        <footer>
+            <div class="panel1 ">
+                <ul class="ul1">
+                    <p>Get to know Us</p>
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                    
+                    
+                </ul>
+                <ul class="ul1">
+                    <p>For Patients</p>
+                    <a href="{% url 'login' %}">Find Doctors</a>
+                    <a href="{% url 'login' %}">Book appointment</a>
+                </ul>
+
+                <ul>
+                    <p>Social</p>
+                    <div class="social">
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <a href="#">Twitter</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-facebook"></i>
+                        <a href="#">Facebook</a>
+                    </div>
+                    <div class="social">
+                        <i class="fa-brands fa-instagram"></i>
+                        <a href="#">Instagram</a>
+                    </div>
+                </ul>
+
+
+            </div>
+            <div class="panel2">
+                <div class="pro_title border">
+                    <i class="fa-solid fa-tooth"></i>
+                    DENTIST
+                </div>
+            </div>
+
+            <div class="panel3">
+                <p>DENTIST © 2024, All Rights Reserved </p>
+            </div>
+        </footer>
+    </body>
+</html>

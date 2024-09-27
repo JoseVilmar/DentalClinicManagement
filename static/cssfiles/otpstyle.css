@@ -1,0 +1,140 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+.otp{
+    
+    height: 800px;
+    background-color: #f4e8df;
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-top: 4rem;
+    
+}
+.otp1{
+    
+    height: 300px;
+    background-color: #f4e8df;
+    font-size: 1.4rem;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.e-otp{
+    width: 25%;
+    height: 300px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 2rem;
+}
+.e-input{
+    width: 300px;
+    height: 30px;
+    font-size: 1rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+.so{
+    width: 90px;
+    height: 30px;
+    font-size: 1rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-radius: 2rem;
+    background-color: white;
+    margin-left: 6rem;
+    text-align: center;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* pop up */
+.otp-change-user {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.change-p {
+    height: 500px;
+   
+    width: 400px;
+    padding-left: 4rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    
+
+}
+
+
+.enter-otp{
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.enter-otp input{
+    width: 300px;
+    height: 25px;
+    font-size: 1.2rem;
+    color: black;
+}
+.enter-otp p{
+    margin-bottom: 0.4rem;
+}
+
+
+
+.button{
+    width: 90px;
+    height: 30px;
+    font-size: 1.2rem;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(3, 215, 252); 
+}
+.c-book{
+    margin-top: 2rem;
+    margin-left: 8rem;
+    
+}  
+
+/* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }
+

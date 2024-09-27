@@ -1,0 +1,260 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+/* header */
+.navbar{
+    background-color: rgb(3, 215, 252);
+    height: 70px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+
+}
+/* title-logo */
+.pro_title i{
+    width: 30px;
+    
+}
+.pro_title{
+    font-size: 2rem;
+    font-weight: 900;
+    height: 35px;
+    display: flex;
+    margin-left: 5rem;
+    align-items: center;
+}
+.user-part{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.border{
+    border-bottom: 1.5px solid transparent;
+    
+}
+.border:hover{
+    border-bottom: 1.5px solid white;
+}
+
+
+
+/* contact */
+.contact-us a{
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 300;
+    height: 35px;
+    display: flex;
+    width: 120px;
+    align-items: center;
+    
+
+}
+.about-us a{
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 300;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    
+
+}
+/* user */
+
+.user-login{
+    width: 200px;
+    height:46px;
+    font-size: 1.5rem;
+    
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.user-login a{
+    text-decoration: none;
+    color: white;
+    
+
+}
+
+/* section1 */
+.section-one{
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly ;
+    align-items: center;
+    
+
+}.heading-one{
+    width: 80%;
+    height: 60px;
+    font-size: 3rem;
+    font-weight: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: darkblue;
+    margin-top: 90px;
+
+}
+.heading-two{
+    height: 60px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+
+}
+.msg-one{
+    width: 70%;
+    height: 60px;
+    
+    margin-bottom: 20px;
+  
+}
+.line-one{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* section2 */
+.section-two{
+    height: 500px;
+    background-image: url("/static/cssfiles/aboutusphoto2.png");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-end;
+}
+.heading-three{
+    height: 50px;
+    width: 30%;
+    
+    font-size: 2rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 250px;
+    margin-top:100px;
+    
+}
+.msg-two{
+    height: 100px;
+    width: 40%;
+    font-size: 1.1rem;
+    
+    margin-right: 50px;
+    margin-bottom: 110px;
+}
+/* section3 */
+.section-three{
+    height: 500px;
+    background-color: #E0DBD7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.heading-four{
+    font-size: 2.2rem;
+    font-weight: 900;
+}
+.msg-four{
+    width: 80%;
+    height: 350px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.connect{
+    width: 30%;
+    height: 300px;
+    
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+.t-one{
+    font-size: 2rem;
+    font-weight: 800;
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+.msg-four i{
+    font-size: 6rem;
+}
+/* footer */
+/* panel1 */
+.panel1{
+    height:200px;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.3rem;
+    background-color: white;
+}
+ul{
+    margin-top: 20px;
+}
+.ul1 a{
+    display: block;
+}
+ul a{
+    
+    font-size: 1rem;
+    margin-top: 10px;
+    color: rgb(3, 215, 252);
+    text-decoration: none;
+
+}
+.ul1 a:hover{
+    border-bottom: 1.5px solid rgb(3, 215, 252);
+}
+.social{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.social:hover{
+    border-bottom: 1.5px solid rgb(3, 215, 252);
+}
+/* panel2 */
+.panel2{
+    background-color: white;
+    height: 60px;
+    border-top: 2px solid rgb(3, 215, 252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+/* panel3 */
+.panel3{
+    background-color: rgb(3, 215, 252);
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+

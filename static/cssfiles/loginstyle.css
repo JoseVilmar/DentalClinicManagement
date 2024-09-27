@@ -1,0 +1,106 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+
+.heading{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+
+.login-form{
+    height: 600px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.photo{
+    background-image: url("/static/cssfiles/login.png");
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+    border-radius: 50rem;
+    box-shadow: 6px 6px 6px 6px rgb(3, 215, 252);
+    
+    margin-right: 4rem;
+}
+.form-u{
+    height: 500px;
+    width: 500px;
+    background-color: rgb(3, 215, 252,0.5);
+    font-size: 1.4rem;
+    border-radius: 10px;
+    
+    box-shadow: 6px 6px 6px black;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: self-start;
+    padding-left: 3rem;
+    margin-left: 4rem;
+    
+}
+.email{
+    margin-top: 2rem;
+}
+.et{
+    height: 40px;
+    width: 70%;
+    font-size: 1rem;
+}
+.fp{
+    font-size: 1rem;
+    margin-top: 0.6rem;
+    
+}
+.fp a{
+    text-decoration: none;
+    color: black;
+}
+.btn{
+    font-size: 1.2rem;
+    width: 100px;
+    height: 40px;
+    border-radius: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    margin-left: 7rem;
+    background-color: white;
+}
+.sp{
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 6rem;
+}
+.sp a{
+    text-decoration: none;
+    color: black;
+}
+/* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }

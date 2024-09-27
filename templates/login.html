@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Patient Login Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="/static/cssfiles/loginstyle.css">
+    </head>
+    
+ <body>
+    <div class="main">
+        <div class="heading">
+            <h2>Patient Login</h2>
+        </div>
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+        <div class="login-form">
+            <div class="photo"></div>
+            <form action="{% url 'login'%}" class="form-u" method="post">
+            {% csrf_token %}
+                <label for="email" class="email">
+                    Email Id:
+                </label>
+                <input type="email" name="email" id="email" class="et" placeholder="Enter your email">
+                <label for="password" class="email">
+                    Password:
+                </label>
+                <input type="password"  name="password" id="password" class="et" placeholder="Enter your password">
+                <label for="" class="fp">
+                    <a href="{% url 'otp'%}">Forgot Password?</a>
+                </label>
+                <label for="cyah"></label>
+                <p class="fp"><input type="checkbox" id="cyah" name="cyah" value="human" > Confirm you are human.</p>
+                <input type="submit" value="Login" class="btn" >
+    
+                <label for="" class="sp">
+                    New User? <a href="{% url 'register'%}">Sign Up</a>
+                </label>
+                
+            </form>
+        </div>
+    </div>        
+        
+
+        
+        
+  </body>
+</html>

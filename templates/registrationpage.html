@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Patient Registation</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="/static/cssfiles/registrationstyle.css">
+        
+    </head>
+    
+    <body>
+        
+        <!-- user registraiont -->
+        
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>{{ message}}</strong> 
+        </div>
+        
+        {% endfor%}
+        {%endif%}
+        <div class="registration-page">
+            
+            <form method="post" action="{% url 'register' %}" class="detail-form">
+            {% csrf_token %}
+                <div class="detail-title">
+                    <h1>Patient Registation</h1>
+                </div>
+                <div class="details">
+                    <div class="name">
+                        <label for="uname"><p>Name:</p></label>
+                        <input type="text" id="uname" name="uname" placeholder="Enter name" class="input-one">
+                    </div>
+                    <div class="row1">
+                        <div class="name">
+                            <label for="udob"><p>Date of Birth:</p></label>
+                            
+                            <input type="date" value="dd/mm/yyyy" id="udob" name="udob" class="input-one">
+                        </div>
+                        <div class="name">
+                            
+                            <label for="ugender"><p>Gender:</p></label>
+                            <div class="gender">
+                                <p><input type="radio" id="ugender" name="ugender" value="Male" > Male</p>
+                                <p><input type="radio" id="ugender" name="ugender" value="Female" > Female</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div class="name">
+                            <label for="ucontact"><p>Contact:</p></label>
+                            
+                            <input type="number" id="ucontact" name="ucontact" placeholder="Enter contact number" class="input-one">
+                        </div>
+                        <div class="name">
+                            <label for="uemail"><p>Email:</p></label>
+                            
+                            <input type="email" id="uemail" name="uemail" placeholder="Enter email-id" class="input-one">
+            
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div class="name">
+                            <label for="uaddress"><p>Address:</p></label>
+                            
+                            <textarea id="uaddress"  name="uaddress" placeholder="Enter address" class="input-two"></textarea>
+                        </div>
+                        <div class="name">
+                            <label for="upincode">
+                                <p>Pincode:</p>
+                                
+                            </label>
+                            <input type="text" id="upincode"  name="upincode" placeholder="Enter pincode" class="input-one">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div class="name">
+                            <label for="newpassword"><p>Enter password:</p></label>
+                            
+                            <input type="password" id="newpassword"  name="newpassword" placeholder="Enter password" class="input-one">
+                        </div>
+                        <div class="name">
+                            <label for="confirmpassword">
+                                <p>Confirm password:</p>
+                                
+                            </label>
+                            <input type="password" id="confirmpassword"  name="confirmpassword" placeholder="Confirm password" class="input-one">
+                        </div>
+                    </div>
+                    <div class="button">
+                    
+                        <input type="submit" value="Register" class="btn">
+                        
+                    </div>
+                    <label for="" class="sp">
+                        Already have an account? <a href="{% url 'login' %}"> Login</a>
+                    </label>
+                </div>
+                
+            </form>
+        </div>
+        
+        
+    </body>
+</html>

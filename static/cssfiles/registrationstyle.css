@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+
+
+.registration-page{
+    height: 1000px;
+    
+    background-image: url("/static/cssfiles/registrationphoto.png");
+    background-size: cover;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    
+}
+
+.detail-title{
+    text-align: center;
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+}
+.detail-form p{
+    font-size: 1.4rem;
+
+}
+.details{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(3, 215, 252,0.4);
+    padding-left: 4rem;
+    padding-right: 4rem;
+    box-shadow: 3px rgb(3, 215, 252);
+}
+.row1{
+    display: flex;
+    justify-content: space-between;
+}
+.input-one{
+    width: 300px;
+    height: 25px;
+    font-size: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+.name{
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+}
+.input-two{
+    width: 300px;
+    height: 150px;
+    font-size: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    text-align: start;
+
+}
+.detail-form button{
+    width: 80px;
+    height: 30px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    
+    background-color: rgb(244, 239, 239); 
+}
+.button{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.btn{
+    font-size: 1.2rem;
+    width: 100px;
+    height: 40px;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    
+    background-color: white;
+    
+}
+.sp{
+    
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    
+    display: flex;
+    justify-content: center;
+}
+.sp a{
+    text-decoration: none;
+    color: black;
+}
+.gender{
+    display: flex;
+    width: 300px;
+    justify-content: flex-start;
+    
+}
+.gender p{
+    padding-right: 1rem;
+    
+}
+.gender input{
+    width: 20px;
+    height: 20px;
+    padding-top: 1rem;
+    
+}
+/* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }

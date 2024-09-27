@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html >
+  <head>
+
+    <title>Doctor Schedule</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/cssfiles/doctorschedulestyle.css">
+    <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+  </head>
+  <body>
+    <!-- header -->
+    <header>
+
+      <div class="navbar" >
+
+          <div class="pro_title border">
+              <i class="fa-solid fa-tooth"></i>
+              DENTIST
+          </div>
+
+          
+          <div class="user-part">
+              <div class="contact-us border">
+                  <a href="{% url 'contact'%}">Contact Us</a>
+
+              </div>
+              <div class="about-us border">
+                  <a href="{% url 'about'%}">About Us</a>
+
+              </div>
+              
+              <div class="about-us border">
+                <a href="{%url 'doctorappoitmenthistory' email %}">History</a>
+
+              </div>
+              <div class="about-us border">
+                <a href="{%url 'userlogout'%}">Log Out</a>
+
+              </div>
+
+              
+              
+          </div>
+      </div>
+          
+
+  </header>
+  {% if messages %}
+  {%for message in messages%}
+  <div class="alert" >
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>{{ message}}</strong> 
+  </div>
+  
+  {% endfor%}
+  {%endif%}
+
+    <div class="container">
+      <div class="header">
+        <h1>Schedule</h1>
+      </div>
+      
+      <div>
+        {%if noappointment == True%}
+        <table class="schedule">
+          
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Patient Name</th>
+              <th>Prescription</th>
+              <th>Cancel appointment</th>
+            </tr>
+          </thead>
+          {%for n in userdetail%}
+          <tbody>
+            <tr>
+              <td>{{n.apptime}}</td>
+              <td>{{n.username}}</td>
+              <td>
+                
+                <form method="post" action="{% url 'doctors' email %}">
+                {% csrf_token %}
+                      <input type="hidden" name="form_type" value="prescription">
+                      <input type="hidden" name="useremail" value="{{n.useremail}}">
+                      <input type="hidden" name="date" value="{{n.appdate}}">
+                      <input type="hidden" name="time" value="{{n.apptime}}">
+              
+                      <p>
+                          <input type="submit" class="prescription-button" value="Prescription">
+                      </p>
+                      
+                </form>
+              </td>
+              <td class="cbtn">
+               
+               <form method="post" action="{% url 'doctors' email %}">
+                {% csrf_token %}
+                    <input type="hidden" name="form_type" value="email_user">
+                    <input type="hidden" name="date" value="{{n.appdate}}">
+                    <input type="hidden" name="time" value="{{n.apptime}}">
+                    
+                    <input type="hidden" name="useremail" value="{{n.useremail}}">
+                    <input type="hidden" name="doctorname" value="{{n.doctorname}}">
+                    <p>
+                      <input type="submit" class="present-button" value="Cancel">
+                    </p>
+                    
+               </form>
+              </td>
+            </tr>
+            
+          </tbody>
+          {%endfor%}
+        </table>
+        
+        {% elif noappointment == False  %}
+        <div class="head1">
+          <h1>No Appointments today!</h1>
+        </div>
+        {%endif%}
+
+      </div>
+    </div>
+    <!-- footer -->
+    <footer>
+      <div class="panel1 ">
+          <ul class="ul1">
+              <p>Get to know Us</p>
+              
+              <a href="{% url 'doctors' email %}">Home</a>
+             
+              <a href="{% url 'about' %}">About Us</a>
+              <a href="{% url 'contact' %}">Contact Us</a>
+              
+              
+          </ul>
+          
+
+          <ul>
+              <p>Social</p>
+              <div class="social">
+                  <i class="fa-brands fa-x-twitter"></i>
+                  <a href="#">Twitter</a>
+              </div>
+              <div class="social">
+                  <i class="fa-brands fa-facebook"></i>
+                  <a href="#">Facebook</a>
+              </div>
+              <div class="social">
+                  <i class="fa-brands fa-instagram"></i>
+                  <a href="#">Instagram</a>
+              </div>
+          </ul>
+
+
+      </div>
+      <div class="panel2">
+          <div class="pro_title border">
+              <i class="fa-solid fa-tooth"></i>
+              DENTIST
+          </div>
+      </div>
+
+      <div class="panel3">
+          <p>DENTIST © 2024, All Rights Reserved </p>
+      </div>
+   </footer>
+  </body>
+</html>

@@ -1,0 +1,323 @@
+*{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+}
+/* header */
+.navbar{
+    background-color: rgb(3, 215, 252);
+    height: 70px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+
+}
+/* title-logo */
+.pro_title i{
+    width: 30px;
+    
+}
+.pro_title{
+    font-size: 2rem;
+    font-weight: 900;
+    height: 35px;
+    display: flex;
+    align-items: center;
+}
+.border{
+    border-bottom: 1.5px solid transparent;
+    
+}
+.border:hover{
+    border-bottom: 1.5px solid white;
+}
+
+/* navsearch */
+.nav-search{
+    width: 600px;
+    height:45px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.nav-search:hover{
+    border: 1.5px solid darkblue;
+    border-radius: 5px;
+}
+.search-input{
+    width: 100%;
+    font-size: 1.2rem;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.search-icon{
+    width: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkblue;
+    color: rgb(3, 215, 252);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+/* .search-icon button{
+    width: 50px;
+    height: 45px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkblue;
+    color: rgb(3, 215, 252);
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+} */
+/* contact */
+.contact-us a{
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 300;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    
+
+}
+.about-us a{
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 300;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    
+
+}
+/* user */
+.user{
+    width: 46px;
+    height:46px;
+    font-size: 1.5rem;
+    background-color: white;
+    color: rgb(3, 215, 252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+}
+.user:hover{
+    border: 1.5px solid darkblue;
+    border-radius: 100px;
+
+}
+/* toggle bar */
+#sidebarMenu {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 250px;
+    margin-top: 70px;
+    transform: translateX(250px);
+    transition: transform 250ms ease-in-out;
+    background: darkblue;
+}
+.menu{
+    list-style: none; 
+      margin:0;
+      padding:0;
+  }
+  .menu li{
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  .menu li a{
+      color: #fff;
+      display: block;
+      padding: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-decoration: none;
+  }
+  .menu li a:hover{
+    background-color: rgb(3, 215, 252,0.5);
+  }
+  #openSidebarMenu:checked ~ #sidebarMenu {
+      transform: translateX(0px);
+  }
+  
+  input#openSidebarMenu{
+      display: none;
+  }
+  .sidebarIconToggle{
+      
+      width: 46px;
+      height:46px;
+      position: absolute;
+      z-index: 99; 
+      top: 12px;
+      right: 73px;
+      transition: all 0.3s;
+      cursor: pointer; 
+      border-radius: 100px;
+  }
+  
+/* hero section */
+.hero-section{
+    background-image: url("/static/cssfiles/herosectionimage.jpeg");
+    background-size: cover;
+    height: 450px;
+    display: flex;
+    align-items: flex-end;
+}
+.hero-msgone{
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-left: 100px;
+    margin-bottom: 180px;
+}
+.mone{
+    color: rgb(3, 215, 252);
+    
+}
+.hero-msgtwo{
+    background-color: rgb(255, 255, 255,0.5);
+    color: black;
+    font-size: 1rem;
+    width: 50%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+/* appointment section */
+.appointment-section{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #E0DBD7;
+
+    height: 450px;
+}
+.box{
+    width: 35%;
+    height: 350px;
+    
+    background-color: rgb(3, 215, 252);
+    color: white;
+    border-radius: 10px;
+    padding: 20px 0px 15px;
+    margin-top: 15px;
+}
+.box-content{
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+.msgthree{
+    margin-top: 2rem;
+    margin-bottom: 1.85rem;
+    font-size: 1rem;
+}
+.a1:link, a1:visited{
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: rgb(3, 215, 252);
+}
+.make-appointment{
+    display: flex;
+    width: 250px;
+    height:40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+ 
+}
+.make-appointment:hover{
+    border: 1.5px solid darkblue ;
+}
+.emer{
+    color: red;
+}
+.emer1{
+    color: black;
+}
+/* footer */
+/* panel1 */
+.panel1{
+    height:200px;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.3rem;
+    background-color: white;
+}
+ul{
+    margin-top: 20px;
+}
+.ul1 a{
+    display: block;
+}
+ul a{
+    
+    font-size: 1rem;
+    margin-top: 10px;
+    color: rgb(3, 215, 252);
+    text-decoration: none;
+
+}
+.ul1 a:hover{
+    border-bottom: 1.5px solid rgb(3, 215, 252);
+}
+.social{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.social:hover{
+    border-bottom: 1.5px solid rgb(3, 215, 252);
+}
+/* panel2 */
+.panel2{
+    background-color: white;
+    height: 60px;
+    border-top: 2px solid rgb(3, 215, 252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+/* panel3 */
+.panel3{
+    background-color: rgb(3, 215, 252);
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+/* alert */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }
