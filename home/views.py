@@ -22,6 +22,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
 FILL_ALL_DETAILS_MSG = "Fill all details!"
+EMAIL_DOES_NOT_EXIST_MSG = "Email does not exist!"
+FILL_ALL_DETAILS_MSG = "Fill all the details!"
+DENTIST_EMAIL = "dentist.2407best@gmail.com"
 
 check_login=False
 check_doclogin=False
@@ -116,7 +119,7 @@ def fordoctor(request):
                     messages.warning(request,"Incorrect password!")
                     return redirect("fordoctor")
             else:
-                messages.warning(request,"Email does not exist!")
+                messages.warning(request,EMAIL_DOES_NOT_EXIST_MSG)
                 return redirect("fordoctor")
 
     return render(request,"doctorpage.html",{'check':check_login})
@@ -136,7 +139,7 @@ def login(request):
         password=request.POST.get('password')
         cyah=request.POST.get('cyah')
         if email == "" or password == "" or cyah == None:
-                messages.warning(request,"Fill all the details !")
+                messages.warning(request,FILL_ALL_DETAILS_MSG)
                 return redirect('login')
         if UserDetail.objects.filter(email=email).exists():
             user=UserDetail.objects.get(email=email)
@@ -154,7 +157,7 @@ def login(request):
                 messages.warning(request,"Incorrect password!")
                 return redirect("login")
         else:
-            messages.warning(request,"Email does not exist!")
+            messages.warning(request,EMAIL_DOES_NOT_EXIST_MSG)
             return redirect("login")
 
 
@@ -169,7 +172,7 @@ def registeremail(name, email):
     send_mail(
     "Welcome to DENTIST World",
     f"Hi {name},\n\nThank you for registering with DENTIST. We look forward to helping you achieve a beautiful, healthy smile.\n\nBest regards,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [email],
     fail_silently=False,
     )
@@ -192,7 +195,7 @@ def register(request):
         password = request.POST.get('newpassword')
         cpassword =request.POST.get('confirmpassword')
         if name == "" or email == "" or contact == "" or dateofbirth == None or gender == None or address == "" or pincode == "" or password == ""or cpassword == "":
-                messages.warning(request,"Fill all the details !")
+                messages.warning(request,FILL_ALL_DETAILS_MSG)
                 return redirect('register')
         
         if password==cpassword:
@@ -213,7 +216,7 @@ def register(request):
                 # send_mail(
                 # "Welcome to DENTIST World",
                 # f"Hi {name},\n\nThank you for registering with DENTIST. We look forward to helping you achieve a beautiful, healthy smile.\n\nBest regards,\nThe DENTIST Team",
-                # "dentist.2407best@gmail.com",
+                # DENTIST_EMAIL,
                 # [email],
                 # fail_silently=False,
                 # )
@@ -236,62 +239,90 @@ def register(request):
 # -------------------------------------------changepassword----------------------------------------------
 
 def otp(request):
-    if check_login==True:
-        return redirect('userhp',useremail)
+    if check_login == True:
+        return redirect('userhp', useremail)
+    
     global uotp
     global ue
-    if request.method == 'POST':
-       
-        if request.POST.get("form_type") == "useremail":
-            uemail=request.POST.get('emailid')
-            if UserDetail.objects.filter(email=uemail).exists():
-                udetail=UserDetail.objects.get(email=uemail)
-                name=udetail.name
-                otp=random.randint(10000,99999)
-                
-                uotp=str(otp)
-                
-                ue=uemail
-                send_mail(
-                "Verification for Changing Password",
-                f"Hi {name},\n\nYour One-Time Password (OTP) for resetting your password is {uotp}. Please do not share this OTP with anyone for security reasons.\n\nThank you,\nThe DENTIST Team",
-                "dentist.2407best@gmail.com",
-                [uemail],
-                fail_silently=False,
-                )
-
-                messages.warning(request,"OTP sent to your Email ID successfully")
-            else:
-                messages.warning(request,"Email does not exist!")
-                return redirect("otp")
-        elif request.POST.get("form_type") == "changepassword":
-            eotp=request.POST.get('enterotp')
-            password = request.POST.get('newpassword')
-            cpassword =request.POST.get('cnewpassword')
-            if eotp == "" or password == "" or cpassword == "":
-                    messages.warning(request,"Fill all the details !")
-                    return redirect('otp')
-            
-            if eotp == uotp:
-                if password==cpassword:
-                    udetail=UserDetail.objects.get(email=ue)
-                    udetail.password=password
-                    udetail.save()
-                    
-                    uotp=""
-                    messages.success(request,"Password changed successfully")
-                    return redirect("login")
-                else:
-                    messages.warning(request,"Password does not match!")
-                    return redirect("otp")
-            else:
-                messages.warning(request,"Enter correct OTP!")
-                return redirect("otp")
-
-
     
-    return render(request,"otp.html")
+    if request.method != 'POST':
+        return render(request, 'otp.html')  # Assuming you have an OTP template
+    
+    form_type = request.POST.get("form_type")
+    
+    if form_type == "useremail":
+        return handle_email_form(request)
+    elif form_type == "changepassword":
+        return handle_password_change_form(request)
+    
+    return redirect("otp")
 
+
+def handle_email_form(request):
+    global uotp, ue
+    
+    uemail = request.POST.get('emailid')
+    
+    if not UserDetail.objects.filter(email=uemail).exists():
+        messages.warning(request, "Email does not exist!")
+        return redirect("otp")
+    
+    udetail = UserDetail.objects.get(email=uemail)
+    name = udetail.name
+    otp = random.randint(10000, 99999)
+    
+    uotp = str(otp)
+    ue = uemail
+    
+    send_otp_email(name, uemail, uotp)
+    messages.warning(request, "OTP sent to your Email ID successfully")
+    
+    return render(request, 'otp.html')  # Return to OTP page
+
+
+def handle_password_change_form(request):
+    global uotp, ue
+    
+    eotp = request.POST.get('enterotp')
+    password = request.POST.get('newpassword')
+    cpassword = request.POST.get('cnewpassword')
+    
+    if not validate_password_form_data(request, eotp, password, cpassword):
+        return redirect('otp')
+    
+    if eotp != uotp:
+        messages.warning(request, "Enter correct OTP!")
+        return redirect("otp")
+    
+    if password != cpassword:
+        messages.warning(request, "Password does not match!")
+        return redirect("otp")
+    
+    # Update password
+    udetail = UserDetail.objects.get(email=ue)
+    udetail.password = password
+    udetail.save()
+    
+    uotp = ""  # Clear OTP after successful password change
+    messages.success(request, "Password changed successfully")
+    return redirect("login")
+
+
+def validate_password_form_data(request, eotp, password, cpassword):
+    if eotp == "" or password == "" or cpassword == "":
+        messages.warning(request, "Fill all the details !")
+        return False
+    return True
+
+
+def send_otp_email(name, email, otp):
+    send_mail(
+        "Verification for Changing Password",
+        f"Hi {name},\n\nYour One-Time Password (OTP) for resetting your password is {otp}. Please do not share this OTP with anyone for security reasons.\n\nThank you,\nThe DENTIST Team",
+        "dentist.2407best@gmail.com",
+        [email],
+        fail_silently=False,
+    )
 
 
 #-------------------------------------------userhp-------------------------------------------
@@ -357,7 +388,7 @@ def bookappmail(user_name,doctorname,apdate,aptime,clinicname,city,consultationf
     send_mail(
     "Appointment Confirmation",
     f"Hi {user_name},\n\nYour appointment with {doctorname} has been confirmed for {apdate} at {aptime}. The appointment will take place at {clinicname}, {city}. The consultation fee is ₹{consultationfee}. Please make sure to arrive on time.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [user_email],
     fail_silently=False,
     )
@@ -401,7 +432,7 @@ def bookuserappointment(request,demailid):
                 # send_mail(
                 # "Appointment Confirmation",
                 # f"Hi {user_name},\n\nYour appointment with {doctorname} has been confirmed for {apdate} at {aptime}. The appointment will take place at {clinicname}, {city}. The consultation fee is ₹{consultationfee}. Please make sure to arrive on time.\n\nThank you,\nThe DENTIST Team",
-                # "dentist.2407best@gmail.com",
+                # DENTIST_EMAIL,
                 # [user_email],
                 # fail_silently=False,
                 # )
@@ -475,7 +506,7 @@ def bookemergappmail(cuser_name,doctorname,todaysdate,aptime1,t,clinicname,city,
     send_mail(
     "Appointment Delayed!",
     f"Hi {cuser_name},\n\nWe regret to inform you that your appointment with {doctorname} on {todaysdate} at {aptime1} has been rescheduled due to an emergency. The new appointment time is {t}. The appointment will take place at {clinicname}, {city}. The consultation fee remains ₹{consultationfee}. We apologize for the inconvenience and appreciate your understanding.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [cuser_email],
     fail_silently=False,
     )
@@ -546,7 +577,7 @@ def bookemergencyappointment(request,demailid):
                     # send_mail(
                     # "Appointment Delayed!",
                     # f"Hi {cuser_name},\n\nWe regret to inform you that your appointment with {doctorname} on {todaysdate} at {aptime1} has been rescheduled due to an emergency. The new appointment time is {t}. The appointment will take place at {clinicname}, {city}. The consultation fee remains ₹{consultationfee}. We apologize for the inconvenience and appreciate your understanding.\n\nThank you,\nThe DENTIST Team",
-                    # "dentist.2407best@gmail.com",
+                    # DENTIST_EMAIL,
                     # [cuser_email],
                     # fail_silently=False,
                     # )
@@ -560,7 +591,7 @@ def bookemergencyappointment(request,demailid):
                 # send_mail(
                 # "Appointment Confirmation",
                 # f"Hi {user_name}, Your appointment is confirmed with Dentist {doctorname} on {todaysdate} at {aptime1}. Address: {clinicname}, {city} and the consultation fees is ₹{consultfee}. Please be on time. Thank you.",
-                # "dentist.2407best@gmail.com",
+                # DENTIST_EMAIL,
                 # [user_email],
                 # fail_silently=False,
                 # )
@@ -592,7 +623,7 @@ def cancelappmail(user_name,doctorname,date,atime,uemailid):
     send_mail(
     "Appointment Cancelled",
     f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been successfully cancelled.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [uemailid],
     fail_silently=False,
     )
@@ -630,7 +661,7 @@ def appointmentlist(request,uemailid):
         # send_mail(
         # "Appointment Cancelled",
         # f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been successfully cancelled.\n\nThank you,\nThe DENTIST Team",
-        # "dentist.2407best@gmail.com",
+        # DENTIST_EMAIL,
         # [uemailid],
         # fail_silently=False,
         # )
@@ -680,7 +711,7 @@ def doctorcancelapp(user_name,doctorname,date,atime,user_email):
     send_mail(
     "Appointment Cancelled",
     f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been cancelled due to your absence at the scheduled time.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [user_email],
     fail_silently=False,
     )
@@ -716,7 +747,7 @@ def doctorschedule(request,demail):
             # send_mail(
             # "Appointment Cancelled",
             # f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been cancelled due to your absence at the scheduled time.\n\nThank you,\nThe DENTIST Team",
-            # "dentist.2407best@gmail.com",
+            # DENTIST_EMAIL,
             # [useremail],
             # fail_silently=False,
             # )
@@ -917,7 +948,7 @@ def send_pdf_email(doctoremail,useremail,patient_name):
 
     subject = "Invoice and Prescription"
     body = f"Dear {patient_name},\n\nPlease find attached the prescription and invoice for your recent appointment. Thank you for choosing our services.\n\nBest regards,\nThe DENTIST Team"
-    from_email = "dentist.2407best@gmail.com"
+    from_email = DENTIST_EMAIL
     to_email = [useremail]
     email = EmailMessage(subject, body, from_email, to_email)
 
