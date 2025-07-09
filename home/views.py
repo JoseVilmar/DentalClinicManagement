@@ -79,50 +79,87 @@ def about(request):
 
 # ------------------------------------doctor page----------------------------------------
 def fordoctor(request):
-    if check_login==True:
-        return redirect('userhp',useremail)
-   
-    if request.method == 'POST':
-        if request.POST.get("form_type") == "contactOne":
-            name = request.POST.get('doctorname')
-            email = request.POST.get('doctoremail')
-            contact = request.POST.get('doctorcontact')
-            message = request.POST.get('doctormessage')
-            
-            if name == "" or email == "" or contact == "" or message == "":
-                messages.warning(request, FILL_ALL_DETAILS_MSG)
-                return redirect('fordoctor')
-            user_contact = DoctorsMessage(name=name, email=email, contact=contact, message=message,date=datetime.today())
-            user_contact.save()
-            messages.success(request,"Message sent successfully")
-            
-            return redirect("fordoctor")
-        elif request.POST.get("form_type") == "loginOne":
-            demail=request.POST.get('docemail')
-            dpassword=request.POST.get('docpassword')
-            if demail == "" or dpassword == "":
-                messages.warning(request,FILL_ALL_DETAILS_MSG)
-                return redirect('fordoctor')
-            if DoctorDetail.objects.filter(email=demail).exists():
-                docotor=DoctorDetail.objects.get(email=demail)
-                dp=docotor.password
+    if check_login == True:
+        return redirect('userhp', useremail)
+    
+    if request.method != 'POST':
+        return render(request, "doctorpage.html", {'check': check_login})
+    
+    form_type = request.POST.get("form_type")
+    
+    if form_type == "contactOne":
+        return handle_doctor_contact_form(request)
+    elif form_type == "loginOne":
+        return handle_doctor_login_form(request)
+    
+    return render(request, "doctorpage.html", {'check': check_login})
 
-                if dp==dpassword:
-                    global check_doclogin
-                    check_doclogin=True
 
-                    global doctoremail
-                    doctoremail=demail
-                    messages.success(request,"Login successfully")
-                    return redirect("doctors",demail)
-                else:
-                    messages.warning(request,"Incorrect password!")
-                    return redirect("fordoctor")
-            else:
-                messages.warning(request,EMAIL_DOES_NOT_EXIST_MSG)
-                return redirect("fordoctor")
+def handle_doctor_contact_form(request):
+    name = request.POST.get('doctorname')
+    email = request.POST.get('doctoremail')
+    contact = request.POST.get('doctorcontact')
+    message = request.POST.get('doctormessage')
+    
+    if not validate_contact_form_data(request, name, email, contact, message):
+        return redirect('fordoctor')
+    
+    save_doctor_message(name, email, contact, message)
+    messages.success(request, "Message sent successfully")
+    return redirect("fordoctor")
 
-    return render(request,"doctorpage.html",{'check':check_login})
+
+def handle_doctor_login_form(request):
+    demail = request.POST.get('docemail')
+    dpassword = request.POST.get('docpassword')
+    
+    if not validate_login_form_data(request, demail, dpassword):
+        return redirect('fordoctor')
+    
+    if not DoctorDetail.objects.filter(email=demail).exists():
+        messages.warning(request, EMAIL_DOES_NOT_EXIST_MSG)
+        return redirect("fordoctor")
+    
+    doctor = DoctorDetail.objects.get(email=demail)
+    
+    if doctor.password != dpassword:
+        messages.warning(request, "Incorrect password!")
+        return redirect("fordoctor")
+    
+    set_doctor_login_session(demail)
+    messages.success(request, "Login successfully")
+    return redirect("doctors", demail)
+
+
+def validate_contact_form_data(request, name, email, contact, message):
+    if name == "" or email == "" or contact == "" or message == "":
+        messages.warning(request, FILL_ALL_DETAILS_MSG)
+        return False
+    return True
+
+
+def validate_login_form_data(request, email, password):
+    if email == "" or password == "":
+        messages.warning(request, FILL_ALL_DETAILS_MSG)
+        return False
+    return True
+
+
+def save_doctor_message(name, email, contact, message):
+    user_contact = DoctorsMessage(
+        name=name, 
+        email=email, 
+        contact=contact, 
+        message=message,
+        date=datetime.today()
+    )
+    user_contact.save()
+    
+    
+def set_doctor_login_session(email):
+    global check_doclogin, doctoremail
+    check_doclogin = True
+    doctoremail = email
 
 
 
