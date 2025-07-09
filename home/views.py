@@ -1,5 +1,3 @@
-
-
 from io import BytesIO
 from django.shortcuts import render, redirect
 import pytz
@@ -25,6 +23,7 @@ FILL_ALL_DETAILS_MSG = "Fill all details!"
 EMAIL_DOES_NOT_EXIST_MSG = "Email does not exist!"
 FILL_ALL_DETAILS_MSG = "Fill all the details!"
 DENTIST_EMAIL = "dentist.2407best@gmail.com"
+INDIA_TIMEZONE = "Asia/Kolkata"
 
 check_login=False
 check_doclogin=False
@@ -483,7 +482,7 @@ def validate_appointment_fields(request, appointment_data):
     
 
 def is_valid_appointment_date(request, appointment_data):
-    current_date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    current_date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     
     if appointment_data['apdate'] <= current_date:
         messages.success(request, "Select valid date!")
@@ -613,7 +612,7 @@ def bookemergencyappointment(request,demailid):
     
     
     
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
   
     
     
@@ -728,7 +727,7 @@ def appointmentlist(request,uemailid):
         return redirect('home')
     
     cdate=str(datetime.today())
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
 
     todaysdate=date[0:10]
     currenttime=date[11:16]
@@ -816,7 +815,7 @@ def doctorschedule(request,demail):
         return redirect('home')
     
     
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     todaysdate=date[0:10]
     
     userdetail=bookappointment.objects.filter(doctoremail=demail,appdate=todaysdate).order_by('apptime')
@@ -1059,7 +1058,7 @@ def prescription(request,uemail):
         return redirect('home')
     userdetail=UserDetail.objects.get(email=uemail)
 
-    tdate = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    tdate = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     todaysdate=tdate[0:10]
     
     todate=tdate[0:4]
@@ -1136,7 +1135,7 @@ def doctorappoitmenthistory(request,demailid):
         return redirect('home')
     
 
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     todaysdate=date[0:10]
     userdetail=appointmenthistory.objects.filter(doctoremail=demailid, appdate=todaysdate)
     noappointment=True
