@@ -1004,14 +1004,15 @@ def prescription_pdf(doctoremail,useremail):
 
     
     
-    text_object = p.beginText(text_x := box_x + 10, text_y := box_y + box_height - 15)  
+    text_object = p.beginText()
+    text_object.setTextOrigin(box_x + 10, box_y + box_height - 15)
     text_object.setFont("Helvetica", 10)
-    p.setFont("Helvetica", 10)
+    
     for line in paragraph_text.split('. '):
-        text_object.textLine(line.strip() + ".")  
-        if text_object.getY() < box_y:  
+        text_object.textLine(line.strip() + ".")
+        if text_object.getY() < box_y:
             break
-
+        
     p.drawText(text_object)
 
     
