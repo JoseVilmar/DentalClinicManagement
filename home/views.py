@@ -19,14 +19,11 @@ import time
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
-FILL_ALL_DETAILS_MSG = "Fill all details!"
-<<<<<<< HEAD
+
 EMAIL_DOES_NOT_EXIST_MSG = "Email does not exist!"
 FILL_ALL_DETAILS_MSG = "Fill all the details!"
 DENTIST_EMAIL = "dentist.2407best@gmail.com"
 INDIA_TIMEZONE = "Asia/Kolkata"
-=======
->>>>>>> caceb14 (Refatora código para remover duplicação de string, conforme SonarCloud)
 
 check_login=False
 check_doclogin=False
@@ -440,6 +437,7 @@ def bookuserappointment(request, demailid):
         return render(request, "bookappointment.html", {'demail': demailid})
     
     return process_appointment_booking(request, demailid)
+
 
 
 def process_appointment_booking(request, demailid):
