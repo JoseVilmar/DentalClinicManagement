@@ -430,65 +430,123 @@ def bookappmail(user_name,doctorname,apdate,aptime,clinicname,city,consultationf
     fail_silently=False,
     )
 
-def bookuserappointment(request,demailid):
-    if check_login==False:
+def bookuserappointment(request, demailid):
+    if check_login == False:
         return redirect('home')
     
-    if request.method == 'POST':
-        
-        
-        doctordetail=DoctorDetail.objects.get(email=demailid)
-        userdetail=UserDetail.objects.get(email=useremail)
-        
-        user_name=userdetail.name
-        user_email=userdetail.email
-        doctorname=doctordetail.name
-        doctoremail=doctordetail.email
-        clinicname=doctordetail.clinicname
-        city=doctordetail.city
-        consultationfee=doctordetail.consultationfee
-        apdate = request.POST.get('ad')
-        aptime = request.POST.get('select_time')
-        payment = request.POST.get('select_payment')
-        
-        date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
-        
-        
-        if apdate!=None and aptime!=None and payment!=None:
-            if apdate > date :
-                if bookappointment.objects.filter(doctoremail=demailid,appdate=apdate,apptime=aptime).exists():
-                    messages.warning(request,"Please change date or time. Doctor is not available")
-                    return redirect('bookappointment',doctoremail)
-                
-                if bookappointment.objects.filter(appdate=apdate,useremail=user_email).exists():
-                    messages.warning(request,"Please change date. You had already booked an appointment on the selected date.")
-                    return redirect('bookappointment',doctoremail)
-                 
-                user_appoint = bookappointment(username=user_name, useremail=user_email, doctorname=doctorname, doctoremail=doctoremail,clinicname=clinicname,city=city, appdate=apdate, apptime=aptime, consultationfee=consultationfee, payment=payment)
-                user_appoint.save()
-                # send_mail(
-                # "Appointment Confirmation",
-                # f"Hi {user_name},\n\nYour appointment with {doctorname} has been confirmed for {apdate} at {aptime}. The appointment will take place at {clinicname}, {city}. The consultation fee is ₹{consultationfee}. Please make sure to arrive on time.\n\nThank you,\nThe DENTIST Team",
-                # DENTIST_EMAIL,
-                # [user_email],
-                # fail_silently=False,
-                # )
+    if request.method != 'POST':
+        return render(request, "bookappointment.html", {'demail': demailid})
+    
+    return process_appointment_booking(request, demailid)
 
-                
-                thread = threading.Thread(target=bookappmail, args=(user_name,doctorname,apdate,aptime,clinicname,city,consultationfee,user_email))
-                thread.start()
-                messages.success(request,"Appointment booked successfully!")
-                
-                return redirect('appointment',useremail)
-            else:
-                messages.success(request,"Select valid date!")
-                
-                return redirect('bookappointment',doctoremail)
-        else:
-            messages.success(request,"Select all the fields!")
-            
-            return redirect('bookappointment',doctoremail)
-    return render(request,"bookappointment.html",{'demail':demailid})
+
+def process_appointment_booking(request, demailid):
+    appointment_data = get_appointment_data(request, demailid)
+    
+    if not validate_appointment_fields(request, appointment_data):
+        return redirect('bookappointment', appointment_data['doctoremail'])
+    
+    if not is_valid_appointment_date(request, appointment_data):
+        return redirect('bookappointment', appointment_data['doctoremail'])
+    
+    if has_conflicting_appointments(request, appointment_data):
+        return redirect('bookappointment', appointment_data['doctoremail'])
+    
+    return create_appointment(request, appointment_data)
+
+
+def get_appointment_data(request, demailid):
+    doctordetail = DoctorDetail.objects.get(email=demailid)
+    userdetail = UserDetail.objects.get(email=useremail)
+    
+    return {
+        'user_name': userdetail.name,
+        'user_email': userdetail.email,
+        'doctorname': doctordetail.name,
+        'doctoremail': doctordetail.email,
+        'clinicname': doctordetail.clinicname,
+        'city': doctordetail.city,
+        'consultationfee': doctordetail.consultationfee,
+        'apdate': request.POST.get('ad'),
+        'aptime': request.POST.get('select_time'),
+        'payment': request.POST.get('select_payment')
+    }
+    
+
+def validate_appointment_fields(request, appointment_data):
+    if (appointment_data['apdate'] is None or 
+        appointment_data['aptime'] is None or 
+        appointment_data['payment'] is None):
+        messages.success(request, "Select all the fields!")
+        return False
+    return True
+    
+
+def is_valid_appointment_date(request, appointment_data):
+    current_date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    
+    if appointment_data['apdate'] <= current_date:
+        messages.success(request, "Select valid date!")
+        return False
+    return True
+
+
+def has_conflicting_appointments(request, appointment_data):
+    # Check if doctor is available at the requested time
+    if bookappointment.objects.filter(
+        doctoremail=appointment_data['doctoremail'],
+        appdate=appointment_data['apdate'],
+        apptime=appointment_data['aptime']
+    ).exists():
+        messages.warning(request, "Please change date or time. Doctor is not available")
+        return True
+
+    # Check if user already has an appointment on the same date
+    if bookappointment.objects.filter(
+        appdate=appointment_data['apdate'],
+        useremail=appointment_data['user_email']
+    ).exists():
+        messages.warning(request, "Please change date. You had already booked an appointment on the selected date.")
+        return True
+        
+    return False
+    
+
+def create_appointment(request, appointment_data):
+    user_appoint = bookappointment(
+        username=appointment_data['user_name'],
+        useremail=appointment_data['user_email'],
+        doctorname=appointment_data['doctorname'],
+        doctoremail=appointment_data['doctoremail'],
+        clinicname=appointment_data['clinicname'],
+        city=appointment_data['city'],
+        appdate=appointment_data['apdate'],
+        apptime=appointment_data['aptime'],
+        consultationfee=appointment_data['consultationfee'],
+        payment=appointment_data['payment']
+    )
+    user_appoint.save()
+    
+    send_appointment_confirmation_email(appointment_data)
+    messages.success(request, "Appointment booked successfully!")
+    return redirect('appointment', useremail)
+
+
+def send_appointment_confirmation_email(appointment_data):
+    thread = threading.Thread(
+        target=bookappmail,
+        args=(
+            appointment_data['user_name'],
+            appointment_data['doctorname'],
+            appointment_data['apdate'],
+            appointment_data['aptime'],
+            appointment_data['clinicname'],
+            appointment_data['city'],
+            appointment_data['consultationfee'],
+            appointment_data['user_email']
+        )
+    )
+    thread.start()
 
 
 # ----------------------------------emergency appointment page----------------------------------------------
