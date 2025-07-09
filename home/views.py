@@ -439,7 +439,6 @@ def bookuserappointment(request, demailid):
     return process_appointment_booking(request, demailid)
 
 
-
 def process_appointment_booking(request, demailid):
     appointment_data = get_appointment_data(request, demailid)
     
