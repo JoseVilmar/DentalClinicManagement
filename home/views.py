@@ -21,7 +21,7 @@ import time
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
-
+FILL_ALL_DETAILS_MSG = "Fill all details!"
 
 check_login=False
 check_doclogin=False
@@ -56,7 +56,7 @@ def contactus(request):
         message = request.POST.get('usermessage')
         
         if name == "" or email == "" or contact == "" or message == "":
-            messages.warning(request,"Fill all details !")
+            messages.warning(request,FILL_ALL_DETAILS_MSG)
             return redirect('contact')
         user_contact = UserContacts(name=name, email=email, contact=contact, message=message,date=datetime.today())
         user_contact.save()
@@ -87,7 +87,7 @@ def fordoctor(request):
             message = request.POST.get('doctormessage')
             
             if name == "" or email == "" or contact == "" or message == "":
-                messages.warning(request,"Fill all details !")
+                messages.warning(request, FILL_ALL_DETAILS_MSG)
                 return redirect('fordoctor')
             user_contact = DoctorsMessage(name=name, email=email, contact=contact, message=message,date=datetime.today())
             user_contact.save()
@@ -98,7 +98,7 @@ def fordoctor(request):
             demail=request.POST.get('docemail')
             dpassword=request.POST.get('docpassword')
             if demail == "" or dpassword == "":
-                messages.warning(request,"Fill all details !")
+                messages.warning(request,FILL_ALL_DETAILS_MSG)
                 return redirect('fordoctor')
             if DoctorDetail.objects.filter(email=demail).exists():
                 docotor=DoctorDetail.objects.get(email=demail)
