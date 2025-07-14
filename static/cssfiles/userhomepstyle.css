@@ -63,18 +63,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-/* .search-icon button{
-    width: 50px;
-    height: 45px;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: darkblue;
-    color: rgb(3, 215, 252);
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-} */
+
 /* contact */
 .contact-us a{
     color: white;
@@ -223,7 +212,7 @@
     margin-bottom: 1.85rem;
     font-size: 1rem;
 }
-.a1:link, a1:visited{
+.a1:link, .a1:visited{
     text-decoration: none;
     font-size: 1.4rem;
     color: rgb(3, 215, 252);
@@ -232,7 +221,6 @@
     display: flex;
     width: 250px;
     height:40px;
-    display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgb(255, 255, 255);

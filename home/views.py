@@ -730,7 +730,6 @@ def appointmentlist(request,uemailid):
     date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
 
     todaysdate=date[0:10]
-    currenttime=date[11:16]
     
     appdetail=bookappointment.objects.filter(useremail=uemailid).order_by('appdate')
     noappointment=True
@@ -1095,7 +1094,6 @@ def prescription(request,uemail):
         user_email=userdetail.email
         doctorname=doctordetail.name
         docemail=doctordetail.email
-        todaysdate=tdate[0:10]
         date=appdetail.appdate
         time=appdetail.apptime
         payment=appdetail.payment

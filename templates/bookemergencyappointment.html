@@ -11,7 +11,7 @@
     {% if messages %}
         {%for message in messages%}
         <div class="alert" >
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <span class="closebtn" onclick="this.parentElement.style.display='none';" onkeydown="if(event.key==='Enter'||event.key===' ')this.parentElement.style.display='none';" tabindex="0">&times;</span> 
             <strong>{{ message}}</strong> 
         </div>
         
@@ -25,7 +25,6 @@
             {% csrf_token %}
                 
                 <div class="date">
-                    <label for="ad"></label>
                     <p>Select Date:  {{date}}</p>
                     
                 </div>
@@ -56,7 +55,7 @@
                     </div>
                 </div>
                 <div class="payment-method ">
-                    <p><label for="select_payment"></label>Payment:</p>
+                    <p><label for="select_payment">Payment:</label></p>
                     <div>
                         <p><input type="radio" id="select_payment" name="select_payment" value="Online Payment"> Online Payment</p>
                         <p><input type="radio" id="select_payment" name="select_payment" value="Ofline Payment"> Offline Payment</p>
