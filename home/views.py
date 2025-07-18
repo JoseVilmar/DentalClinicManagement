@@ -653,7 +653,7 @@ def bookemergencyappointment(request,demailid):
 
         
         
-        if aptime!=None and payment!=None:
+        if aptime and payment:
             if aptime > currenttime:
                 if bookappointment.objects.filter(appdate=todaysdate,useremail=user_email).exists():
                     messages.warning(request,"You cannot take an appointment. You had already booked an appointment on the selected date.")
