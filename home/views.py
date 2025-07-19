@@ -1,5 +1,3 @@
-
-
 from io import BytesIO
 from django.shortcuts import render, redirect
 import pytz
@@ -21,7 +19,11 @@ import time
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
-
+FILL_ALL_DETAILS_MSG = "Fill all details!"
+EMAIL_DOES_NOT_EXIST_MSG = "Email does not exist!"
+FILL_ALL_DETAILS_MSG = "Fill all the details!"
+DENTIST_EMAIL = "dentist.2407best@gmail.com"
+INDIA_TIMEZONE = "Asia/Kolkata"
 
 check_login=False
 check_doclogin=False
@@ -56,7 +58,7 @@ def contactus(request):
         message = request.POST.get('usermessage')
         
         if name == "" or email == "" or contact == "" or message == "":
-            messages.warning(request,"Fill all details !")
+            messages.warning(request,FILL_ALL_DETAILS_MSG)
             return redirect('contact')
         user_contact = UserContacts(name=name, email=email, contact=contact, message=message,date=datetime.today())
         user_contact.save()
@@ -76,50 +78,87 @@ def about(request):
 
 # ------------------------------------doctor page----------------------------------------
 def fordoctor(request):
-    if check_login==True:
-        return redirect('userhp',useremail)
-   
-    if request.method == 'POST':
-        if request.POST.get("form_type") == "contactOne":
-            name = request.POST.get('doctorname')
-            email = request.POST.get('doctoremail')
-            contact = request.POST.get('doctorcontact')
-            message = request.POST.get('doctormessage')
-            
-            if name == "" or email == "" or contact == "" or message == "":
-                messages.warning(request,"Fill all details !")
-                return redirect('fordoctor')
-            user_contact = DoctorsMessage(name=name, email=email, contact=contact, message=message,date=datetime.today())
-            user_contact.save()
-            messages.success(request,"Message sent successfully")
-            
-            return redirect("fordoctor")
-        elif request.POST.get("form_type") == "loginOne":
-            demail=request.POST.get('docemail')
-            dpassword=request.POST.get('docpassword')
-            if demail == "" or dpassword == "":
-                messages.warning(request,"Fill all details !")
-                return redirect('fordoctor')
-            if DoctorDetail.objects.filter(email=demail).exists():
-                docotor=DoctorDetail.objects.get(email=demail)
-                dp=docotor.password
+    if check_login == True:
+        return redirect('userhp', useremail)
+    
+    if request.method != 'POST':
+        return render(request, "doctorpage.html", {'check': check_login})
+    
+    form_type = request.POST.get("form_type")
+    
+    if form_type == "contactOne":
+        return handle_doctor_contact_form(request)
+    elif form_type == "loginOne":
+        return handle_doctor_login_form(request)
+    
+    return render(request, "doctorpage.html", {'check': check_login})
 
-                if dp==dpassword:
-                    global check_doclogin
-                    check_doclogin=True
 
-                    global doctoremail
-                    doctoremail=demail
-                    messages.success(request,"Login successfully")
-                    return redirect("doctors",demail)
-                else:
-                    messages.warning(request,"Incorrect password!")
-                    return redirect("fordoctor")
-            else:
-                messages.warning(request,"Email does not exist!")
-                return redirect("fordoctor")
+def handle_doctor_contact_form(request):
+    name = request.POST.get('doctorname')
+    email = request.POST.get('doctoremail')
+    contact = request.POST.get('doctorcontact')
+    message = request.POST.get('doctormessage')
+    
+    if not validate_contact_form_data(request, name, email, contact, message):
+        return redirect('fordoctor')
+    
+    save_doctor_message(name, email, contact, message)
+    messages.success(request, "Message sent successfully")
+    return redirect("fordoctor")
 
-    return render(request,"doctorpage.html",{'check':check_login})
+
+def handle_doctor_login_form(request):
+    demail = request.POST.get('docemail')
+    dpassword = request.POST.get('docpassword')
+    
+    if not validate_login_form_data(request, demail, dpassword):
+        return redirect('fordoctor')
+    
+    if not DoctorDetail.objects.filter(email=demail).exists():
+        messages.warning(request, EMAIL_DOES_NOT_EXIST_MSG)
+        return redirect("fordoctor")
+    
+    doctor = DoctorDetail.objects.get(email=demail)
+    
+    if doctor.password != dpassword:
+        messages.warning(request, "Incorrect password!")
+        return redirect("fordoctor")
+    
+    set_doctor_login_session(demail)
+    messages.success(request, "Login successfully")
+    return redirect("doctors", demail)
+
+
+def validate_contact_form_data(request, name, email, contact, message):
+    if name == "" or email == "" or contact == "" or message == "":
+        messages.warning(request, FILL_ALL_DETAILS_MSG)
+        return False
+    return True
+
+
+def validate_login_form_data(request, email, password):
+    if email == "" or password == "":
+        messages.warning(request, FILL_ALL_DETAILS_MSG)
+        return False
+    return True
+
+
+def save_doctor_message(name, email, contact, message):
+    user_contact = DoctorsMessage(
+        name=name, 
+        email=email, 
+        contact=contact, 
+        message=message,
+        date=datetime.today()
+    )
+    user_contact.save()
+    
+    
+def set_doctor_login_session(email):
+    global check_doclogin, doctoremail
+    check_doclogin = True
+    doctoremail = email
 
 
 
@@ -136,7 +175,7 @@ def login(request):
         password=request.POST.get('password')
         cyah=request.POST.get('cyah')
         if email == "" or password == "" or cyah == None:
-                messages.warning(request,"Fill all the details !")
+                messages.warning(request,FILL_ALL_DETAILS_MSG)
                 return redirect('login')
         if UserDetail.objects.filter(email=email).exists():
             user=UserDetail.objects.get(email=email)
@@ -154,7 +193,7 @@ def login(request):
                 messages.warning(request,"Incorrect password!")
                 return redirect("login")
         else:
-            messages.warning(request,"Email does not exist!")
+            messages.warning(request,EMAIL_DOES_NOT_EXIST_MSG)
             return redirect("login")
 
 
@@ -169,7 +208,7 @@ def registeremail(name, email):
     send_mail(
     "Welcome to DENTIST World",
     f"Hi {name},\n\nThank you for registering with DENTIST. We look forward to helping you achieve a beautiful, healthy smile.\n\nBest regards,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [email],
     fail_silently=False,
     )
@@ -192,7 +231,7 @@ def register(request):
         password = request.POST.get('newpassword')
         cpassword =request.POST.get('confirmpassword')
         if name == "" or email == "" or contact == "" or dateofbirth == None or gender == None or address == "" or pincode == "" or password == ""or cpassword == "":
-                messages.warning(request,"Fill all the details !")
+                messages.warning(request,FILL_ALL_DETAILS_MSG)
                 return redirect('register')
         
         if password==cpassword:
@@ -213,7 +252,7 @@ def register(request):
                 # send_mail(
                 # "Welcome to DENTIST World",
                 # f"Hi {name},\n\nThank you for registering with DENTIST. We look forward to helping you achieve a beautiful, healthy smile.\n\nBest regards,\nThe DENTIST Team",
-                # "dentist.2407best@gmail.com",
+                # DENTIST_EMAIL,
                 # [email],
                 # fail_silently=False,
                 # )
@@ -236,62 +275,90 @@ def register(request):
 # -------------------------------------------changepassword----------------------------------------------
 
 def otp(request):
-    if check_login==True:
-        return redirect('userhp',useremail)
+    if check_login == True:
+        return redirect('userhp', useremail)
+    
     global uotp
     global ue
-    if request.method == 'POST':
-       
-        if request.POST.get("form_type") == "useremail":
-            uemail=request.POST.get('emailid')
-            if UserDetail.objects.filter(email=uemail).exists():
-                udetail=UserDetail.objects.get(email=uemail)
-                name=udetail.name
-                otp=random.randint(10000,99999)
-                
-                uotp=str(otp)
-                
-                ue=uemail
-                send_mail(
-                "Verification for Changing Password",
-                f"Hi {name},\n\nYour One-Time Password (OTP) for resetting your password is {uotp}. Please do not share this OTP with anyone for security reasons.\n\nThank you,\nThe DENTIST Team",
-                "dentist.2407best@gmail.com",
-                [uemail],
-                fail_silently=False,
-                )
-
-                messages.warning(request,"OTP sent to your Email ID successfully")
-            else:
-                messages.warning(request,"Email does not exist!")
-                return redirect("otp")
-        elif request.POST.get("form_type") == "changepassword":
-            eotp=request.POST.get('enterotp')
-            password = request.POST.get('newpassword')
-            cpassword =request.POST.get('cnewpassword')
-            if eotp == "" or password == "" or cpassword == "":
-                    messages.warning(request,"Fill all the details !")
-                    return redirect('otp')
-            
-            if eotp == uotp:
-                if password==cpassword:
-                    udetail=UserDetail.objects.get(email=ue)
-                    udetail.password=password
-                    udetail.save()
-                    
-                    uotp=""
-                    messages.success(request,"Password changed successfully")
-                    return redirect("login")
-                else:
-                    messages.warning(request,"Password does not match!")
-                    return redirect("otp")
-            else:
-                messages.warning(request,"Enter correct OTP!")
-                return redirect("otp")
-
-
     
-    return render(request,"otp.html")
+    if request.method != 'POST':
+        return render(request, 'otp.html')  # Assuming you have an OTP template
+    
+    form_type = request.POST.get("form_type")
+    
+    if form_type == "useremail":
+        return handle_email_form(request)
+    elif form_type == "changepassword":
+        return handle_password_change_form(request)
+    
+    return redirect("otp")
 
+
+def handle_email_form(request):
+    global uotp, ue
+    
+    uemail = request.POST.get('emailid')
+    
+    if not UserDetail.objects.filter(email=uemail).exists():
+        messages.warning(request, "Email does not exist!")
+        return redirect("otp")
+    
+    udetail = UserDetail.objects.get(email=uemail)
+    name = udetail.name
+    otp = random.randint(10000, 99999)
+    
+    uotp = str(otp)
+    ue = uemail
+    
+    send_otp_email(name, uemail, uotp)
+    messages.warning(request, "OTP sent to your Email ID successfully")
+    
+    return render(request, 'otp.html')  # Return to OTP page
+
+
+def handle_password_change_form(request):
+    global uotp, ue
+    
+    eotp = request.POST.get('enterotp')
+    password = request.POST.get('newpassword')
+    cpassword = request.POST.get('cnewpassword')
+    
+    if not validate_password_form_data(request, eotp, password, cpassword):
+        return redirect('otp')
+    
+    if eotp != uotp:
+        messages.warning(request, "Enter correct OTP!")
+        return redirect("otp")
+    
+    if password != cpassword:
+        messages.warning(request, "Password does not match!")
+        return redirect("otp")
+    
+    # Update password
+    udetail = UserDetail.objects.get(email=ue)
+    udetail.password = password
+    udetail.save()
+    
+    uotp = ""  # Clear OTP after successful password change
+    messages.success(request, "Password changed successfully")
+    return redirect("login")
+
+
+def validate_password_form_data(request, eotp, password, cpassword):
+    if eotp == "" or password == "" or cpassword == "":
+        messages.warning(request, "Fill all the details !")
+        return False
+    return True
+
+
+def send_otp_email(name, email, otp):
+    send_mail(
+        "Verification for Changing Password",
+        f"Hi {name},\n\nYour One-Time Password (OTP) for resetting your password is {otp}. Please do not share this OTP with anyone for security reasons.\n\nThank you,\nThe DENTIST Team",
+        "dentist.2407best@gmail.com",
+        [email],
+        fail_silently=False,
+    )
 
 
 #-------------------------------------------userhp-------------------------------------------
@@ -357,70 +424,128 @@ def bookappmail(user_name,doctorname,apdate,aptime,clinicname,city,consultationf
     send_mail(
     "Appointment Confirmation",
     f"Hi {user_name},\n\nYour appointment with {doctorname} has been confirmed for {apdate} at {aptime}. The appointment will take place at {clinicname}, {city}. The consultation fee is ₹{consultationfee}. Please make sure to arrive on time.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [user_email],
     fail_silently=False,
     )
 
-def bookuserappointment(request,demailid):
-    if check_login==False:
+def bookuserappointment(request, demailid):
+    if check_login == False:
         return redirect('home')
     
-    if request.method == 'POST':
-        
-        
-        doctordetail=DoctorDetail.objects.get(email=demailid)
-        userdetail=UserDetail.objects.get(email=useremail)
-        
-        user_name=userdetail.name
-        user_email=userdetail.email
-        doctorname=doctordetail.name
-        doctoremail=doctordetail.email
-        clinicname=doctordetail.clinicname
-        city=doctordetail.city
-        consultationfee=doctordetail.consultationfee
-        apdate = request.POST.get('ad')
-        aptime = request.POST.get('select_time')
-        payment = request.POST.get('select_payment')
-        
-        date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
-        
-        
-        if apdate!=None and aptime!=None and payment!=None:
-            if apdate > date :
-                if bookappointment.objects.filter(doctoremail=demailid,appdate=apdate,apptime=aptime).exists():
-                    messages.warning(request,"Please change date or time. Doctor is not available")
-                    return redirect('bookappointment',doctoremail)
-                
-                if bookappointment.objects.filter(appdate=apdate,useremail=user_email).exists():
-                    messages.warning(request,"Please change date. You had already booked an appointment on the selected date.")
-                    return redirect('bookappointment',doctoremail)
-                 
-                user_appoint = bookappointment(username=user_name, useremail=user_email, doctorname=doctorname, doctoremail=doctoremail,clinicname=clinicname,city=city, appdate=apdate, apptime=aptime, consultationfee=consultationfee, payment=payment)
-                user_appoint.save()
-                # send_mail(
-                # "Appointment Confirmation",
-                # f"Hi {user_name},\n\nYour appointment with {doctorname} has been confirmed for {apdate} at {aptime}. The appointment will take place at {clinicname}, {city}. The consultation fee is ₹{consultationfee}. Please make sure to arrive on time.\n\nThank you,\nThe DENTIST Team",
-                # "dentist.2407best@gmail.com",
-                # [user_email],
-                # fail_silently=False,
-                # )
+    if request.method != 'POST':
+        return render(request, "bookappointment.html", {'demail': demailid})
+    
+    return process_appointment_booking(request, demailid)
 
-                
-                thread = threading.Thread(target=bookappmail, args=(user_name,doctorname,apdate,aptime,clinicname,city,consultationfee,user_email))
-                thread.start()
-                messages.success(request,"Appointment booked successfully!")
-                
-                return redirect('appointment',useremail)
-            else:
-                messages.success(request,"Select valid date!")
-                
-                return redirect('bookappointment',doctoremail)
-        else:
-            messages.success(request,"Select all the fields!")
-            
-            return redirect('bookappointment',doctoremail)
-    return render(request,"bookappointment.html",{'demail':demailid})
+
+def process_appointment_booking(request, demailid):
+    appointment_data = get_appointment_data(request, demailid)
+    
+    if not validate_appointment_fields(request, appointment_data):
+        return redirect('bookappointment', appointment_data['doctoremail'])
+    
+    if not is_valid_appointment_date(request, appointment_data):
+        return redirect('bookappointment', appointment_data['doctoremail'])
+    
+    if has_conflicting_appointments(request, appointment_data):
+        return redirect('bookappointment', appointment_data['doctoremail'])
+    
+    return create_appointment(request, appointment_data)
+
+
+def get_appointment_data(request, demailid):
+    doctordetail = DoctorDetail.objects.get(email=demailid)
+    userdetail = UserDetail.objects.get(email=useremail)
+    
+    return {
+        'user_name': userdetail.name,
+        'user_email': userdetail.email,
+        'doctorname': doctordetail.name,
+        'doctoremail': doctordetail.email,
+        'clinicname': doctordetail.clinicname,
+        'city': doctordetail.city,
+        'consultationfee': doctordetail.consultationfee,
+        'apdate': request.POST.get('ad'),
+        'aptime': request.POST.get('select_time'),
+        'payment': request.POST.get('select_payment')
+    }
+    
+
+def validate_appointment_fields(request, appointment_data):
+    if (appointment_data['apdate'] is None or 
+        appointment_data['aptime'] is None or 
+        appointment_data['payment'] is None):
+        messages.success(request, "Select all the fields!")
+        return False
+    return True
+    
+
+def is_valid_appointment_date(request, appointment_data):
+    current_date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
+    
+    if appointment_data['apdate'] <= current_date:
+        messages.success(request, "Select valid date!")
+        return False
+    return True
+
+
+def has_conflicting_appointments(request, appointment_data):
+    # Check if doctor is available at the requested time
+    if bookappointment.objects.filter(
+        doctoremail=appointment_data['doctoremail'],
+        appdate=appointment_data['apdate'],
+        apptime=appointment_data['aptime']
+    ).exists():
+        messages.warning(request, "Please change date or time. Doctor is not available")
+        return True
+
+    # Check if user already has an appointment on the same date
+    if bookappointment.objects.filter(
+        appdate=appointment_data['apdate'],
+        useremail=appointment_data['user_email']
+    ).exists():
+        messages.warning(request, "Please change date. You had already booked an appointment on the selected date.")
+        return True
+        
+    return False
+    
+
+def create_appointment(request, appointment_data):
+    user_appoint = bookappointment(
+        username=appointment_data['user_name'],
+        useremail=appointment_data['user_email'],
+        doctorname=appointment_data['doctorname'],
+        doctoremail=appointment_data['doctoremail'],
+        clinicname=appointment_data['clinicname'],
+        city=appointment_data['city'],
+        appdate=appointment_data['apdate'],
+        apptime=appointment_data['aptime'],
+        consultationfee=appointment_data['consultationfee'],
+        payment=appointment_data['payment']
+    )
+    user_appoint.save()
+    
+    send_appointment_confirmation_email(appointment_data)
+    messages.success(request, "Appointment booked successfully!")
+    return redirect('appointment', useremail)
+
+
+def send_appointment_confirmation_email(appointment_data):
+    thread = threading.Thread(
+        target=bookappmail,
+        args=(
+            appointment_data['user_name'],
+            appointment_data['doctorname'],
+            appointment_data['apdate'],
+            appointment_data['aptime'],
+            appointment_data['clinicname'],
+            appointment_data['city'],
+            appointment_data['consultationfee'],
+            appointment_data['user_email']
+        )
+    )
+    thread.start()
 
 
 # ----------------------------------emergency appointment page----------------------------------------------
@@ -475,7 +600,7 @@ def bookemergappmail(cuser_name,doctorname,todaysdate,aptime1,t,clinicname,city,
     send_mail(
     "Appointment Delayed!",
     f"Hi {cuser_name},\n\nWe regret to inform you that your appointment with {doctorname} on {todaysdate} at {aptime1} has been rescheduled due to an emergency. The new appointment time is {t}. The appointment will take place at {clinicname}, {city}. The consultation fee remains ₹{consultationfee}. We apologize for the inconvenience and appreciate your understanding.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [cuser_email],
     fail_silently=False,
     )
@@ -487,7 +612,7 @@ def bookemergencyappointment(request,demailid):
     
     
     
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
   
     
     
@@ -546,7 +671,7 @@ def bookemergencyappointment(request,demailid):
                     # send_mail(
                     # "Appointment Delayed!",
                     # f"Hi {cuser_name},\n\nWe regret to inform you that your appointment with {doctorname} on {todaysdate} at {aptime1} has been rescheduled due to an emergency. The new appointment time is {t}. The appointment will take place at {clinicname}, {city}. The consultation fee remains ₹{consultationfee}. We apologize for the inconvenience and appreciate your understanding.\n\nThank you,\nThe DENTIST Team",
-                    # "dentist.2407best@gmail.com",
+                    # DENTIST_EMAIL,
                     # [cuser_email],
                     # fail_silently=False,
                     # )
@@ -560,7 +685,7 @@ def bookemergencyappointment(request,demailid):
                 # send_mail(
                 # "Appointment Confirmation",
                 # f"Hi {user_name}, Your appointment is confirmed with Dentist {doctorname} on {todaysdate} at {aptime1}. Address: {clinicname}, {city} and the consultation fees is ₹{consultfee}. Please be on time. Thank you.",
-                # "dentist.2407best@gmail.com",
+                # DENTIST_EMAIL,
                 # [user_email],
                 # fail_silently=False,
                 # )
@@ -592,7 +717,7 @@ def cancelappmail(user_name,doctorname,date,atime,uemailid):
     send_mail(
     "Appointment Cancelled",
     f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been successfully cancelled.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [uemailid],
     fail_silently=False,
     )
@@ -602,7 +727,7 @@ def appointmentlist(request,uemailid):
         return redirect('home')
     
     cdate=str(datetime.today())
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
 
     todaysdate=date[0:10]
     currenttime=date[11:16]
@@ -630,7 +755,7 @@ def appointmentlist(request,uemailid):
         # send_mail(
         # "Appointment Cancelled",
         # f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been successfully cancelled.\n\nThank you,\nThe DENTIST Team",
-        # "dentist.2407best@gmail.com",
+        # DENTIST_EMAIL,
         # [uemailid],
         # fail_silently=False,
         # )
@@ -680,7 +805,7 @@ def doctorcancelapp(user_name,doctorname,date,atime,user_email):
     send_mail(
     "Appointment Cancelled",
     f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been cancelled due to your absence at the scheduled time.\n\nThank you,\nThe DENTIST Team",
-    "dentist.2407best@gmail.com",
+    DENTIST_EMAIL,
     [user_email],
     fail_silently=False,
     )
@@ -690,7 +815,7 @@ def doctorschedule(request,demail):
         return redirect('home')
     
     
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     todaysdate=date[0:10]
     
     userdetail=bookappointment.objects.filter(doctoremail=demail,appdate=todaysdate).order_by('apptime')
@@ -716,7 +841,7 @@ def doctorschedule(request,demail):
             # send_mail(
             # "Appointment Cancelled",
             # f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been cancelled due to your absence at the scheduled time.\n\nThank you,\nThe DENTIST Team",
-            # "dentist.2407best@gmail.com",
+            # DENTIST_EMAIL,
             # [useremail],
             # fail_silently=False,
             # )
@@ -879,14 +1004,15 @@ def prescription_pdf(doctoremail,useremail):
 
     
     
-    text_object = p.beginText(text_x := box_x + 10, text_y := box_y + box_height - 15)  
+    text_object = p.beginText()
+    text_object.setTextOrigin(box_x + 10, box_y + box_height - 15)
     text_object.setFont("Helvetica", 10)
-    p.setFont("Helvetica", 10)
+    
     for line in paragraph_text.split('. '):
-        text_object.textLine(line.strip() + ".")  
-        if text_object.getY() < box_y:  
+        text_object.textLine(line.strip() + ".")
+        if text_object.getY() < box_y:
             break
-
+        
     p.drawText(text_object)
 
     
@@ -917,7 +1043,7 @@ def send_pdf_email(doctoremail,useremail,patient_name):
 
     subject = "Invoice and Prescription"
     body = f"Dear {patient_name},\n\nPlease find attached the prescription and invoice for your recent appointment. Thank you for choosing our services.\n\nBest regards,\nThe DENTIST Team"
-    from_email = "dentist.2407best@gmail.com"
+    from_email = DENTIST_EMAIL
     to_email = [useremail]
     email = EmailMessage(subject, body, from_email, to_email)
 
@@ -933,7 +1059,7 @@ def prescription(request,uemail):
         return redirect('home')
     userdetail=UserDetail.objects.get(email=uemail)
 
-    tdate = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    tdate = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     todaysdate=tdate[0:10]
     
     todate=tdate[0:4]
@@ -969,7 +1095,6 @@ def prescription(request,uemail):
         user_email=userdetail.email
         doctorname=doctordetail.name
         docemail=doctordetail.email
-        todaysdate=tdate[0:10]
         date=appdetail.appdate
         time=appdetail.apptime
         payment=appdetail.payment
@@ -1010,7 +1135,7 @@ def doctorappoitmenthistory(request,demailid):
         return redirect('home')
     
 
-    date = str(datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     todaysdate=date[0:10]
     userdetail=appointmenthistory.objects.filter(doctoremail=demailid, appdate=todaysdate)
     noappointment=True
