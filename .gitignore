@@ -1,5 +1,5 @@
-# Ignorar configurações locais
-dentalmanagement/local_settings.py
+# Ignorar senhas locais
+.env
 
 # Ignorar arquivos desnecessários
 __pycache__/
