@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xml:lang="pt-BR">
+<html >
   <head>
 
     <title>Doctor Schedule</title>
@@ -48,7 +48,7 @@
   {% if messages %}
   {%for message in messages%}
   <div class="alert" >
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                  <span class="closebtn" onclick="this.parentElement.style.display='none';" onkeydown="if(event.key==='Enter'||event.key===' ')this.parentElement.style.display='none';" tabindex="0">&times;</span> 
       <strong>{{ message}}</strong> 
   </div>
   

@@ -730,7 +730,6 @@ def appointmentlist(request,uemailid):
     date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
 
     todaysdate=date[0:10]
-    currenttime=date[11:16]
     
     appdetail=bookappointment.objects.filter(useremail=uemailid).order_by('appdate')
     noappointment=True
