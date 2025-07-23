@@ -1,222 +1,237 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home Page</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="/static/cssfiles/indexstyle.css">
-        
-        
-    </head>
-    
-    <body>
-        <!-- header -->
-        <header>
 
-            <div class="navbar" id="home-page">
+<head>
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/cssfiles/indexstyle.css">
 
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
-                </div>
 
-                
-                <div class="contact-us border">
-                    <a href="{% url 'contact' %}">Contact Us</a>
+</head>
 
-                </div>
-                <div class="about-us border">
-                    <a href="{% url 'about' %}">About Us</a>
+<body>
+    <!-- header -->
+    <header>
 
-                </div>
-                <div class="for-doctor border">
-                    <a href="{% url 'fordoctor' %}">For Doctor</a>
+        <div class="navbar" id="home-page">
 
-                </div>
-                {%if check == False%}
-                <div class="user">
-                    <p>
-                        <a class="border" href="{% url 'login' %}">Login</a> or <a class="border" href="{% url 'register' %}">Register</a>
-                    </p>
-                </div>
-                {%endif%}
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
             </div>
-                
 
-        </header>
-        {% if messages %}
-        {%for message in messages%}
-        <div class="alert" >
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>{{ message}}</strong> 
+
+            <div class="contact-us border">
+                <a href="{% url 'contact' %}">Fale Conosco</a>
+
+            </div>
+            <div class="about-us border">
+                <a href="{% url 'about' %}">Sobre Nós</a>
+
+            </div>
+            <div class="for-doctor border">
+                <a href="{% url 'fordoctor' %}">Para Doutores</a>
+
+            </div>
+            {%if check == False%}
+            <div class="user">
+                <p>
+                    <a class="border" href="{% url 'login' %}">Entrar</a> ou <a class="border"
+                        href="{% url 'register' %}">Cadastrar</a>
+                </p>
+            </div>
+            {%endif%}
         </div>
-        
-        {% endfor%}
-        {%endif%}
-        
-        <section class="section-one">
-            <div class="herosection">
-                <div class="title-hero">
-                    <h2 class="title-one">TRUSTED DENTISTS</h2>
-                    <h1 class="title-two">
-                        Exceptional Dental Care for all age groups
-                    </h1>
-                    
-                </div>
-                <div class="img-1">
-                    
-                </div>
-            </div>
-        </section>
-        <section class="information">
-            <div class="information-one">
-                <p>
-                    Dental care or dentalcare is the maintenance of healthy teeth and may refer to:
-                    
-                </p>
-                <ul>
-                    <li>Oral hygiene, the practice of keeping the mouth and teeth clean in order to prevent dental disorders</li>
-                    <li>Dentistry, the professional care of teeth, including professional oral hygiene and dental surgery</li>
-                    <li>Oral Surgery, any of a number of medical procedures that involve artificially modifying dentition; in other words, surgery of the teeth and jaw bones</li>
-                </ul>
-                
-            </div>
-            <div class="information-two">
-                <p class="info-two-one">
-                    
-                    Oral health includes your teeth and gums, both of which require regular care to avoid cavities, infections, and other issues. Taking care of your oral health can also benefit other parts of your body, including your heart.
-                    
-                </p>
-                <p class="info-two-two">
-                    Dental and oral health is an essential part of your overall health and well-being. Poor oral hygiene can lead to dental cavities and gum disease, and has also been linked to heart disease, cancer, and diabetes.
-                </p>
-                <p class="info-two-two">
-                    
-                    Maintaining healthy teeth and gums is a lifelong commitment. The earlier you learn proper oral hygiene habits — such as brushing, flossing, and limiting your sugar intake — the easier it'll be to avoid costly dental procedures and long-term health issues.
-                </p>
-                <h1>Symptoms of dental and oral problems</h1>
-                <p class="info-two-two">You shouldn't wait until you have symptoms to visit your dentist. Going to the dentist twice a year will usually allow them to catch a problem before you even notice any symptoms.</p>
-                <p class="info-two-two">If you experience any of the following warning signs of dental health issues, you should make an appointment to see your dentist as soon as possible:</p>
-                <ul>
-                    <li>ulcers, sores, or tender areas in the mouth that won't heal after a week or two</li>
-                    <li>bleeding or swollen gums after brushing or flossing</li>
-                    <li>chronic bad breath</li>
-                    <li>sudden sensitivity to hot and cold temperatures or beverages</li>
-                    <li>pain or toothache</li>
-                    <li>loose teeth</li>
-                    <li>receding gums</li>
-                    <li>pain with chewing or biting</li>
-                    <li>swelling of the face and cheek</li>
-                    <li>clicking of the jaw</li>
-                    <li>cracked or broken teeth</li>
-                    <li>frequent dry mouth</li>
-                </ul>   
-                <p class="info-two-three">If any of these symptoms are accompanied by a high fever and facial or neck swelling, you should seek emergency medical treatment. Learn more about the warning signs of oral health issues.</p>
-            </div>
-            <div class="information-three">
-                <p>
-                    We provide you appoinment with best dentist in few minutes according to your convinent time and near place. Which help you to care your teeth.
-                </p>
-            </div>
-        </section>
 
 
-            <div class="stwo">
-                
-                    
-                <div class="m-one">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <p class="lead">"Every tooth in a man's head is more valuable than a diamond."</p>
-                    
-                    <h2 class="n-one">Miguel de Cervantes</h2>
-                    <p class="p-one">Novelist, Playwright &amp; Poet</p>
-                </div>
-            
-            
-                <div class="m-one">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <p class="lead">"A smile is a curve that sets everything straight."</p>
-                    
-                    <h2 class="n-one">Phyllis Diller</h2>
-                    <p class="p-one">American stand-up comedian, actress, author, musician, and visual artist</p>
-                </div>
-                    
-                    
-                <div class="m-one">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <p class="lead">"You're never fully dressed without a smile."</p>
-                    
-                    <h2 class="n-one">Martin Charnin</h2>
-                    <p class="p-one">American lyricist, writer, and theatre director</p>
-                </div>
-                
-            </div>
-            
-            <div class="sthree">
-                <div class="m-one">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <p class="lead">"Your smile is your logo, your personality is your business card, and how you
-                    leave others feeling after having an experience with you becomes your trademark."</p>
-                    
-                    <h2 class="n-one">Dr. Jay Shetty</h2>
-                    <p class="p-one">Dentist</p>
-                </div>
-            </div>
-        </section>
-        
-        <section class="map-h">
-            <div class="map">
-            <iframe  class="map-one" title="map" scrolling="no"
-                src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s%C4%B0mumbai!6i14!3m1!1sen!5m1!1sen" ></iframe>
-            </div>
-            
-        </section>
-        
-            
-        <!-- footer -->
-        <footer>
-            <div class="panel1 ">
-                <ul class="ul1">
-                    <p>Get to know Us</p>
-                    <a href="{% url 'home' %}">Home</a>
-                    <a href="{% url 'about' %}">About Us</a>
-                    <a href="{% url 'contact' %}">Contact Us</a>
-                    
-                    
-                </ul>
-                <ul class="ul1">
-                    <p>For Patients</p>
-                    <a href="{% url 'login' %}">Find Doctors</a>
-                    <a href="{% url 'login' %}">Book appointment</a>
-                </ul>
+    </header>
+    {% if messages %}
+    {%for message in messages%}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>{{ message}}</strong>
+    </div>
 
-                <ul>
-                    <p>Social</p>
-                    <div class="social">
-                        <i class="fa-brands fa-x-twitter"></i>
-                        <a href="#">Twitter</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-facebook"></i>
-                        <a href="#">Facebook</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-instagram"></i>
-                        <a href="#">Instagram</a>
-                    </div>
-                </ul>
+    {% endfor%}
+    {%endif%}
 
+    <section class="section-one">
+        <div class="herosection">
+            <div class="title-hero">
+                <h2 class="title-one">DENTISTAS DE CONFIANÇA</h2>
+                <h1 class="title-two">
+                    Cuidado Odontológico Excepcional para todas as idades
+                </h1>
 
             </div>
-            <div class="panel2">
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
-                </div>
-            </div>
+            <div class="img-1">
 
-            <div class="panel3">
-                <p>DENTIST © 2024, All Rights Reserved </p>
             </div>
-        </footer>
-    </body>
+        </div>
+    </section>
+    <section class="information">
+        <div class="information-one">
+            <p>
+                Cuidado dental ou odontológico é a manutenção de dentes saudáveis e pode se referir a:
+
+            </p>
+            <ul>
+                <li>Higiene bucal, a prática de manter a boca e os dentes limpos para prevenir distúrbios dentários</li>
+                <li>Odontologia, o cuidado profissional dos dentes, incluindo higiene bucal profissional e cirurgia
+                    dentária</li>
+                <li>Cirurgia Oral, qualquer um dos vários procedimentos médicos que envolvem a modificação artificial da
+                    dentição; em outras palavras, cirurgia dos dentes e ossos da mandíbula</li>
+            </ul>
+
+        </div>
+        <div class="information-two">
+            <p class="info-two-one">
+
+                A saúde bucal inclui seus dentes e gengivas, ambos exigindo cuidados regulares para evitar cáries,
+                infecções e outros problemas. Cuidar da sua saúde bucal também pode beneficiar outras partes do seu
+                corpo, incluindo o coração.
+
+            </p>
+            <p class="info-two-two">
+                A saúde dental e bucal é uma parte essencial da sua saúde e bem-estar geral. A má higiene bucal pode
+                levar a cáries e doenças gengivais, e também tem sido associada a doenças cardíacas, câncer e diabetes.
+            </p>
+            <p class="info-two-two">
+
+                Manter dentes e gengivas saudáveis é um compromisso para toda a vida. Quanto mais cedo você aprender
+                hábitos adequados de higiene bucal — como escovar, usar fio dental e limitar a ingestão de açúcar — mais
+                fácil será evitar procedimentos odontológicos caros e problemas de saúde a longo prazo.
+            </p>
+            <h1>Sintomas de problemas dentários e bucais</h1>
+            <p class="info-two-two">Você не deveria esperar até ter sintomas para visitar seu dentista. Ir ao dentista
+                duas vezes por ano geralmente permitirá que eles identifiquem um problema antes mesmo de você notar
+                qualquer sintoma.</p>
+            <p class="info-two-two">Se você sentir algum dos seguintes sinais de alerta de problemas de saúde dental,
+                deve marcar uma consulta com seu dentista o mais rápido possível:</p>
+            <ul>
+                <li>úlceras, feridas ou áreas sensíveis na boca que não cicatrizam após uma ou duas semanas</li>
+                <li>gengivas sangrando ou inchadas após escovar ou usar fio dental</li>
+                <li>mau hálito crônico</li>
+                <li>sensibilidade súbita a temperaturas ou bebidas quentes e frias</li>
+                <li>dor ou dor de dente</li>
+                <li>dentes moles</li>
+                <li>retração gengival</li>
+                <li>dor ao mastigar ou morder</li>
+                <li>inchaço do rosto e da bochecha</li>
+                <li>estalos na mandíbula</li>
+                <li>dentes rachados ou quebrados</li>
+                <li>boca seca frequente</li>
+            </ul>
+            <p class="info-two-three">Se algum desses sintomas for acompanhado por febre alta e inchaço no rosto ou
+                pescoço, você deve procurar tratamento médico de emergência.</p>
+        </div>
+        <div class="information-three">
+            <p>
+                Nós fornecemos a você um agendamento com o melhor dentista em poucos minutos, de acordo com seu horário
+                conveniente e local próximo. O que ajuda você a cuidar dos seus dentes.
+            </p>
+        </div>
+    </section>
+
+
+    <div class="stwo">
+
+
+        <div class="m-one">
+            <i class="fa-solid fa-quote-right"></i>
+            <p class="lead">"Cada dente na cabeça de um homem é mais valioso que um diamante."</p>
+
+            <h2 class="n-one">Miguel de Cervantes</h2>
+            <p class="p-one">Romancista, Dramaturgo & Poeta</p>
+        </div>
+
+
+        <div class="m-one">
+            <i class="fa-solid fa-quote-right"></i>
+            <p class="lead">"Um sorriso é uma curva que endireita tudo."</p>
+
+            <h2 class="n-one">Phyllis Diller</h2>
+            <p class="p-one">Comediante, atriz, autora, musicista e artista visual americana</p>
+        </div>
+
+
+        <div class="m-one">
+            <i class="fa-solid fa-quote-right"></i>
+            <p class="lead">"Você nunca está totalmente vestido sem um sorriso."</p>
+
+            <h2 class="n-one">Martin Charnin</h2>
+            <p class="p-one">Letrista, escritor e diretor de teatro americano</p>
+        </div>
+
+    </div>
+
+    <div class="sthree">
+        <div class="m-one">
+            <i class="fa-solid fa-quote-right"></i>
+            <p class="lead">"Seu sorriso é seu logotipo, sua personalidade é seu cartão de visita, e como você faz os
+                outros se sentirem após uma experiência com você se torna sua marca registrada."</p>
+
+            <h2 class="n-one">Dr. Jay Shetty</h2>
+            <p class="p-one">Dentista</p>
+        </div>
+    </div>
+    </section>
+
+    <section class="map-h">
+        <div class="map">
+            <iframe class="map-one" title="map" scrolling="no"
+                src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s%C4%B0mumbai!6i14!3m1!1sen!5m1!1sen"></iframe>
+        </div>
+
+    </section>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="panel1 ">
+            <ul class="ul1">
+                <p>Conheça-nos</p>
+                <a href="{% url 'home' %}">Início</a>
+                <a href="{% url 'about' %}">Sobre Nós</a>
+                <a href="{% url 'contact' %}">Fale Conosco</a>
+
+
+            </ul>
+            <ul class="ul1">
+                <p>Para Pacientes</p>
+                <a href="{% url 'login' %}">Encontrar Doutores</a>
+                <a href="{% url 'login' %}">Agendar Consulta</a>
+            </ul>
+
+            <ul>
+                <p>Redes Sociais</p>
+                <div class="social">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <a href="#">Twitter</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook"></i>
+                    <a href="#">Facebook</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-instagram"></i>
+                    <a href="#">Instagram</a>
+                </div>
+            </ul>
+
+
+        </div>
+        <div class="panel2">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
+            </div>
+        </div>
+
+        <div class="panel3">
+            <p>DENTIST © 2025, Todos os Direitos Reservados </p>
+        </div>
+    </footer>
+</body>
+
 </html>

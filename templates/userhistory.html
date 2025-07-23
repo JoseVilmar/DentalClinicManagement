@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>User Details</title>
+    <title>Histórico de Consultas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
     <link rel="stylesheet" href="/static/cssfiles/userhistorystyle.css">
@@ -12,12 +12,14 @@
             display: inline-block;
             padding: 8px 12px;
             background-color: white;
-            color: #03a9f4; /* Azul da sua interface */
+            color: #03a9f4;
+            /* Azul da sua interface */
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid #03a9f4;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .details-button:hover {
             background-color: #03a9f4;
             color: white;
@@ -34,10 +36,10 @@
             </div>
             <div class="user-part">
                 <div class="contact-us border">
-                    <a href="{% url 'contact' %}">Contact Us</a>
+                    <a href="{% url 'contact' %}">Fale Conosco</a>
                 </div>
                 <div class="about-us border">
-                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'about' %}">Sobre Nós</a>
                 </div>
                 <div class="user">
                     <i class="fa-solid fa-user"></i>
@@ -45,21 +47,21 @@
             </div>
         </div>
     </header>
-    
+
     <input type="checkbox" id="opensidebar">
     <label for="opensidebar" class="sidebarIconToggle"></label>
     <div id="sidebarmenu">
         <ul class="menu">
-            <li><a href="{% url 'userdetail' email %}">Details</a></li>
-            <li><a href="{% url 'applist' email %}">Appointments</a></li>
-            <li><a href="{% url 'history' email%}">History</a></li>
-            <li><a href="{%url 'userlogout'%}">Log Out</a></li>
+            <li><a href="{% url 'userdetail' email %}">Meus Dados</a></li>
+            <li><a href="{% url 'applist' email %}">Agendamentos</a></li>
+            <li><a href="{% url 'history' email%}">Histórico</a></li>
+            <li><a href="{%url 'userlogout'%}">Sair</a></li>
         </ul>
     </div>
 
     <div class="user-history" id="appointment-history">
         <div class="detail-title">
-            <h1>Appointment History</h1>
+            <h1>Histórico de Consultas</h1>
         </div>
         {% if userdetail %}
         <table class="history-table">
@@ -76,32 +78,33 @@
                 <td>
                     <p>{{n.doctorname}}</p>
                 </td>
-                <td style="text-align: center;"> <a href="{% url 'detalhe_consulta' n.id %}" class="details-button">Ver Detalhes</a>
+                <td style="text-align: center;"> <a href="{% url 'detalhe_consulta' n.id %}" class="details-button">Ver
+                        Detalhes</a>
                 </td>
             </tr>
             {% endfor %}
         </table>
         {% else %}
         <div class="detail-title1">
-            <h1>No Appointment history</h1>
+            <h1>Nenhum histórico de consultas</h1>
         </div>
         {% endif %}
     </div>
     <footer>
         <div class="panel1 ">
             <ul class="ul1">
-                <p>Get to know Us</p>
-                <a href="{% url 'userhp' email %}">Home</a>
-                <a href="{% url 'about' %}">About Us</a>
-                <a href="{% url 'contact' %}">Contact Us</a>
+                <p>Conheça-nos</p>
+                <a href="{% url 'userhp' email %}">Início</a>
+                <a href="{% url 'about' %}">Sobre Nós</a>
+                <a href="{% url 'contact' %}">Fale Conosco</a>
             </ul>
             <ul class="ul1">
-                <p>For Patients</p>
-                <a href="{% url 'userhp' email %}">Find Doctors</a>
-                <a href="{% url 'userhp' email %}">Book appointment</a>
+                <p>Para Pacientes</p>
+                <a href="{% url 'userhp' email %}">Encontrar Doutores</a>
+                <a href="{% url 'userhp' email %}">Agendar Consulta</a>
             </ul>
             <ul>
-                <p>Social</p>
+                <p>Redes Sociais</p>
                 <div class="social">
                     <i class="fa-brands fa-x-twitter"></i>
                     <a href="#">Twitter</a>
@@ -123,8 +126,9 @@
             </div>
         </div>
         <div class="panel3">
-            <p>DENTIST © 2024, All Rights Reserved </p>
+            <p>DENTIST © 2024, Todos os Direitos Reservados </p>
         </div>
     </footer>
 </body>
+
 </html>

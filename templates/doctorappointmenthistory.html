@@ -1,26 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Histórico de Consultas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
     <link rel="stylesheet" href="/static/cssfiles/userhistorystyle.css">
 </head>
+
 <body>
+    <!-- Header Padrão -->
     <header>
         <div class="navbar">
             <div class="pro_title border">
                 <i class="fa-solid fa-tooth"></i> DENTIST
             </div>
+            <div class="user-part">
+                <div class="about-us border">
+                    <a href="#">Área do Doutor(a)</a>
+                </div>
+                <div class="user">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
             </div>
+        </div>
     </header>
 
+    <!-- Menu Lateral para Doutores -->
+    <input type="checkbox" id="opensidebar">
+    <label for="opensidebar" class="sidebarIconToggle"></label>
+    <div id="sidebarmenu">
+        <ul class="menu">
+            <li><a href="{% url 'doctors' email %}">Agenda de Hoje</a></li>
+            <li><a href="{% url 'doctorappoitmenthistory' email %}">Histórico de Consultas</a></li>
+            <li><a href="{% url 'userlogout' %}">Sair</a></li>
+        </ul>
+    </div>
+
+    <!-- Conteúdo da Página -->
     <div class="user-history">
         <div class="detail-title">
             <h1>Histórico de Consultas de Pacientes</h1>
         </div>
 
-        <form method="post" action="{% url 'doctorappoitmenthistory' email %}" style="margin-bottom: 2rem; text-align: center;">
+        <form method="post" action="{% url 'doctorappoitmenthistory' email %}"
+            style="margin-bottom: 2rem; text-align: center;">
             {% csrf_token %}
             <label for="ad">Filtrar por data:</label>
             <input type="date" id="ad" name="ad">
@@ -28,48 +52,59 @@
         </form>
 
         {% if noappointment %}
-            <div class="detail-title1">
-                <h1>Nenhum histórico de consulta encontrado.</h1>
-            </div>
+        <div class="detail-title1">
+            <h1>Nenhum histórico de consulta encontrado.</h1>
+        </div>
         {% else %}
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th class="table-drname">Paciente</th>
-                        <th class="table-date">Data</th>
-                        <th>Horário</th>
-                        <th style="width: 150px;">Avaliação</th>
-                        <th>Comentário</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for app in userdetail %}
-                    <tr>
-                        <td>{{ app.username }}</td>
-                        <td class="display-date">{{ app.appdate }}</td>
-                        <td style="text-align: center;">{{ app.apptime }}</td>
-                        <td style="text-align: center;">
-                            {% if app.avaliacao %}
-                                {{ app.avaliacao }} / 5 estrelas
-                            {% else %}
-                                <span style="color: #888;">Pendente</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if app.feedback %}
-                                {{ app.feedback }}
-                            {% else %}
-                                <span style="color: #888;">Nenhum comentário.</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th class="table-drname">Paciente</th>
+                    <th class="table-date">Data</th>
+                    <th>Horário</th>
+                    <th style="width: 150px;">Avaliação</th>
+                    <th>Comentário</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in userdetail %}
+                <tr>
+                    <td>{{ app.username }}</td>
+                    <td class="display-date">{{ app.appdate }}</td>
+                    <td style="text-align: center;">{{ app.apptime }}</td>
+                    <td style="text-align: center;">
+                        {% if app.avaliacao %}
+                        {{ app.avaliacao }} / 5 estrelas
+                        {% else %}
+                        <span style="color: #888;">Pendente</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if app.feedback %}
+                        {{ app.feedback }}
+                        {% else %}
+                        <span style="color: #888;">Nenhum comentário.</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% endif %}
     </div>
 
+    <!-- Footer Padrão -->
     <footer>
-       </footer>
+        <div class="panel2">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
+            </div>
+        </div>
+        <div class="panel3">
+            <p>DENTIST © 2024, Todos os Direitos Reservados </p>
+        </div>
+    </footer>
 </body>
+
 </html>

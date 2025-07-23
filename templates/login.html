@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Patient Login Page</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        
-        <link rel="stylesheet" href="/static/cssfiles/loginstyle.css">
-    </head>
-    
- <body>
+
+<head>
+    <title>Página de Login do Paciente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="/static/cssfiles/loginstyle.css">
+</head>
+
+<body>
     <div class="main">
         <div class="heading">
-            <h2>Patient Login</h2>
+            <h2>Login do Paciente</h2>
         </div>
         {% if messages %}
         {%for message in messages%}
-        <div class="alert" >
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>{{ message}}</strong> 
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>{{ message}}</strong>
         </div>
-        
+
         {% endfor%}
         {%endif%}
         <div class="login-form">
             <div class="photo"></div>
             <form action="{% url 'login'%}" class="form-u" method="post">
-            {% csrf_token %}
+                {% csrf_token %}
                 <label for="email" class="email">
-                    Email Id:
+                    E-mail:
                 </label>
-                <input type="email" name="email" id="email" class="et" placeholder="Enter your email">
+                <input type="email" name="email" id="email" class="et" placeholder="Digite seu e-mail">
                 <label for="password" class="email">
-                    Password:
+                    Senha:
                 </label>
-                <input type="password"  name="password" id="password" class="et" placeholder="Enter your password">
+                <input type="password" name="password" id="password" class="et" placeholder="Digite sua senha">
                 <label for="" class="fp">
-                    <a href="{% url 'otp'%}">Forgot Password?</a>
+                    <a href="{% url 'otp'%}">Esqueceu a senha?</a>
                 </label>
                 <label for="cyah"></label>
-                <p class="fp"><input type="checkbox" id="cyah" name="cyah" value="human" > Confirm you are human.</p>
-                <input type="submit" value="Login" class="btn" >
-    
+                <p class="fp"><input type="checkbox" id="cyah" name="cyah" value="human"> Confirme que você é humano.
+                </p>
+                <input type="submit" value="Entrar" class="btn">
+
                 <label for="" class="sp">
-                    New User? <a href="{% url 'register'%}">Sign Up</a>
+                    Novo Usuário? <a href="{% url 'register'%}">Cadastre-se</a>
                 </label>
-                
+
             </form>
         </div>
-    </div>        
-        
+    </div>
 
-        
-        
-  </body>
+
+
+
+</body>
+
 </html>

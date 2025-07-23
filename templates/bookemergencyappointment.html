@@ -1,95 +1,142 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Book emergency appointment Page</title>
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        <link rel="stylesheet" href="/static/cssfiles/bookappointmentstyle.css">
-    </head>
+<head>
+    <title>Agendar Consulta de Emergência</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Adicionando os CSS que faltavam para o layout -->
+    <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+    <link rel="stylesheet" href="/static/cssfiles/bookappointmentstyle.css">
+</head>
 
-    <body>
-        {% if messages %}
-        {%for message in messages%}
-        <div class="alert">
-            <button type="button" class="closebtn"
-                onclick="this.parentElement.style.display='none';"
-                aria-label="Close alert">
-                &times;
-            </button>
-            <strong>{{ message}}</strong>
-        </div>
-
-        {% endfor%}
-        {%endif%}
-        <div class="set-schedule">
-
-            <div class="appointment-detail">
-
-                <form method="post"
-                    action="{% url 'bookemergencyappointment' demail %}">
-                    {% csrf_token %}
-
-                    <div class="date">
-                        <label for="ad"></label>
-                        <p>Select Date: {{date}}</p>
-
-                    </div>
-                    <div class="date">
-                        <p>Select Time:</p>
-                        <div class="select-time">
-                            <p class="time"><input type="radio" id="time_10"
-                                    name="select_time" value="10:00 Am"><label
-                                    for="time_10">10:00 AM</label></p>
-                            <p class="time"><input type="radio" id="time_11"
-                                    name="select_time" value="11:00 Am"><label
-                                    for="time_11">11:00 AM</label></p>
-                            <p class="time"><input type="radio" id="time_12"
-                                    name="select_time" value="12:00 Pm"><label
-                                    for="time_12">12:00 PM</label></p>
-                            <p class="time"><input type="radio" id="time_13"
-                                    name="select_time" value="01:00 Pm"><label
-                                    for="time_13">1:00 PM</label></p>
-                            <p class="time"><input type="radio" id="time_14"
-                                    name="select_time" value="02:00 Pm"><label
-                                    for="time_14">2:00 PM</label></p>
-                            <p class="time"><input type="radio" id="time_15"
-                                    name="select_time" value="03:00 Pm"><label
-                                    for="time_15">3:00 PM</label></p>
-                            <p class="time"><input type="radio" id="time_16"
-                                    name="select_time" value="04:00 Pm"><label
-                                    for="time_16">4:00 PM</label></p>
-                            <p class="time"><input type="radio" id="time_17"
-                                    name="select_time" value="05:00 Pm"><label
-                                    for="time_17">5:00 PM</label></p>
-                            <p class="time"><input type="radio" id="time_18"
-                                    name="select_time" value="06:00 Pm"><label
-                                    for="time_18">6:00 PM</label></p>
-                        </div>
-                    </div>
-                    <div class="payment-method ">
-                        <p>Payment:</p>
-                        <div>
-                            <p><input type="radio" id="payment_online"
-                                    name="select_payment"
-                                    value="Online Payment"><label
-                                    for="payment_online">Online
-                                    Payment</label></p>
-                            <p><input type="radio" id="payment_offline"
-                                    name="select_payment"
-                                    value="Ofline Payment"><label
-                                    for="payment_offline">Offline
-                                    Payment</label></p>
-                        </div>
-                    </div>
-                    <div class="c-book">
-                        <input type="submit" value="Book" class="btn">
-
-                    </div>
-
-                </form>
+<body>
+    <!-- Header adicionado para consistência -->
+    <header>
+        <div class="navbar">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
+            </div>
+            <div class="user-part">
+                <div class="contact-us border">
+                    <a href="{% url 'contact'%}">Fale Conosco</a>
+                </div>
+                <div class="about-us border">
+                    <a href="{% url 'about'%}">Sobre Nós</a>
+                </div>
+                <div class="user">
+                    <i class="fa-solid fa-user"></i>
+                </div>
             </div>
         </div>
+    </header>
 
-    </body>
+    {% if messages %}
+    {%for message in messages%}
+    <div class="alert">
+        <button type="button" class="closebtn" onclick="this.parentElement.style.display='none';"
+            aria-label="Fechar Alerta">
+            &times;
+        </button>
+        <strong>{{ message}}</strong>
+    </div>
+
+    {% endfor%}
+    {%endif%}
+    <div class="set-schedule">
+
+        <div class="appointment-detail">
+
+            <form method="post" action="{% url 'bookemergencyappointment' demail %}">
+                {% csrf_token %}
+
+                <div class="date">
+                    <label for="ad"></label>
+                    <p>Data Selecionada: {{date}}</p>
+
+                </div>
+                <div class="date">
+                    <p>Selecione a Hora:</p>
+                    <div class="select-time">
+                        <p class="time"><input type="radio" id="time_10" name="select_time" value="10:00 Am"><label
+                                for="time_10">10:00</label></p>
+                        <p class="time"><input type="radio" id="time_11" name="select_time" value="11:00 Am"><label
+                                for="time_11">11:00</label></p>
+                        <p class="time"><input type="radio" id="time_12" name="select_time" value="12:00 Pm"><label
+                                for="time_12">12:00</label></p>
+                        <p class="time"><input type="radio" id="time_13" name="select_time" value="01:00 Pm"><label
+                                for="time_13">13:00</label></p>
+                        <p class="time"><input type="radio" id="time_14" name="select_time" value="02:00 Pm"><label
+                                for="time_14">14:00</label></p>
+                        <p class="time"><input type="radio" id="time_15" name="select_time" value="03:00 Pm"><label
+                                for="time_15">15:00</label></p>
+                        <p class="time"><input type="radio" id="time_16" name="select_time" value="04:00 Pm"><label
+                                for="time_16">16:00</label></p>
+                        <p class="time"><input type="radio" id="time_17" name="select_time" value="05:00 Pm"><label
+                                for="time_17">17:00</label></p>
+                        <p class="time"><input type="radio" id="time_18" name="select_time" value="06:00 Pm"><label
+                                for="time_18">18:00</label></p>
+                    </div>
+                </div>
+                <div class="payment-method ">
+                    <p>Pagamento:</p>
+                    <div>
+                        <p><input type="radio" id="payment_online" name="select_payment" value="Pagamento Online"><label
+                                for="payment_online">Pagamento Online</label></p>
+                        <p><input type="radio" id="payment_offline" name="select_payment"
+                                value="Pagamento no Local"><label for="payment_offline">Pagamento no Local</label></p>
+                    </div>
+                </div>
+                <div class="c-book">
+                    <input type="submit" value="Agendar" class="btn">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer adicionado para consistência -->
+    <footer>
+        <div class="panel1 ">
+            <ul class="ul1">
+                <p>Conheça-nos</p>
+                <a href="{% url 'userhp' email %}">Início</a>
+                <a href="{% url 'about' %}">Sobre Nós</a>
+                <a href="{% url 'contact' %}">Fale Conosco</a>
+            </ul>
+            <ul class="ul1">
+                <p>Para Pacientes</p>
+                <a href="{% url 'userhp' email %}">Encontrar Doutores</a>
+                <a href="{% url 'userhp' email %}">Agendar Consulta</a>
+            </ul>
+            <ul>
+                <p>Redes Sociais</p>
+                <div class="social">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <a href="#">Twitter</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook"></i>
+                    <a href="#">Facebook</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-instagram"></i>
+                    <a href="#">Instagram</a>
+                </div>
+            </ul>
+        </div>
+        <div class="panel2">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
+            </div>
+        </div>
+        <div class="panel3">
+            <p>DENTIST © 2024, Todos os Direitos Reservados </p>
+        </div>
+    </footer>
+
+</body>
+
 </html>

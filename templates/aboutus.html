@@ -1,187 +1,199 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>About Us Page</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        
-        <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
-        
-    </head>
-    
-    <body>
-        <!-- header -->
-        <header>
 
-            <div class="navbar" >
+<head>
+    <title>Página Sobre Nós</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
-                </div>
+    <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
 
-                
-                <div class="user-part">
-                    <div class="contact-us border">
-                        <a href="{% url 'contact'%}">Contact Us</a>
-    
-                    </div>
-                    <div class="about-us border">
-                        <a href="{% url 'about'%}">About Us</a>
-    
-                    </div>
-                    
-                    {%if check == False and dcheck == False%}
-                    <div class="about-us border">
-                        <a href="{% url 'fordoctor' %}">For Doctor</a>
-    
-                    </div>
-                    <div class="user-login">
-                        <p>
-                            <a class="border" href="{% url 'login' %}">Login</a> or <a class="border" href="{% url 'register' %}">Register</a>
-                        </p>
-                    </div>
-                    {%endif%}
-                </div>
-            </div>
-                
+</head>
 
-        </header>
-        
-       
+<body>
+    <!-- header -->
+    <header>
 
-        
-        <!-- section -->
-        <section id="aboutus-one">
-            <div class="section-one" >
-                <div class="heading-one">
-                    <p>I WAS CREATED TO CREATE BEAUTIFUL SMILES</p>
+        <div class="navbar">
 
-                </div>
-                <div class="heading-two">
-                    Our Mission
-                </div>
-                <div class="msg-one">
-                    <div class="line-one">
-                        <p>
-                            DENTIST is on a mission to make quality dentalcare affordable and accessible for over a billion+ Indians. We believe in empowering our users 
-                        </p>
-                    </div>
-                    <div class="line-one">
-                        <p>
-                            with the most accurate, comprehensive, and curated information and care, enabling them to make better dentalcare decisions.
-                        </p>
-                    </div>
-                </div>
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
             </div>
 
-            <div class="section-two">
-                <div class="heading-three">
-                    <p>Healthy teeth is a habit</p>
-                </div>
-                <div class="msg-two">
-                    <p>It is the journey that takes you to new destinations every day with endless possibilities of life on the back of happiness, energy, and hope. DENTIST wants to make this journey easy for every Indian and help them live healthier and longer lives with healthy teeth.</p>
-                </div>
-            </div>
 
-            <div class="section-three">
-                <div class="heading-four">
-                    <P>Our approach to dentalcare</P>
-                </div>
-                <div class="msg-three">
-                    <p>Providing high-quality, trusted, and accessible dentalcare is our reason for being</p>
-                </div>
-                <div class="msg-four">
-                    <div class="connect">
-                        <i class="fa-solid fa-user-group"></i>
-                        <p class="t-one">Connect</p>
-                        <p>
-                            We understand dentalcare goes beyond signs, symptoms, diagnosis, and treatment. It's about the deep connection between doctors and patients that leads to continuous care and sustained, better outcomes.
-                        </p>
-                    </div>
-                    <div class="connect">
-                        <i class="fa-solid fa-handshake"></i>
-                        <p class="t-one">Trust</p>
-                        <p>
-                            DINTIST works on trust. We are aware of the responsibility placed on us by patients. We always have and always will do everything we possibly can to uphold this trust.
-                        </p>
-                    </div>
-                    <div class="connect">
-                        <i class="fa-regular fa-eye"></i>
-                        <p class="t-one">Transparency</p>
-                        <p>
-                            We believe in full disclosure. We believe in communicating openly and honestly, and holding ourselves to the highest ethical standards
-                        </p>
-                    </div>
+            <div class="user-part">
+                <div class="contact-us border">
+                    <a href="{% url 'contact'%}">Fale Conosco</a>
 
                 </div>
-            </div>
-        </section>
+                <div class="about-us border">
+                    <a href="{% url 'about'%}">Sobre Nós</a>
 
-        
-        <!-- footer -->
-        <footer>
-            <div class="panel1 ">
-                <ul class="ul1">
-                    <p>Get to know Us</p>
-                    {%if check == False and dcheck == False %}
-                    <a href="{% url 'home' %}">Home</a>
-                    {%endif%}
-                    {%if check == True%}
-                    <a href="{% url 'userhp' uemail %}">Home</a>
-                    {%endif%}
-                    {%if dcheck == True%}
-                    <a href="{% url 'doctors' email %}">Home</a>
-                    {%endif%}
+                </div>
 
-                    
-                    <a href="{% url 'about' %}">About Us</a>
-                    <a href="{% url 'contact' %}">Contact Us</a>
-                    
-                    
-                </ul>
-                {% if check == False and dcheck == False %}
-                <ul class="ul1">
-                    <p>For Patients</p>
-                    <a href="{% url 'login' %}">Find Doctors</a>
-                    <a href="{% url 'login' %}">Book appointment</a>
-                </ul>
+                {%if check == False and dcheck == False%}
+                <div class="about-us border">
+                    <a href="{% url 'fordoctor' %}">Para Doutores</a>
+
+                </div>
+                <div class="user-login">
+                    <p>
+                        <a class="border" href="{% url 'login' %}">Entrar</a> ou <a class="border"
+                            href="{% url 'register' %}">Cadastrar</a>
+                    </p>
+                </div>
                 {%endif%}
-                {%if check == True %}
-                <ul class="ul1">
-                    <p>For Patients</p>
-                    <a href="{% url 'appointment' uemail %}">Find Doctors</a>
-                    <a href="{% url 'appointment' uemail %}">Book appointment</a>
-                </ul>
+            </div>
+        </div>
+
+
+    </header>
+
+
+
+
+    <!-- section -->
+    <section id="aboutus-one">
+        <div class="section-one">
+            <div class="heading-one">
+                <p>FUI CRIADO PARA CRIAR LINDOS SORRISOS</p>
+
+            </div>
+            <div class="heading-two">
+                Nossa Missão
+            </div>
+            <div class="msg-one">
+                <div class="line-one">
+                    <p>
+                        O DENTIST tem a missão de tornar o cuidado odontológico de qualidade acessível. Acreditamos em
+                        capacitar nossos usuários
+                    </p>
+                </div>
+                <div class="line-one">
+                    <p>
+                        com as informações e cuidados mais precisos, abrangentes e selecionados, permitindo que tomem
+                        melhores decisões sobre seus cuidados odontológicos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-two">
+            <div class="heading-three">
+                <p>Dentes saudáveis são um hábito</p>
+            </div>
+            <div class="msg-two">
+                <p>É a jornada que te leva a novos destinos todos os dias com infinitas possibilidades de vida, baseada
+                    em felicidade, energia и esperança. O DENTIST quer facilitar essa jornada para todos e ajudá-los a
+                    viver vidas mais longas e saudáveis com dentes saudáveis.</p>
+            </div>
+        </div>
+
+        <div class="section-three">
+            <div class="heading-four">
+                <P>Nossa abordagem ao cuidado odontológico</P>
+            </div>
+            <div class="msg-three">
+                <p>Fornecer um cuidado odontológico de alta qualidade, confiável e acessível é a nossa razão de ser</p>
+            </div>
+            <div class="msg-four">
+                <div class="connect">
+                    <i class="fa-solid fa-user-group"></i>
+                    <p class="t-one">Conexão</p>
+                    <p>
+                        Entendemos que o cuidado odontológico vai além de sinais, sintomas, diagnósticos e tratamentos.
+                        Trata-se da conexão profunda entre médicos e pacientes que leva a um cuidado contínuo e a
+                        resultados melhores e sustentados.
+                    </p>
+                </div>
+                <div class="connect">
+                    <i class="fa-solid fa-handshake"></i>
+                    <p class="t-one">Confiança</p>
+                    <p>
+                        O DENTIST trabalha com base na confiança. Estamos cientes da responsabilidade que os pacientes
+                        depositam em nós. Sempre fizemos e sempre faremos tudo o que for possível para honrar essa
+                        confiança.
+                    </p>
+                </div>
+                <div class="connect">
+                    <i class="fa-regular fa-eye"></i>
+                    <p class="t-one">Transparência</p>
+                    <p>
+                        Acreditamos na total transparência. Acreditamos em nos comunicar de forma aberta e honesta, e em
+                        nos mantermos nos mais altos padrões éticos.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="panel1 ">
+            <ul class="ul1">
+                <p>Conheça-nos</p>
+                {%if check == False and dcheck == False %}
+                <a href="{% url 'home' %}">Início</a>
+                {%endif%}
+                {%if check == True%}
+                <a href="{% url 'userhp' uemail %}">Início</a>
+                {%endif%}
+                {%if dcheck == True%}
+                <a href="{% url 'doctors' email %}">Início</a>
                 {%endif%}
 
-                <ul>
-                    <p>Social</p>
-                    <div class="social">
-                        <i class="fa-brands fa-x-twitter"></i>
-                        <a href="#">Twitter</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-facebook"></i>
-                        <a href="#">Facebook</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-instagram"></i>
-                        <a href="#">Instagram</a>
-                    </div>
-                </ul>
+
+                <a href="{% url 'about' %}">Sobre Nós</a>
+                <a href="{% url 'contact' %}">Fale Conosco</a>
 
 
-            </div>
-            <div class="panel2">
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
+            </ul>
+            {% if check == False and dcheck == False %}
+            <ul class="ul1">
+                <p>Para Pacientes</p>
+                <a href="{% url 'login' %}">Encontrar Doutores</a>
+                <a href="{% url 'login' %}">Agendar Consulta</a>
+            </ul>
+            {%endif%}
+            {%if check == True %}
+            <ul class="ul1">
+                <p>Para Pacientes</p>
+                <a href="{% url 'appointment' uemail %}">Encontrar Doutores</a>
+                <a href="{% url 'appointment' uemail %}">Agendar Consulta</a>
+            </ul>
+            {%endif%}
+
+            <ul>
+                <p>Redes Sociais</p>
+                <div class="social">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <a href="#">Twitter</a>
                 </div>
-            </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook"></i>
+                    <a href="#">Facebook</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-instagram"></i>
+                    <a href="#">Instagram</a>
+                </div>
+            </ul>
 
-            <div class="panel3">
-                <p>DENTIST © 2024, All Rights Reserved </p>
+
+        </div>
+        <div class="panel2">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
             </div>
-        </footer>
-    </body>
+        </div>
+
+        <div class="panel3">
+            <p>DENTIST © 2024, Todos os Direitos Reservados </p>
+        </div>
+    </footer>
+</body>
+
 </html>

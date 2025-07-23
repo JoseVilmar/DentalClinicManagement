@@ -50,28 +50,39 @@ def homepage(request):
 
 
 # ---------------------------contact page-----------------------------------
+# Em home/views.py
+
 def contactus(request):
-    
-   
     if request.method == 'POST':
         name = request.POST.get('username')
         email = request.POST.get('useremail')
         contact = request.POST.get('usercontact')
         message = request.POST.get('usermessage')
         
-        if name == "" or email == "" or contact == "" or message == "":
-            messages.warning(request,FILL_ALL_DETAILS_MSG)
+        if not all([name, email, contact, message]):
+            messages.warning(request, FILL_ALL_DETAILS_MSG)
             return redirect('contact')
-        user_contact = UserContacts(name=name, email=email, contact=contact, message=message,date=datetime.today())
+
+        user_contact = UserContacts(name=name, email=email, contact=contact, message=message, date=datetime.today())
         user_contact.save()
-        messages.success(request, "Mensagem enviada com sucesso") # Traduzido
+
+        subject = f"Nova Mensagem de Contato de {name}"
+        email_body = f"""
+        Você recebeu uma nova mensagem através do site.
+
+        Nome: {name}
+        E-mail: {email}
+        Contato: {contact}
         
+        Mensagem:
+        {message}
+        """
+        send_mail(subject, email_body, DENTIST_EMAIL, [DENTIST_EMAIL], fail_silently=False)
+        
+        messages.success(request, "Mensagem enviada com sucesso. Agradecemos o seu contato!")
         return redirect("contact")
 
-    
-
-    return render(request,"contactus.html",{'check':check_login,'uemail':useremail, 'dcheck':check_doclogin, 'email':doctoremail})
-
+    return render(request, "contactus.html", {'check': check_login, 'uemail': useremail, 'dcheck': check_doclogin, 'email': doctoremail})
 
 # -----------------------------------about page------------------------------------------
 def about(request):
@@ -96,6 +107,8 @@ def fordoctor(request):
     return render(request, "doctorpage.html", {'check': check_login})
 
 
+# Em home/views.py
+
 def handle_doctor_contact_form(request):
     name = request.POST.get('doctorname')
     email = request.POST.get('doctoremail')
@@ -106,7 +119,27 @@ def handle_doctor_contact_form(request):
         return redirect('fordoctor')
     
     save_doctor_message(name, email, contact, message)
-    messages.success(request, "Mensagem enviada com sucesso") # Traduzido
+
+
+    admin_subject = f"Novo Doutor Interessado: {name}"
+    admin_body = f"""
+    Um novo doutor demonstrou interesse em se juntar à plataforma.
+
+    Nome: {name}
+    E-mail: {email}
+    Contato: {contact}
+
+    Mensagem:
+    {message}
+    """
+    send_mail(admin_subject, admin_body, DENTIST_EMAIL, [DENTIST_EMAIL], fail_silently=False)
+
+    doctor_subject = "Recebemos sua mensagem | DENTIST"
+    doctor_body = f"Olá Dr(a). {name},\n\nObrigado por seu interesse em nossa plataforma. Recebemos sua mensagem e entraremos em contato em breve.\n\nAtenciosamente,\nA Equipe DENTIST"
+    send_mail(doctor_subject, doctor_body, DENTIST_EMAIL, [email], fail_silently=False)
+    # --------------------------------------------------------------------
+
+    messages.success(request, "Mensagem enviada com sucesso. Entraremos em contato em breve!")
     return redirect("fordoctor")
 
 
