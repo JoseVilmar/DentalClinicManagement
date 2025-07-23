@@ -1,191 +1,220 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xml:lang="pt-BR">
-    <head>
-        <title>For Doctors</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        
-        <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
-        <link rel="stylesheet" href="/static/cssfiles/doctorpagestyle.css">
-    </head>
-    
-    <body>
-        <!-- header -->
-        <header>
 
-            <div class="navbar" >
+<head>
+    <title>Para Doutores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
+    <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+    <link rel="stylesheet" href="/static/cssfiles/doctorpagestyle.css">
+
+    <style>
+        .contact-heading {
+            flex-direction: column;
+            text-align: left;
+            height: auto;
+            margin-top: 5rem;
+            margin-bottom: 2rem;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+
+        <div class="navbar">
+
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
+            </div>
+
+
+            <div class="user-part">
+                <div class="contact-us border">
+                    <a href="{% url 'contact'%}">Fale Conosco</a>
+
+                </div>
+                <div class="about-us border">
+                    <a href="{% url 'about'%}">Sobre Nós</a>
+
                 </div>
 
-                
-                <div class="user-part">
-                    <div class="contact-us border">
-                        <a href="{% url 'contact'%}">Contact Us</a>
-    
-                    </div>
-                    <div class="about-us border">
-                        <a href="{% url 'about'%}">About Us</a>
-    
-                    </div>
-    
-                    <div class="about-us border">
-                        <a href="{% url 'fordoctor' %}">For Doctor</a>
-    
-                    </div>
-                    {%if check == False%}
-                    <div class="user-login">
-                        <p>
-                            <a class="border" href="{% url 'login' %}">Login</a> or <a class="border" href="{% url 'register' %}">Register</a>
+                <div class="about-us border">
+                    <a href="{% url 'fordoctor' %}">Para Doutores</a>
+
+                </div>
+                {%if check == False%}
+                <div class="user-login">
+                    <p>
+                        <a class="border" href="{% url 'login' %}">Entrar</a> ou <a class="border"
+                            href="{% url 'register' %}">Cadastrar</a>
+                    </p>
+                </div>
+                {%endif%}
+            </div>
+        </div>
+
+
+    </header>
+    {% if messages %}
+    {%for message in messages%}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>{{ message}}</strong>
+    </div>
+
+    {% endfor%}
+    {%endif%}
+
+    <!-- section -->
+    <section id="contactus-one">
+        <div class="msg-five">
+            <p class="title-one"> Apenas para Doutores</p>
+
+        </div>
+        <div class="contact-detail">
+            <div class="main">
+                <div class="heading">
+                    <h2>Login do Doutor(a)</h2>
+                </div>
+                <div class="login-form">
+
+                    <form action="{% url 'fordoctor'%}" class="form-u" method="post" id="form_type">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="loginOne">
+                        <label for="docemail" class="email-login">
+                            E-mail:
+                        </label>
+                        <input type="email" id="docemail" name="docemail" class="et" placeholder="Digite seu e-mail">
+                        <label for="docpassword" class="email-login">
+                            Senha:
+                        </label>
+                        <input type="password" id="docpassword" name="docpassword" class="et"
+                            placeholder="Digite sua senha">
+
+
+
+                        <input type="submit" value="Entrar" class="btn-login">
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Formulário de Contato com Título Adicionado -->
+            <div class="main">
+                <div class="heading">
+                    <div class="contact-heading">
+                        <h2>É médico e tem interesse em fazer parte?</h2>
+                        <p style="font-size: 0.9rem; color: #555;">Deixe sua mensagem e nossa equipe entrará em contato.
                         </p>
                     </div>
-                    {%endif%}
                 </div>
-            </div>
-                
-
-        </header>
-        {% if messages %}
-        {%for message in messages%}
-        <div class="alert" >
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>{{ message}}</strong> 
-        </div>
-        
-        {% endfor%}
-        {%endif%}
-        
-        <!-- section -->
-        <section id="contactus-one">
-            <div class="msg-five">
-                <p class="title-one"> Only for Doctors</p>
-                
-            </div>
-            <div class="contact-detail">
-                <div class="main">
-                    <div class="heading">
-                        <h2>Doctor Login</h2>
-                    </div>
-                    <div class="login-form">
-                        
-                        <form  action="{% url 'fordoctor'%}" class="form-u" method="post" id="form_type">
-                        {% csrf_token %}
-                            <input type="hidden" name="form_type" value="loginOne">
-                            <label for="docemail"class="email-login">
-                                Email Id:
-                            </label>
-                            <input type="email" id="docemail" name="docemail" class="et" placeholder="Enter your email">
-                            <label for="docpassword" class="email-login">
-                                Password:
-                            </label>
-                            <input type="password" id="docpassword" name="docpassword"  class="et" placeholder="Enter your password">
-                            
-                            
-                            
-                            <input type="submit" value="Login"  class="btn-login" >
-                            
-                        </form>
-                    </div>
-                </div>        
-                <form class="form-one" action="{% url 'fordoctor'%}" method="post" id="form_type">
+                <form class="form-one" action="{% url 'fordoctor'%}" method="post" id="form_type_contact">
                     {% csrf_token %}
                     <input type="hidden" name="form_type" value="contactOne">
-                        <div class="name">
-                            <label for="doctorname">
-                                <p>
-                                    Name
-                                    <sup style="color:red;">*</sup>
-                                </p>
-                            </label>
-                            <input type="text" id="doctorname" name="doctorname" placeholder="Enter your full name" class="input-one">
-                        </div>
-                        <div class="name">
-                            <label for="doctoremail">
-                                <p>
-                                    Email
-                                    <sup style="color:red;">*</sup>
-                                </p>
-                            </label>
-                            <input type="email" id="doctoremail" name="doctoremail" placeholder="Enter your email" class="input-one">
-                        </div>
-                        <div class="name">
-                            <label for="doctorcontact">
-                                <p>
-                                    Contact
-                                    <sup style="color:red;">*</sup>
-                                </p>
-                            </label>
-                            <input type="number" id="doctorcontact" name="doctorcontact" placeholder="Enter your phone no." class="input-one">
-                        </div>
-                        <div class="name">
-                            <label for="doctormessage">
-                                <p>
-                                    Message
-                                    <sup style="color:red;">*</sup>
-                                </p>
-                            </label>
-                            <textarea id="doctormessage" name="doctormessage" placeholder="Write Message" class="input-two"></textarea>
-                        </div>
-                        
-                        <input type="submit" value="Submit" class="btn" >
-                            
-                        
-                    </form>
-                
+                    <div class="name">
+                        <label for="doctorname">
+                            <p>
+                                Nome
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <input type="text" id="doctorname" name="doctorname" placeholder="Digite seu nome completo"
+                            class="input-one">
+                    </div>
+                    <div class="name">
+                        <label for="doctoremail">
+                            <p>
+                                Email
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <input type="email" id="doctoremail" name="doctoremail" placeholder="Digite seu e-mail"
+                            class="input-one">
+                    </div>
+                    <div class="name">
+                        <label for="doctorcontact">
+                            <p>
+                                Contato
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <input type="number" id="doctorcontact" name="doctorcontact"
+                            placeholder="Digite seu número de telefone" class="input-one">
+                    </div>
+                    <div class="name">
+                        <label for="doctormessage">
+                            <p>
+                                Mensagem
+                                <sup style="color:red;">*</sup>
+                            </p>
+                        </label>
+                        <textarea id="doctormessage" name="doctormessage" placeholder="Escreva sua mensagem"
+                            class="input-two"></textarea>
+                    </div>
+
+                    <input type="submit" value="Enviar" class="btn">
+                </form>
             </div>
 
-        </section>
+        </div>
 
-        
-        
-        <!-- footer -->
-        <footer>
-            <div class="panel1 ">
-                <ul class="ul1">
-                    <p>Get to know Us</p>
-                    {%if dcheck == True%}
-                    <a href="{% url 'doctors' email %}">Home</a>
-                    {%endif%}
-                    <a href="{% url 'about' %}">About Us</a>
-                    <a href="{% url 'contact' %}">Contact Us</a>
-                    
-                    
-                </ul>
-                <ul class="ul1">
-                    <p>For Patients</p>
-                    <a href="{% url 'login' %}">Find Doctors</a>
-                    <a href="{% url 'login' %}">Book appointment</a>
-                </ul>
-
-                <ul>
-                    <p>Social</p>
-                    <div class="social">
-                        <i class="fa-brands fa-x-twitter"></i>
-                        <a href="#">Twitter</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-facebook"></i>
-                        <a href="#">Facebook</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-instagram"></i>
-                        <a href="#">Instagram</a>
-                    </div>
-                </ul>
+    </section>
 
 
-            </div>
-            <div class="panel2">
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
+
+    <!-- footer -->
+    <footer>
+        <div class="panel1 ">
+            <ul class="ul1">
+                <p>Conheça-nos</p>
+                {%if dcheck == True%}
+                <a href="{% url 'doctors' email %}">Início</a>
+                {%endif%}
+                <a href="{% url 'about' %}">Sobre Nós</a>
+                <a href="{% url 'contact' %}">Fale Conosco</a>
+
+
+            </ul>
+            <ul class="ul1">
+                <p>Para Pacientes</p>
+                <a href="{% url 'login' %}">Encontrar Doutores</a>
+                <a href="{% url 'login' %}">Agendar Consulta</a>
+            </ul>
+
+            <ul>
+                <p>Redes Sociais</p>
+                <div class="social">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <a href="#">Twitter</a>
                 </div>
-            </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook"></i>
+                    <a href="#">Facebook</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-instagram"></i>
+                    <a href="#">Instagram</a>
+                </div>
+            </ul>
 
-            <div class="panel3">
-                <p>DENTIST © 2024, All Rights Reserved </p>
+
+        </div>
+        <div class="panel2">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
             </div>
-        </footer>
-    </body>
+        </div>
+
+        <div class="panel3">
+            <p>DENTIST © 2024, Todos os Direitos Reservados </p>
+        </div>
+    </footer>
+</body>
+
 </html>

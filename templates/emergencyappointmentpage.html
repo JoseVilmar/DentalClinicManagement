@@ -1,225 +1,228 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xml:lang="pt-BR">
-    <head>
-        <title>Emergency Appointment Page</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
-        <link rel="stylesheet" href="/static/cssfiles/appointmentpagestyle.css">
-        
-    </head>
-    
-    <body>
-        <!-- header -->
-        <header>
 
-            <div class="navbar" >
+<head>
+    <title>Página de Agendamento de Emergência</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+    <link rel="stylesheet" href="/static/cssfiles/appointmentpagestyle.css">
 
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+
+        <div class="navbar">
+
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
+            </div>
+
+
+            <div class="user-part">
+                <div class="contact-us border">
+                    <a href="{% url 'contact'%}">Fale Conosco</a>
+
+                </div>
+                <div class="about-us border">
+                    <a href="{% url 'about'%}">Sobre Nós</a>
+
                 </div>
 
-                
-                <div class="user-part">
-                    <div class="contact-us border">
-                        <a href="{% url 'contact'%}">Contact Us</a>
-    
-                    </div>
-                    <div class="about-us border">
-                        <a href="{% url 'about'%}">About Us</a>
-    
-                    </div>
-    
-                    <div class="user">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
+                <div class="user">
+                    <i class="fa-solid fa-user"></i>
                 </div>
             </div>
-            {% if messages %}
-            {%for message in messages%}
-            <div class="alert" >
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong>{{ message}}</strong> 
-            </div>
-            
-            {% endfor%}
-            {%endif%}
-            <div class="beao">
-                <h2>Book emergency appointment only</h2>
-            </div>
-            <!-- main section -->
-         <div class="search-section">
-           
+        </div>
+        {% if messages %}
+        {%for message in messages%}
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>{{ message}}</strong>
+        </div>
+
+        {% endfor%}
+        {%endif%}
+        <div class="beao">
+            <h2>Apenas para agendamentos de emergência</h2>
+        </div>
+        <!-- main section -->
+        <div class="search-section">
+
             <form method="post" action="{% url 'emergencyappointment' email %}">
-            {% csrf_token %}
+                {% csrf_token %}
                 <input type="hidden" name="form_type" value="search_location">
                 <div class="location-search">
                     <div class="location-icon">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <label for="dlocation"></label>
-                    <input type="text" id="dlocation" name="dlocation" placeholder=" Search location" class="input-location">
-                    <input type="submit" value="Search" class="btna" >
+                    <label for="dlocation" class="sr-only">Buscar localidade</label>
+                    <input type="text" id="dlocation" name="dlocation" placeholder=" Buscar localidade"
+                        class="input-location">
+                    <input type="submit" value="Buscar" class="btna">
                 </div>
             </form>
             <form method="post" action="{% url 'emergencyappointment' email %}">
-            {% csrf_token %}
+                {% csrf_token %}
                 <input type="hidden" name="form_type" value="search_doctor">
                 <div class="location-search">
                     <div class="location-icon">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <label for="dname"></label>
-                    <input type="text" id="dname" name="dname" placeholder=" Dentist" class="input-dentist">
-                    <input type="submit" value="Search" class="btna" >
+                    <label for="dname" class="sr-only">Buscar dentista</label>
+                    <input type="text" id="dname" name="dname" placeholder=" Dentista" class="input-dentist">
+                    <input type="submit" value="Buscar" class="btna">
                 </div>
             </form>
 
-            
-        </div>
-                
 
-        </header>
-        
-        <!-- toggle menu -->
-        <input type="checkbox" id="opensidebar">
-        <label for="opensidebar" class="sidebarIconToggle"></label>
-        <div id="sidebarmenu">
-            <ul class="menu">
-                <li><a href="{% url 'userdetail' email %}">Details</a></li>
-                <li><a href="{% url 'applist' email %}">Appointments</a></li>
-                <li><a href="{% url 'history' email%}">History</a></li>
-                <li><a href="{%url 'userlogout'%}">Log Out</a></li>
+        </div>
+
+
+    </header>
+
+    <!-- toggle menu -->
+    <input type="checkbox" id="opensidebar">
+    <label for="opensidebar" class="sidebarIconToggle"></label>
+    <div id="sidebarmenu">
+        <ul class="menu">
+            <li><a href="{% url 'userdetail' email %}">Meus Dados</a></li>
+            <li><a href="{% url 'applist' email %}">Agendamentos</a></li>
+            <li><a href="{% url 'history' email%}">Histórico</a></li>
+            <li><a href="{%url 'userlogout'%}">Sair</a></li>
+        </ul>
+    </div>
+    <!-- section -->
+
+    <div class="doctor-list">
+
+        {% for n in doctordetailfinal %}
+        <div class="doctor-details">
+
+
+            <div class="name">
+                <p>Nome do(a) Doutor(a):</p>
+                <p>{{n.name}}</p>
+            </div>
+            <div class="name">
+                <p>Experiência:</p>
+                <p>{{n.experience}}</p>
+            </div>
+            <div class="name daddre">
+                <p>Endereço:</p>
+                <p>
+                    {{n.clinicname}} ,
+                <address>{{n.city}}</address>
+
+
+                </p>
+
+            </div>
+            <div class="name">
+                <p>Taxa de Consulta:</p>
+                <p>
+                    <i class="fa-solid fa-indian-rupee-sign">{{n.consultationfee}} </i>
+
+                </p>
+
+                <p class="extra">
+                    + <i class="fa-solid fa-indian-rupee-sign">150 adicional </i>
+
+                </p>
+            </div>
+
+
+            <div class="book name">
+                <form method="post" action="{% url 'emergencyappointment' email %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="email_doctor">
+                    <input type="hidden" name="doctoremail" value="{{n.email}}">
+                    <p>Agendar Consulta</p>
+
+                    <p>
+                        <input type="submit" class="btn" value="Agendar">
+                    </p>
+
+                </form>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+        {%endfor%}
+
+        <div class="pagination">
+            {% if doctordetailfinal.has_previous %}
+            <a href="?page={{doctordetailfinal.previous_page_number}}">&laquo;</a>
+            {%endif%}
+
+            {% for n in totalpagelist%}
+            <a href="?page={{n}}">{{n}}</a>
+            {%endfor%}
+            {% if doctordetailfinal.has_next %}
+            <a href="?page={{doctordetailfinal.next_page_number}}">&raquo;</a>
+            {%endif%}
+
+        </div>
+
+
+    </div>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="panel1 ">
+            <ul class="ul1">
+                <p>Conheça-nos</p>
+                <a href="{% url 'userhp' email %}">Início</a>
+                <a href="{% url 'about' %}">Sobre Nós</a>
+                <a href="{% url 'contact' %}">Fale Conosco</a>
+
+
             </ul>
-        </div> 
-        <!-- section -->
-        
-        <div class="doctor-list">
-           
-            {% for n in doctordetailfinal %}
-            <div class="doctor-details">
-                
-                
-                <div class="name">
-                    <p>Doctor Name:</p>
-                    <p>{{n.name}}</p>
-                </div>
-                <div class="name">
-                    <p>Experience:</p>
-                    <p>{{n.experience}}</p>
-                </div>
-                <div class="name daddre">
-                    <p>Address:</p>
-                    <p>
-                        {{n.clinicname}} ,
-                        <address>{{n.city}}</address>
-                            
-                        
-                    </p>
-                    
-                </div>
-                <div class="name">
-                    <p>Consultation fee:</p>
-                    <p>
-                        <i class="fa-solid fa-indian-rupee-sign">{{n.consultationfee}} </i> 
-                       
-                    </p>
-                    
-                    <p class="extra">
-                       + <i class="fa-solid fa-indian-rupee-sign">150 extra </i> 
-                       
-                    </p>
-                </div>
-                
+            <ul class="ul1">
+                <p>Para Pacientes</p>
+                <a href="{% url 'userhp' email %}">Encontrar Doutores</a>
+                <a href="{% url 'userhp' email %}">Agendar Consulta</a>
+            </ul>
 
-                <div class="book name">
-                    <form method="post" action="{% url 'emergencyappointment' email %}">
-                        {% csrf_token %}
-                            <input type="hidden" name="form_type" value="email_doctor">
-                            <input type="hidden" name="doctoremail" value="{{n.email}}">
-                            <p>Book Appointment</p>
-                    
-                            <p>
-                                <input type="submit" class="btn" value="Book">
-                            </p>
-                            
-                    </form>
-                    
-
-
+            <ul>
+                <p>Redes Sociais</p>
+                <div class="social">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <a href="#">Twitter</a>
                 </div>
-            
-            </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook"></i>
+                    <a href="#">Facebook</a>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-instagram"></i>
+                    <a href="#">Instagram</a>
+                </div>
+            </ul>
 
-            
-            
-           
-            
-           {%endfor%}
-           
-            <div class="pagination">
-                {% if doctordetailfinal.has_previous %}
-                <a href="?page={{doctordetailfinal.previous_page_number}}">&laquo;</a>
-                {%endif%}
-                
-                {% for n in totalpagelist%}
-                <a  href="?page=n">{{n}}</a>
-                {%endfor%}
-                {% if doctordetailfinal.has_next %}
-                <a href="?page={{doctordetailfinal.next_page_number}}">&raquo;</a>
-                {%endif%}
-                
-            </div>
-            
 
         </div>
-       
-        
-        <!-- footer -->
-        <footer>
-            <div class="panel1 ">
-                <ul class="ul1">
-                    <p>Get to know Us</p>
-                    <a href="{% url 'userhp' email %}">Home</a>
-                    <a href="{% url 'about' %}">About Us</a>
-                    <a href="{% url 'contact' %}">Contact Us</a>
-                    
-                    
-                </ul>
-                <ul class="ul1">
-                    <p>For Patients</p>
-                    <a href="{% url 'userhp' email %}">Find Doctors</a>
-                    <a href="{% url 'userhp' email %}">Book appointment</a>
-                </ul>
-
-                <ul>
-                    <p>Social</p>
-                    <div class="social">
-                        <i class="fa-brands fa-x-twitter"></i>
-                        <a href="#">Twitter</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-facebook"></i>
-                        <a href="#">Facebook</a>
-                    </div>
-                    <div class="social">
-                        <i class="fa-brands fa-instagram"></i>
-                        <a href="#">Instagram</a>
-                    </div>
-                </ul>
-
-
+        <div class="panel2">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i>
+                DENTIST
             </div>
-            <div class="panel2">
-                <div class="pro_title border">
-                    <i class="fa-solid fa-tooth"></i>
-                    DENTIST
-                </div>
-            </div>
+        </div>
 
-            <div class="panel3">
-                <p>DENTIST © 2024, All Rights Reserved </p>
-            </div>
-        </footer>
-    </body>
+        <div class="panel3">
+            <p>DENTIST © 2024, Todos os Direitos Reservados </p>
+        </div>
+    </footer>
+</body>
+
 </html>

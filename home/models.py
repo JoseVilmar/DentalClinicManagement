@@ -77,4 +77,6 @@ class appointmenthistory(models.Model):
     consultationfee=models.CharField(max_length=10)
     payment=models.CharField(max_length=100)
     prescription=models.TextField(max_length=1000)
+    avaliacao = models.IntegerField(null=True, blank=True)
+    feedback = models.TextField(null=True, blank=True)
     
