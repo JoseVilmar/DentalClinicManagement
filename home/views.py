@@ -18,12 +18,14 @@ import threading
 import time
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from django.shortcuts import get_object_or_404
 
 
-EMAIL_DOES_NOT_EXIST_MSG = "Email does not exist!"
-FILL_ALL_DETAILS_MSG = "Fill all the details!"
+# --- Constantes com mensagens traduzidas ---
+EMAIL_DOES_NOT_EXIST_MSG = "O e-mail não existe!"
+FILL_ALL_DETAILS_MSG = "Preencha todos os detalhes!"
 DENTIST_EMAIL = "dentist.2407best@gmail.com"
-INDIA_TIMEZONE = "Asia/Kolkata"
+INDIA_TIMEZONE = "Asia/Kolkata" # Mantido, pois é uma configuração técnica de fuso horário
 
 check_login=False
 check_doclogin=False
@@ -62,7 +64,7 @@ def contactus(request):
             return redirect('contact')
         user_contact = UserContacts(name=name, email=email, contact=contact, message=message,date=datetime.today())
         user_contact.save()
-        messages.success(request,"Message sent successfully")
+        messages.success(request, "Mensagem enviada com sucesso") # Traduzido
         
         return redirect("contact")
 
@@ -104,7 +106,7 @@ def handle_doctor_contact_form(request):
         return redirect('fordoctor')
     
     save_doctor_message(name, email, contact, message)
-    messages.success(request, "Message sent successfully")
+    messages.success(request, "Mensagem enviada com sucesso") # Traduzido
     return redirect("fordoctor")
 
 
@@ -122,11 +124,11 @@ def handle_doctor_login_form(request):
     doctor = DoctorDetail.objects.get(email=demail)
     
     if doctor.password != dpassword:
-        messages.warning(request, "Incorrect password!")
+        messages.warning(request, "Senha incorreta!") # Traduzido
         return redirect("fordoctor")
     
     set_doctor_login_session(demail)
-    messages.success(request, "Login successfully")
+    messages.success(request, "Login realizado com sucesso") # Traduzido
     return redirect("doctors", demail)
 
 
@@ -186,11 +188,14 @@ def login(request):
                 check_login=True
                 
                 useremail=email
-                messages.success(request,"You have logged in successfully!")
+
+                request.session['useremail'] = email
+
+                messages.success(request,"Você fez login com sucesso!") # Traduzido
                 
                 return redirect("userhp",email)
             else:
-                messages.warning(request,"Incorrect password!")
+                messages.warning(request,"Senha incorreta!") # Traduzido
                 return redirect("login")
         else:
             messages.warning(request,EMAIL_DOES_NOT_EXIST_MSG)
@@ -206,8 +211,8 @@ def registeremail(name, email):
     time.sleep(2)
 
     send_mail(
-    "Welcome to DENTIST World",
-    f"Hi {name},\n\nThank you for registering with DENTIST. We look forward to helping you achieve a beautiful, healthy smile.\n\nBest regards,\nThe DENTIST Team",
+    "Bem-vindo ao Mundo DENTIST", # Traduzido
+    f"Olá {name},\n\nObrigado por se registrar no DENTIST. Estamos ansiosos para ajudá-lo a conquistar um sorriso bonito e saudável.\n\nAtenciosamente,\nA Equipe DENTIST", # Traduzido
     DENTIST_EMAIL,
     [email],
     fail_silently=False,
@@ -236,10 +241,10 @@ def register(request):
         
         if password==cpassword:
             if UserDetail.objects.filter(email=email).exists():
-                messages.warning(request,"Email already exists!")
+                messages.warning(request,"O e-mail já existe!") # Traduzido
                 return redirect("register")
             elif UserDetail.objects.filter(contact=contact).exists():
-                messages.warning(request,"Phone number already exists!")
+                messages.warning(request,"O número de telefone já existe!") # Traduzido
                 return redirect("register")
             else:
                 user_detail = UserDetail(name=name, email=email, contact=contact, dateofbirth=dateofbirth, gender=gender, address=address, pincode=pincode, password=password)
@@ -248,23 +253,16 @@ def register(request):
                 check_login=True
                 
                 useremail=email
-                
-                # send_mail(
-                # "Welcome to DENTIST World",
-                # f"Hi {name},\n\nThank you for registering with DENTIST. We look forward to helping you achieve a beautiful, healthy smile.\n\nBest regards,\nThe DENTIST Team",
-                # DENTIST_EMAIL,
-                # [email],
-                # fail_silently=False,
-                # )
 
+                request.session['useremail'] = email
                 
                 thread = threading.Thread(target=registeremail, args=(name, email))
                 thread.start()
                 
-                messages.success(request,"Registration successful!")
+                messages.success(request,"Cadastro realizado com sucesso!") # Traduzido
                 return redirect("userhp",email)
         else:
-            messages.warning(request,"Password does not match")
+            messages.warning(request,"As senhas não correspondem") # Traduzido
             return redirect("register")
    
     return render(request,"registrationpage.html")
@@ -300,7 +298,7 @@ def handle_email_form(request):
     uemail = request.POST.get('emailid')
     
     if not UserDetail.objects.filter(email=uemail).exists():
-        messages.warning(request, "Email does not exist!")
+        messages.warning(request, "O e-mail não existe!") # Traduzido
         return redirect("otp")
     
     udetail = UserDetail.objects.get(email=uemail)
@@ -311,7 +309,7 @@ def handle_email_form(request):
     ue = uemail
     
     send_otp_email(name, uemail, uotp)
-    messages.warning(request, "OTP sent to your Email ID successfully")
+    messages.warning(request, "OTP enviado para o seu E-mail com sucesso") # Traduzido
     
     return render(request, 'otp.html')  # Return to OTP page
 
@@ -327,11 +325,11 @@ def handle_password_change_form(request):
         return redirect('otp')
     
     if eotp != uotp:
-        messages.warning(request, "Enter correct OTP!")
+        messages.warning(request, "Digite o OTP correto!") # Traduzido
         return redirect("otp")
     
     if password != cpassword:
-        messages.warning(request, "Password does not match!")
+        messages.warning(request, "As senhas não correspondem!") # Traduzido
         return redirect("otp")
     
     # Update password
@@ -340,21 +338,21 @@ def handle_password_change_form(request):
     udetail.save()
     
     uotp = ""  # Clear OTP after successful password change
-    messages.success(request, "Password changed successfully")
+    messages.success(request, "Senha alterada com sucesso") # Traduzido
     return redirect("login")
 
 
 def validate_password_form_data(request, eotp, password, cpassword):
     if eotp == "" or password == "" or cpassword == "":
-        messages.warning(request, "Fill all the details !")
+        messages.warning(request, "Preencha todos os detalhes!") # Traduzido
         return False
     return True
 
 
 def send_otp_email(name, email, otp):
     send_mail(
-        "Verification for Changing Password",
-        f"Hi {name},\n\nYour One-Time Password (OTP) for resetting your password is {otp}. Please do not share this OTP with anyone for security reasons.\n\nThank you,\nThe DENTIST Team",
+        "Verificação para Mudança de Senha", # Traduzido
+        f"Olá {name},\n\nSeu Código de Uso Único (OTP) para redefinir sua senha é {otp}. Por favor, não compartilhe este OTP com ninguém por razões de segurança.\n\nObrigado,\nA Equipe DENTIST", # Traduzido
         "dentist.2407best@gmail.com",
         [email],
         fail_silently=False,
@@ -407,9 +405,7 @@ def appointment(request,uemailid):
     doctorinfo={
         
         'email':uemailid,
-        # 'doctordetail':doctordetail,
         'lastpage':totalpage,
-        
         'doctordetailfinal':doctordetailfinal,
         'totalpagelist':[n+1 for n in range(totalpage)]
         
@@ -422,8 +418,8 @@ def bookappmail(user_name,doctorname,apdate,aptime,clinicname,city,consultationf
     time.sleep(2)  
     
     send_mail(
-    "Appointment Confirmation",
-    f"Hi {user_name},\n\nYour appointment with {doctorname} has been confirmed for {apdate} at {aptime}. The appointment will take place at {clinicname}, {city}. The consultation fee is ₹{consultationfee}. Please make sure to arrive on time.\n\nThank you,\nThe DENTIST Team",
+    "Confirmação de Agendamento", # Traduzido
+    f"Olá {user_name},\n\nSeu agendamento com {doctorname} foi confirmado para {apdate} às {aptime}. O agendamento ocorrerá em {clinicname}, {city}. A taxa de consulta é R${consultationfee}. Por favor, chegue no horário.\n\nObrigado,\nA Equipe DENTIST", # Traduzido
     DENTIST_EMAIL,
     [user_email],
     fail_silently=False,
@@ -476,7 +472,7 @@ def validate_appointment_fields(request, appointment_data):
     if (appointment_data['apdate'] is None or 
         appointment_data['aptime'] is None or 
         appointment_data['payment'] is None):
-        messages.success(request, "Select all the fields!")
+        messages.success(request, "Selecione todos os campos!") # Traduzido
         return False
     return True
     
@@ -485,7 +481,7 @@ def is_valid_appointment_date(request, appointment_data):
     current_date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
     
     if appointment_data['apdate'] <= current_date:
-        messages.success(request, "Select valid date!")
+        messages.success(request, "Selecione uma data válida!") # Traduzido
         return False
     return True
 
@@ -497,7 +493,7 @@ def has_conflicting_appointments(request, appointment_data):
         appdate=appointment_data['apdate'],
         apptime=appointment_data['aptime']
     ).exists():
-        messages.warning(request, "Please change date or time. Doctor is not available")
+        messages.warning(request, "Por favor, altere a data ou a hora. O(a) doutor(a) não está disponível") # Traduzido
         return True
 
     # Check if user already has an appointment on the same date
@@ -505,7 +501,7 @@ def has_conflicting_appointments(request, appointment_data):
         appdate=appointment_data['apdate'],
         useremail=appointment_data['user_email']
     ).exists():
-        messages.warning(request, "Please change date. You had already booked an appointment on the selected date.")
+        messages.warning(request, "Por favor, altere a data. Você já possui um agendamento na data selecionada.") # Traduzido
         return True
         
     return False
@@ -527,7 +523,7 @@ def create_appointment(request, appointment_data):
     user_appoint.save()
     
     send_appointment_confirmation_email(appointment_data)
-    messages.success(request, "Appointment booked successfully!")
+    messages.success(request, "Agendamento realizado com sucesso!") # Traduzido
     return redirect('appointment', useremail)
 
 
@@ -584,7 +580,6 @@ def emergencyappointment(request,uemailid):
     doctorinfo={
         
         'email':uemailid,
-        # 'doctordetail':doctordetail,
         'lastpage':totalpage,
         'doctordetailfinal':doctordetailfinal,
         'totalpagelist':[n+1 for n in range(totalpage)]
@@ -598,8 +593,8 @@ def bookemergappmail(cuser_name,doctorname,todaysdate,aptime1,t,clinicname,city,
     time.sleep(2)
 
     send_mail(
-    "Appointment Delayed!",
-    f"Hi {cuser_name},\n\nWe regret to inform you that your appointment with {doctorname} on {todaysdate} at {aptime1} has been rescheduled due to an emergency. The new appointment time is {t}. The appointment will take place at {clinicname}, {city}. The consultation fee remains ₹{consultationfee}. We apologize for the inconvenience and appreciate your understanding.\n\nThank you,\nThe DENTIST Team",
+    "Agendamento Atrasado!", # Traduzido
+    f"Olá {cuser_name},\n\Lamentamos informar que o seu agendamento com {doctorname} em {todaysdate} às {aptime1} foi remarcado devido a uma emergência. O novo horário do agendamento é {t}. A consulta ocorrerá em {clinicname}, {city}. A taxa de consulta permanece R${consultationfee}. Pedimos desculpas pelo inconveniente e agradecemos a sua compreensão.\n\nObrigado,\nA Equipe DENTIST", # Traduzido
     DENTIST_EMAIL,
     [cuser_email],
     fail_silently=False,
@@ -610,11 +605,7 @@ def bookemergencyappointment(request,demailid):
     if check_login==False:
         return redirect('home')
     
-    
-    
     date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
-  
-    
     
     todaysdate=date[0:10]
     currenttime=date[11:16]
@@ -656,7 +647,7 @@ def bookemergencyappointment(request,demailid):
         if aptime!=None and payment!=None:
             if aptime > currenttime:
                 if bookappointment.objects.filter(appdate=todaysdate,useremail=user_email).exists():
-                    messages.warning(request,"You cannot take an appointment. You had already booked an appointment on the selected date.")
+                    messages.warning(request,"Você não pode marcar uma consulta. Você já agendou uma consulta na data selecionada.") # Traduzido
                     return redirect('bookemergencyappointment',doctoremail)
                 if bookappointment.objects.filter(doctoremail=demailid,appdate=todaysdate,apptime=aptime1).exists():
                     appdetail=bookappointment.objects.get(doctoremail=demailid,appdate=todaysdate,apptime=aptime1)
@@ -668,13 +659,6 @@ def bookemergencyappointment(request,demailid):
                     user_appoint = bookappointment(username=cuser_name, useremail=cuser_email, doctorname=doctorname, doctoremail=doctoremail,clinicname=clinicname,city=city, appdate=todaysdate, apptime=t, consultationfee=consultationfee, payment=upayment)
                     user_appoint.save()   
                     appdetail.delete()
-                    # send_mail(
-                    # "Appointment Delayed!",
-                    # f"Hi {cuser_name},\n\nWe regret to inform you that your appointment with {doctorname} on {todaysdate} at {aptime1} has been rescheduled due to an emergency. The new appointment time is {t}. The appointment will take place at {clinicname}, {city}. The consultation fee remains ₹{consultationfee}. We apologize for the inconvenience and appreciate your understanding.\n\nThank you,\nThe DENTIST Team",
-                    # DENTIST_EMAIL,
-                    # [cuser_email],
-                    # fail_silently=False,
-                    # )
                     
                     thread = threading.Thread(target=bookemergappmail, args=(cuser_name,doctorname,todaysdate,aptime1,t,clinicname,city,consultationfee,cuser_email))
                     thread.start()
@@ -682,26 +666,20 @@ def bookemergencyappointment(request,demailid):
                     
                 user_appoint = bookappointment(username=user_name, useremail=user_email, doctorname=doctorname, doctoremail=doctoremail,clinicname=clinicname,city=city, appdate=todaysdate, apptime=aptime1, consultationfee=consultfee, payment=payment)
                 user_appoint.save()
-                # send_mail(
-                # "Appointment Confirmation",
-                # f"Hi {user_name}, Your appointment is confirmed with Dentist {doctorname} on {todaysdate} at {aptime1}. Address: {clinicname}, {city} and the consultation fees is ₹{consultfee}. Please be on time. Thank you.",
-                # DENTIST_EMAIL,
-                # [user_email],
-                # fail_silently=False,
-                # )
+
                 thread = threading.Thread(target=bookappmail, args=(user_name,doctorname,todaysdate,aptime1,clinicname,city,consultfee,user_email))
                 thread.start()
                 
-                messages.success(request,"Appointment booked successfully")
+                messages.success(request,"Agendamento realizado com sucesso") # Traduzido
                 
                 return redirect('userhp',useremail)
             else:
-                messages.success(request,"Select valid time!")
+                messages.success(request,"Selecione um horário válido!") # Traduzido
             
                 return redirect('bookemergencyappointment',doctoremail)
             
         else:
-            messages.success(request,"Select all the fields!")
+            messages.success(request,"Selecione todos os campos!") # Traduzido
             
             return redirect('bookemergencyappointment',doctoremail)
     return render(request,"bookemergencyappointment.html",{'demail':demailid,'date':todaysdate})
@@ -715,8 +693,8 @@ def cancelappmail(user_name,doctorname,date,atime,uemailid):
     time.sleep(2)
     
     send_mail(
-    "Appointment Cancelled",
-    f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been successfully cancelled.\n\nThank you,\nThe DENTIST Team",
+    "Agendamento Cancelado", # Traduzido
+    f"Olá {user_name},\n\nSeu agendamento com {doctorname} em {date} às {atime} foi cancelado com sucesso.\n\nObrigado,\nA Equipe DENTIST", # Traduzido
     DENTIST_EMAIL,
     [uemailid],
     fail_silently=False,
@@ -752,17 +730,10 @@ def appointmentlist(request,uemailid):
         user_name=appdetail.username
         
         appdetail.delete()
-        # send_mail(
-        # "Appointment Cancelled",
-        # f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been successfully cancelled.\n\nThank you,\nThe DENTIST Team",
-        # DENTIST_EMAIL,
-        # [uemailid],
-        # fail_silently=False,
-        # )
         
         thread = threading.Thread(target=cancelappmail, args=(user_name,doctorname,date,time,uemailid))
         thread.start()
-        messages.success(request,"Appointment cancelled successfully!")
+        messages.success(request,"Agendamento cancelado com sucesso!") # Traduzido
         return redirect('applist',uemailid)
     return render(request,"appointmentlist.html",info)
 
@@ -803,8 +774,8 @@ def doctorcancelapp(user_name,doctorname,date,atime,user_email):
     time.sleep(2)
 
     send_mail(
-    "Appointment Cancelled",
-    f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been cancelled due to your absence at the scheduled time.\n\nThank you,\nThe DENTIST Team",
+    "Agendamento Cancelado", # Traduzido
+    f"Olá {user_name},\n\nSeu agendamento com {doctorname} em {date} às {atime} foi cancelado devido à sua ausência no horário agendado.\n\nObrigado,\nA Equipe DENTIST", # Traduzido
     DENTIST_EMAIL,
     [user_email],
     fail_silently=False,
@@ -838,17 +809,10 @@ def doctorschedule(request,demail):
             appdetail= bookappointment.objects.get(useremail=useremail,appdate=date,apptime=time,doctorname=doctorname)
             user_name=appdetail.username
             appdetail.delete()
-            # send_mail(
-            # "Appointment Cancelled",
-            # f"Hi {user_name},\n\nYour appointment with {doctorname} on {date} at {atime} has been cancelled due to your absence at the scheduled time.\n\nThank you,\nThe DENTIST Team",
-            # DENTIST_EMAIL,
-            # [useremail],
-            # fail_silently=False,
-            # )
             
             thread = threading.Thread(target=doctorcancelapp, args=(user_name,doctorname,date,time,useremail))
             thread.start()      
-            messages.success(request,"Appointment cancelled successfully!")
+            messages.success(request,"Agendamento cancelado com sucesso!") # Traduzido
             return redirect('doctors',demail)
         
         elif request.POST.get("form_type") == "prescription":
@@ -869,7 +833,7 @@ def invoice_pdf(doctoremail,useremail):
     clinic_name = doctordetail.clinicname
     clinic_address = doctordetail.city
     doctor_name = doctordetail.name
-    doctor_contact = f"Phone: {doctordetail.contact}"
+    doctor_contact = f"Telefone: {doctordetail.contact}" # Traduzido
     patient_name = userdetail.name
     patient_phone = userdetail.contact
     consultation = doctordetail.consultationfee
@@ -877,7 +841,7 @@ def invoice_pdf(doctoremail,useremail):
     userprescription = appointmenthistory.objects.filter(useremail=useremail, doctoremail=doctoremail, appdate=date_str).order_by('-appdate', '-apptime').first()
 
     payment_details = [
-        {"description": "Consultation Fee", "amount": consultation},
+        {"description": "Taxa de Consulta", "amount": consultation}, # Traduzido
         
     ]
 
@@ -896,20 +860,20 @@ def invoice_pdf(doctoremail,useremail):
     p.setFont("Helvetica", 12)
     p.drawCentredString(width / 2, height - 80, clinic_address)
     p.setFont("Helvetica", 10)
-    p.drawString(50, height - 120, f"Doctor: {doctor_name}")
+    p.drawString(50, height - 120, f"Doutor(a): {doctor_name}") # Traduzido
     p.drawString(50, height - 135, doctor_contact)
-    p.drawRightString(width - 50, height - 120, f"Date: {date_str}")
+    p.drawRightString(width - 50, height - 120, f"Data: {date_str}") # Traduzido
     p.line(50, height - 150, width - 50, height - 150)
     
     
     y_position = height - 170
-    p.drawString(50, y_position, f"Patient Name: {patient_name}")
+    p.drawString(50, y_position, f"Nome do Paciente: {patient_name}") # Traduzido
     y_position -= 15
-    p.drawString(50, y_position, f"Phone Number: {patient_phone}")
+    p.drawString(50, y_position, f"Número de Telefone: {patient_phone}") # Traduzido
     
     
     y_position -= 30
-    p.drawString(50, y_position, "Payment Details:")
+    p.drawString(50, y_position, "Detalhes do Pagamento:") # Traduzido
     y_position -= 20
     for detail in payment_details:
         description = detail["description"]
@@ -928,7 +892,7 @@ def invoice_pdf(doctoremail,useremail):
     
     y_position -= 20
     p.setFont("Helvetica", 10)
-    p.drawString(50, y_position, f"Payment Mode: {payment_mode}")
+    p.drawString(50, y_position, f"Modo de Pagamento: {payment_mode}") # Traduzido
 
     p.showPage()
     p.save()
@@ -951,7 +915,7 @@ def prescription_pdf(doctoremail,useremail):
     clinic_name = doctordetail.clinicname
     clinic_address = doctordetail.city
     doctor_name = doctordetail.name
-    doctor_contact = f"Phone: {doctordetail.contact}"
+    doctor_contact = f"Telefone: {doctordetail.contact}" # Traduzido
     patient_name = userdetail.name
     patient_phone = userdetail.contact
     date_str = datetime.now().strftime("%Y-%m-%d")
@@ -967,24 +931,24 @@ def prescription_pdf(doctoremail,useremail):
 
    
     p.setFont("Helvetica-Bold", 20)
-    p.drawCentredString(width / 2, height - 50, f"{clinic_name} - Prescription")
+    p.drawCentredString(width / 2, height - 50, f"{clinic_name} - Prescrição") # Traduzido
     p.setFont("Helvetica", 12)
     p.drawCentredString(width / 2, height - 80, clinic_address)
     p.setFont("Helvetica", 10)
-    p.drawString(50, height - 120, f"Doctor: {doctor_name}")
+    p.drawString(50, height - 120, f"Doutor(a): {doctor_name}") # Traduzido
     p.drawString(50, height - 135, doctor_contact)
-    p.drawRightString(width - 50, height - 120, f"Date: {date_str}")
+    p.drawRightString(width - 50, height - 120, f"Data: {date_str}") # Traduzido
     p.line(50, height - 150, width - 50, height - 150)
     
    
     y_position = height - 170
-    p.drawString(50, y_position, f"Patient Name: {patient_name}")
+    p.drawString(50, y_position, f"Nome do Paciente: {patient_name}") # Traduzido
     y_position -= 15
-    p.drawString(50, y_position, f"Phone Number: {patient_phone}")
+    p.drawString(50, y_position, f"Número de Telefone: {patient_phone}") # Traduzido
     
 
     y_position -= 30
-    p.drawString(50, y_position, "Prescription Details:")
+    p.drawString(50, y_position, "Detalhes da Prescrição:") # Traduzido
     
     y_position -= 30  
     paragraph_text = (
@@ -1001,8 +965,6 @@ def prescription_pdf(doctoremail,useremail):
     p.setStrokeColorRGB(0, 0, 0)  
     p.setLineWidth(1)
     p.rect(box_x, box_y, box_width, box_height)
-
-    
     
     text_object = p.beginText()
     text_object.setTextOrigin(box_x + 10, box_y + box_height - 15)
@@ -1014,43 +976,30 @@ def prescription_pdf(doctoremail,useremail):
             break
         
     p.drawText(text_object)
-
     
     p.showPage()
     p.save()
-
     
     pdf_data = buffer.getvalue()
     buffer.close()
     
-
-   
     return pdf_data
-
-
-
-
-
-
-
-
-
 
 # ---------------------------------------------------prescription---------------------------------------------------------
 def send_pdf_email(doctoremail,useremail,patient_name):
    
     time.sleep(2)
 
-    subject = "Invoice and Prescription"
-    body = f"Dear {patient_name},\n\nPlease find attached the prescription and invoice for your recent appointment. Thank you for choosing our services.\n\nBest regards,\nThe DENTIST Team"
+    subject = "Fatura e Prescrição" # Traduzido
+    body = f"Prezado(a) {patient_name},\n\nEm anexo, encontre a prescrição e a fatura de sua consulta recente. Obrigado por escolher nossos serviços.\n\nAtenciosamente,\nA Equipe DENTIST" # Traduzido
     from_email = DENTIST_EMAIL
     to_email = [useremail]
     email = EmailMessage(subject, body, from_email, to_email)
 
     pdf_invoice_data=invoice_pdf(doctoremail,useremail)
     pdf_prescription_data=prescription_pdf(doctoremail,useremail)
-    email.attach("invoice.pdf", pdf_invoice_data, "application/pdf")
-    email.attach("prescription.pdf", pdf_prescription_data, "application/pdf")
+    email.attach("fatura.pdf", pdf_invoice_data, "application/pdf") # Traduzido
+    email.attach("prescricao.pdf", pdf_prescription_data, "application/pdf") # Traduzido
     email.send(fail_silently=False)
 
 
@@ -1086,7 +1035,7 @@ def prescription(request,uemail):
     if request.method == 'POST':
         prescription=request.POST.get('pres')
         if prescription == "":
-            messages.warning(request,"Please write prescription!")
+            messages.warning(request,"Por favor, escreva a prescrição!") # Traduzido
             return redirect('prescription',uemail)
         doctordetail=DoctorDetail.objects.get(email=doctoremail)
         userdetail=UserDetail.objects.get(email=uemail)
@@ -1108,7 +1057,7 @@ def prescription(request,uemail):
         thread = threading.Thread(target=send_pdf_email, args=(docemail,user_email,user_name))
         thread.start()
         
-        messages.success(request,"Appointment completed! ")
+        messages.success(request,"Consulta concluída!") # Traduzido
         
         return redirect('doctors',docemail)
 
@@ -1120,7 +1069,7 @@ def userlogout(request):
     check_login=False
     global check_doclogin
     check_doclogin=False
-    messages.success(request,"You have been logged out successfully!")
+    messages.success(request,"Você saiu com sucesso!") # Traduzido
     
     return redirect("home")
 
@@ -1130,35 +1079,71 @@ def userlogout(request):
 
 #-----------------------------------------doctorbookappoitmenthistory-----------------------------------------------
 
-def doctorappoitmenthistory(request,demailid):
-    if check_doclogin==False:
+def doctorappoitmenthistory(request, demailid):
+    if not check_doclogin:
         return redirect('home')
-    
 
-    date = str(datetime.now(pytz.timezone(INDIA_TIMEZONE)))
-    todaysdate=date[0:10]
-    userdetail=appointmenthistory.objects.filter(doctoremail=demailid, appdate=todaysdate)
-    noappointment=True
+    userdetail = appointmenthistory.objects.filter(doctoremail=demailid).order_by('-appdate', '-apptime')
+
     if request.method == 'POST':
-        
         apdate = request.POST.get('ad')
-        userdetail=appointmenthistory.objects.filter(doctoremail=demailid, appdate=apdate)
-    
+        if apdate:
+             userdetail = appointmenthistory.objects.filter(doctoremail=demailid, appdate=apdate).order_by('-apptime')
 
-    
-    if not userdetail:
-        noappointment=False
-    userinfo={
-        'noappointment':noappointment,
-        'email':demailid,
-        'userdetail':userdetail,
-        'dcheck':check_doclogin
+    noappointment = not userdetail.exists()
+
+    userinfo = {
+        'noappointment': noappointment,
+        'email': demailid,
+        'userdetail': userdetail,
+        'dcheck': check_doclogin
     }
 
+    return render(request, "doctorappointmenthistory.html", userinfo)
 
-    return render(request,"doctorappointmenthistory.html",userinfo)
-
-
-
+#-------------------------------------------------salvar_feedback-----------------------------------------------
 
 
+def salvar_feedback(request, app_id):
+    if not check_login:
+        return redirect('home')
+
+    consulta = get_object_or_404(appointmenthistory, id=app_id)
+
+    useremail_logado = request.session.get('useremail') 
+
+    if consulta.useremail != useremail_logado:
+        messages.error(request, "Você não tem permissão para avaliar esta consulta.")
+        return redirect('history', uemailid=useremail_logado)
+
+    if request.method == 'POST':
+        avaliacao = request.POST.get('avaliacao')
+        feedback = request.POST.get('feedback')
+
+        consulta.avaliacao = avaliacao
+        consulta.feedback = feedback
+        consulta.save()
+
+        messages.success(request, "Obrigado pelo seu feedback!")
+
+    return redirect('detalhe_consulta', app_id=app_id)
+
+#-------------------------------------------------detalhe_consulta-----------------------------------------------
+
+
+def detalhe_consulta(request, app_id):
+    if not check_login:
+        return redirect('home')
+
+    consulta = get_object_or_404(appointmenthistory, id=app_id)
+    useremail_logado = request.session.get('useremail')
+
+    if consulta.useremail != useremail_logado:
+        messages.error(request, "Acesso não permitido.")
+        return redirect('history', uemailid=useremail_logado)
+
+    context = {
+        'consulta': consulta,
+        'email': useremail_logado
+    }
+    return render(request, 'consultadetail.html', context)

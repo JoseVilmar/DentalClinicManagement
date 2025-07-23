@@ -22,5 +22,8 @@ urlpatterns = [
     path("bookappoitment/<demailid>",views.bookuserappointment,name="bookappointment"),
     path("bookemergencyappoitment/<demailid>",views.bookemergencyappointment,name="bookemergencyappointment"),
     path("doctorappoitmenthistory/<demailid>",views.doctorappoitmenthistory,name="doctorappoitmenthistory"),
+    path("feedback/<int:app_id>/", views.salvar_feedback, name="salvar_feedback"),
+    path("consulta/<int:app_id>/", views.detalhe_consulta, name="detalhe_consulta"),
+
 
 ]
