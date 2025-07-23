@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes da Consulta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/cssfiles/aboutusstyle.css">
+    <link rel="stylesheet" href="/static/cssfiles/userhistorystyle.css">
+    <style>
+        /* Seu estilo para as estrelas do formulário */
+        .rating { display: flex; flex-direction: row-reverse; justify-content: center; margin-bottom: 15px; }
+        .rating > input { display: none; }
+        .rating > label { position: relative; width: 1em; font-size: 2rem; color: #FFD600; cursor: pointer; }
+        .rating > label::before { content: "\2605"; position: absolute; opacity: 0; }
+        .rating > label:hover:before, .rating > label:hover ~ label:before { opacity: 1 !important; }
+        .rating > input:checked ~ label:before { opacity: 1; }
+        
+        /* Estilo para o botão de avaliação */
+        .feedback-form button { display: inline-block; padding: 10px 15px; background-color: #03a9f4; color: white; text-decoration: none; border-radius: 5px; border: none; cursor: pointer; transition: background-color 0.3s; }
+        .feedback-form button:hover { background-color: #0288d1; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="pro_title border">
+                <i class="fa-solid fa-tooth"></i> DENTIST
+            </div>
+            <div class="user-part">
+                <div class="contact-us border"><a href="{% url 'contact' %}">Contact Us</a></div>
+                <div class="about-us border"><a href="{% url 'about' %}">About Us</a></div>
+                <div class="user"><i class="fa-solid fa-user"></i></div>
+            </div>
+        </div>
+    </header>
+    
+    <input type="checkbox" id="opensidebar">
+    <label for="opensidebar" class="sidebarIconToggle"></label>
+    <div id="sidebarmenu">
+        <ul class="menu">
+            <li><a href="{% url 'userdetail' email %}">Details</a></li>
+            <li><a href="{% url 'applist' email %}">Appointments</a></li>
+            <li><a href="{% url 'history' email %}">History</a></li>
+            <li><a href="{%url 'userlogout'%}">Log Out</a></li>
+        </ul>
+    </div>
+
+    <div class="user-history">
+        <div class="detail-title">
+            <h1>Detalhes da Consulta</h1>
+        </div>
+        
+        <p><strong>Doutor(a):</strong> {{ consulta.doctorname }}</p>
+        <p><strong>Data:</strong> {{ consulta.appdate }}</p>
+        <hr>
+        
+        <h3>Prescrição</h3>
+        <p>{{ consulta.prescription|linebreaksbr }}</p>
+        <hr>
+
+        <h3>Avaliação da Consulta</h3>
+        {% if consulta.feedback %}
+            <p><strong>Sua Nota:</strong> {{ consulta.avaliacao }} de 5 estrelas</p>
+            <p><strong>Seu Comentário:</strong> {{ consulta.feedback }}</p>
+        {% else %}
+            <form class="feedback-form" action="{% url 'salvar_feedback' consulta.id %}" method="post">
+                {% csrf_token %}
+                <div class="rating">
+                    <input type="radio" id="star5" name="avaliacao" value="5" required /><label for="star5" title="5 stars">☆</label>
+                    <input type="radio" id="star4" name="avaliacao" value="4" /><label for="star4" title="4 stars">☆</label>
+                    <input type="radio" id="star3" name="avaliacao" value="3" /><label for="star3" title="3 stars">☆</label>
+                    <input type="radio" id="star2" name="avaliacao" value="2" /><label for="star2" title="2 stars">☆</label>
+                    <input type="radio" id="star1" name="avaliacao" value="1" /><label for="star1" title="1 star">☆</label>
+                </div>
+                <textarea name="feedback" placeholder="Deixe seu feedback sobre a consulta..." required rows="4" style="width: 100%; box-sizing: border-box;"></textarea>
+                <br><br>
+                <button type="submit">Enviar Avaliação</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <footer>
+        <div class="panel1 ">
+            <ul class="ul1">
+                <p>Get to know Us</p>
+                <a href="{% url 'userhp' email %}">Home</a>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'contact' %}">Contact Us</a>
+            </ul>
+            <ul class="ul1">
+                <p>For Patients</p>
+                <a href="{% url 'userhp' email %}">Find Doctors</a>
+                <a href="{% url 'userhp' email %}">Book appointment</a>
+            </ul>
+            <ul>
+                <p>Social</p>
+                <div class="social"><i class="fa-brands fa-x-twitter"></i><a href="#">Twitter</a></div>
+                <div class="social"><i class="fa-brands fa-facebook"></i><a href="#">Facebook</a></div>
+                <div class="social"><i class="fa-brands fa-instagram"></i><a href="#">Instagram</a></div>
+            </ul>
+        </div>
+        <div class="panel2">
+            <div class="pro_title border"><i class="fa-solid fa-tooth"></i> DENTIST</div>
+        </div>
+        <div class="panel3">
+            <p>DENTIST © 2024, All Rights Reserved </p>
+        </div>
+    </footer>
+</body>
+</html>
