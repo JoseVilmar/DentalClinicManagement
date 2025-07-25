@@ -19,7 +19,7 @@ import time
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
-FILL_ALL_DETAILS_MSG = "Fill all details!"
+
 EMAIL_DOES_NOT_EXIST_MSG = "Email does not exist!"
 FILL_ALL_DETAILS_MSG = "Fill all the details!"
 DENTIST_EMAIL = "dentist.2407best@gmail.com"

@@ -59,3 +59,47 @@ Accessibility: Provides patients with easy access to their records and appointme
 Accuracy: Minimizes errors in scheduling, billing, and patient records through automated processes.
 
 Scalability: Built on Django, the project can be easily scaled to accommodate the growing needs of a dental clinic.
+
+---
+
+## Setup Instructions
+
+### 1. Clone o repositório
+```bash
+git clone https://github.com/JoseVilmar/DentalClinicManagement.git
+cd DentalClinicManagement
+```
+
+### 2. Crie o ambiente virtual
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+### 3. Instale as dependências
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure o arquivo `.env`
+Crie um arquivo `.env` na raiz do projeto (mesmo nível do `manage.py`) com o seguinte conteúdo:
+
+```
+DB_NAME=dentalmanagement
+DB_USER=root
+DB_PASSWORD=7499373180
+DB_HOST=127.0.0.1
+DB_PORT=3306
+EMAIL_HOST_PASSWORD=fzwlpnlqruhaarxc
+```
+
+> ⚠️ Se você estiver usando MAMP, altere `DB_HOST=localhost` e `DB_PORT=8889`
+
+### 5. Rode o projeto
+```bash
+python manage.py runserver
+```
+
+Acesse `http://127.0.0.1:8000/` no navegador.
+
+---
