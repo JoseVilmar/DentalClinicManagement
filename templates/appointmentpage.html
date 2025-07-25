@@ -38,7 +38,7 @@
             {% if messages %}
             {%for message in messages%}
             <div class="alert" >
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <span class="closebtn" onclick="this.parentElement.style.display='none';" onkeypress="if(event.key === 'Enter' || event.key === ' ') { this.parentElement.style.display='none'; }" role="button" tabindex="0">&times;</span> 
                 <strong>{{ message}}</strong> 
             </div>
             
@@ -53,8 +53,7 @@
                     <div class="location-icon">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <label for="dlocation" class="sr-only">Search location</label>
-                    <input type="text" id="dlocation" name="dlocation" placeholder=" Search location" class="input-location">
+                    <label for="dlocation"></label>
                     <input type="text" id="dlocation" name="dlocation" placeholder=" Search location" class="input-location">
                     <input type="submit" value="Search" class="btna" >
                 </div>
@@ -66,8 +65,7 @@
                     <div class="location-icon">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <label for="dname" class="sr-only">Search dentist</label>
-                    <input type="text" id="dname" name="dname" placeholder=" Dentist" class="input-dentist">
+                    <label for="dname"></label>
                     <input type="text" id="dname" name="dname" placeholder=" Dentist" class="input-dentist">
                     <input type="submit" value="Search" class="btna" >
                 </div>
@@ -81,9 +79,7 @@
         
         <!-- toggle menu -->
         <input type="checkbox" id="opensidebar">
-        <label for="opensidebar" class="sidebarIconToggle" aria-label="Open sidebar menu">
-            <span class="fa fa-bars" aria-hidden="true"></span>
-        </label>
+        <label for="opensidebar" class="sidebarIconToggle"></label>
         <div id="sidebarmenu">
             <ul class="menu">
                 <li><a href="{% url 'userdetail' email %}">Details</a></li>

@@ -38,11 +38,9 @@
                 
 
         </header>
-        <!-- toggle menu -->        
+        <!-- toggle menu -->
         <input type="checkbox" id="opensidebar">
-        <label for="opensidebar" class="sidebarIconToggle" aria-label="Open sidebar menu">
-            <span class="fa fa-bars" aria-hidden="true"></span>
-        </label>
+        <label for="opensidebar" class="sidebarIconToggle"></label>
         <div id="sidebarmenu">
             <ul class="menu">
                 <li><a href="{% url 'userdetail' email %}">Details</a></li>
@@ -54,7 +52,7 @@
         {% if messages %}
         {%for message in messages%}
         <div class="alert" >
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <span class="closebtn" onclick="this.parentElement.style.display='none';" onkeypress="if(event.key === 'Enter' || event.key === ' ') { this.parentElement.style.display='none'; }" role="button" tabindex="0">&times;</span> 
             <strong>{{ message}}</strong> 
         </div>
         
