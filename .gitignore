@@ -1,3 +1,6 @@
+ Ignorar senhas locais
+.env
+
 # Ignorar configurações locais
 dentalmanagement/local_settings.py
 
