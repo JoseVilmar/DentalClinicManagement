@@ -19,6 +19,8 @@ import time
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST, require_GET
+from django.shortcuts import redirect, get_object_or_404, render
 
 
 # --- Constantes com mensagens traduzidas ---
@@ -1102,34 +1104,32 @@ def doctorappoitmenthistory(request, demailid):
 
 #-------------------------------------------------salvar_feedback-----------------------------------------------
 
-
+@require_POST
 def salvar_feedback(request, app_id):
     if not check_login:
         return redirect('home')
 
     consulta = get_object_or_404(appointmenthistory, id=app_id)
-
     useremail_logado = request.session.get('useremail') 
 
     if consulta.useremail != useremail_logado:
         messages.error(request, "Você não tem permissão para avaliar esta consulta.")
         return redirect('history', uemailid=useremail_logado)
 
-    if request.method == 'POST':
-        avaliacao = request.POST.get('avaliacao')
-        feedback = request.POST.get('feedback')
+    avaliacao = request.POST.get('avaliacao')
+    feedback = request.POST.get('feedback')
 
-        consulta.avaliacao = avaliacao
-        consulta.feedback = feedback
-        consulta.save()
+    consulta.avaliacao = avaliacao
+    consulta.feedback = feedback
+    consulta.save()
 
-        messages.success(request, "Obrigado pelo seu feedback!")
+    messages.success(request, "Obrigado pelo seu feedback!")
 
     return redirect('detalhe_consulta', app_id=app_id)
 
 #-------------------------------------------------detalhe_consulta-----------------------------------------------
 
-
+@require_GET
 def detalhe_consulta(request, app_id):
     if not check_login:
         return redirect('home')
